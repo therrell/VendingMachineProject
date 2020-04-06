@@ -1,31 +1,23 @@
 from django.db import models
 
-import uuid
-# UUID is unique user id
-# might have to change to int primary key if it doesn't work
-
-# it doesn't work
-
+#user is a keyword for django; model does not appear
 class User(models.Model):
-    userID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    userID = models.IntegerField(primary_key=True)
     loginName = models.CharField(max_length=16)
     password = models.CharField(max_length=256)
 
 class CRN(models.Model):
     crnID = models.IntegerField(primary_key=True)
-    enrollmentNumber = models.IntegerField()
     subject = models.CharField(max_length=4)
     number = models.IntegerField()
     buildingID = models.ForeignKey('Building', on_delete = models.CASCADE)
 
-#UUID is unintelligible in website editor
 class Building(models.Model):
-    buildingID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    buildingID = models.IntegerField(primary_key=True)
     buildingName = models.CharField(max_length=256)
     buildingLocation = models.CharField(max_length=256)
     city = models.CharField(max_length=256)
 
-#fix buildingID
 class VendingMachine(models.Model):
     WORKING = 'WO'
     MAINTENANCE = 'MA'
@@ -37,8 +29,8 @@ class VendingMachine(models.Model):
     TYPE_CHOICES = [(DRINK, 'DRINK'), (FOOD, 'FOOD')]
 
     buildingID = models.ForeignKey('Building', on_delete=models.CASCADE)
-    vmID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    VM_Location = models.CharField(max_length=256)
+    vmID = models.IntegerField(primary_key=True)
+    VMLocation = models.CharField(max_length=256)
     status = models.CharField(choices=STATUS_CHOICES, default=WORKING, max_length=2)
     type = models.CharField(choices = TYPE_CHOICES, default=FOOD, max_length=2)
 
@@ -47,7 +39,7 @@ class Product(models.Model):
     FOOD = 'FO'
     TYPE_CHOICES = [(DRINK, 'DRINK'), (FOOD, 'FOOD')]
 
-    productID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    productID = models.IntegerField(primary_key=True)
     productName = models.CharField(max_length=256)
     productType = models.CharField(choices = TYPE_CHOICES, default=FOOD, max_length=2)
     price = models.DecimalField(max_digits=5, decimal_places=2)

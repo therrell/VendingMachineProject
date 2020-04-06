@@ -1,6 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import VendingMachine
+from .serializers import VendingMachineSerializer
+from rest_framework import generics
 # Create your views here.
+
+class VendingMachineListCreate(generics.ListCreateAPIView):
+    queryset = VendingMachine.objects.all()
+    serializer_class = VendingMachineSerializer
 
 def index(request):
     return HttpResponse("Hello, world.")
