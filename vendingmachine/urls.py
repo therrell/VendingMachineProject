@@ -5,3 +5,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('machines/', include('machines.vm.urls')),
     path('courses/', include('machines.crn.urls')),
+    ]

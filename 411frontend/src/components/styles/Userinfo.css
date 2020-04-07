@@ -1,0 +1,21 @@
+.form2
+{
+  margin-top: 50px ;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: space-evenly;
+}
+
+.paper2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 60px;
+    justify-content: space-evenly;
+}
+.container2{
+    display: block;
+    text-align: center;
+    /* // textAlign: center; */
+}
