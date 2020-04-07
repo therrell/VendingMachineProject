@@ -1,16 +1,22 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-#user is a keyword for django; model does not appear
-class User(models.Model):
+#userID breaks authentication
+class User(AbstractUser):
     userID = models.IntegerField(primary_key=True)
-    loginName = models.CharField(max_length=16)
-    password = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.username
 
 class CRN(models.Model):
     crnID = models.IntegerField(primary_key=True)
     subject = models.CharField(max_length=4)
     number = models.IntegerField()
     buildingID = models.ForeignKey('Building', on_delete = models.CASCADE)
+
+    def __str__(self):
+        course_name = self.subject + " " + self.number
+        return course_name
 
 class Building(models.Model):
     buildingID = models.IntegerField(primary_key=True)
