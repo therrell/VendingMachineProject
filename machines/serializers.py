@@ -21,12 +21,17 @@ class UserRegisterSerializer(RegisterSerializer):
         fields = ('username', 'password', 'userID')
 
     def get_cleaned_data(self):
+        f = open('machines/maxuser.txt', 'r+')
+        curr = int(f.read())
+        f.seek(0)
+        f.write(str(curr+1))
+        f.close()
         return {
             'username': self.validated_data.get('username', ''),
             'password1': self.validated_data.get('password1', ''),
             'password2': self.validated_data.get('password2', ''),
             'email': self.validated_data.get('email', ''),
-            'userID': self.validated_data.get('userID', ''),
+            'userID': curr,
         }
 
     def save(self, request):
