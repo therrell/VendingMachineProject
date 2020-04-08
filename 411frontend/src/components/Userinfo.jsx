@@ -90,7 +90,7 @@ class Userinfo extends Component {
 
   deleteCRN(crn) {
     console.log(`Deleting new CRN ${crn}`)
-    const deleteURL = '___SPECIAL_DELETE_URL_FROM_BACKEND___' + crn
+    const deleteURL = 'http://127.0.0.1:8000/courses/' + crn
     axios.delete(deleteURL).then((response)=>{
         this.loadCRNS()
     }).catch((error)=>{
@@ -117,7 +117,7 @@ class Userinfo extends Component {
 
   addCRN(crn) {
     console.log(`Adding new CRN ${crn}`)
-    const addURL = '___SPECIAL_ADD_URL_FROM_BACKEND___' + crn
+    const addURL = 'http://127.0.0.1:8000/courses/' + crn
     axios.post(addURL).then((response)=>{
         this.loadCRNS()
     }).catch((error)=>{
@@ -146,7 +146,7 @@ class Userinfo extends Component {
 
   editCRN(crn) {
     console.log(`Editing new CRN ${crn}`)
-    const deleteURL = '___SPECIAL_EDIT_URL_FROM_BACKEND___' + crn
+    const deleteURL = 'http://127.0.0.1:8000/courses/' + crn
     axios.delete(deleteURL).then((response)=>{
         this.loadCRNS()
     }).catch((error)=>{
