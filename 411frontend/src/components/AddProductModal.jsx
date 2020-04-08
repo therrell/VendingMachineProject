@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddProductModal() {
+
+export default function AddProductModal(props) {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -42,13 +43,22 @@ export default function AddProductModal() {
     setOpen(false);
   };
 
+  const handleAdd= () => {
+    // props.data : data in textfield.
+    // props.addItem: function that does post stuff.
+    //let data = this.state.crn;
+    props.addItem(props.newName)
+    setOpen(false);
+  };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title" align="center">New Product</h2>
       <p id="simple-modal-description">
       <TextField
           name="product"
-          //onChange={this.textChange}
+          value={props.newName}
+          onChange={props.handleChange}
           label="eg: Monster Blue"
           fullWidth
           />
@@ -56,7 +66,8 @@ export default function AddProductModal() {
       <Button type="button"
       variant="outlined"
       color="primary"
-      startIcon={<ArrowUpwardIcon/>}>
+      startIcon={<ArrowUpwardIcon/>}
+      onClick={handleAdd}>
       Submit
       </Button>
 

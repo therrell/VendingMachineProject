@@ -28,7 +28,7 @@ class Login extends Component {
         }
         this.login = this.login.bind(this);
         this.textChange = this.textChange.bind(this);
-    
+
     }
 
     // try to call the api to get users result
@@ -55,9 +55,9 @@ class Login extends Component {
         });
     }
 
-  
 
-    
+
+
 
     render(){
         if (this.state.redirect){
@@ -72,25 +72,25 @@ class Login extends Component {
                 Vending Machine Locator
                 </Typography>
                 <Paper className="paper">
-                   
+
                     <Typography  variant="h4">
                         Please Sign In
                     </Typography>
-                    <form className="form">  
-                        <TextField 
-                            name="username" 
-                            onChange={this.textChange} 
-                            label="Username" 
+                    <form className="form">
+                        <TextField
+                            name="username"
+                            onChange={this.textChange}
+                            label="Username"
                             fullWidth
-                            
+
                             />
-                        <TextField 
-                            name="password" 
-                            type="password" 
-                            onChange={this.textChange} 
-                            label="Password" 
+                        <TextField
+                            name="password"
+                            type="password"
+                            onChange={this.textChange}
+                            label="Password"
                             fullWidth
-                           
+
                             />
                         <Button
                             className="form"
@@ -105,7 +105,7 @@ class Login extends Component {
                         <Typography className="form">
                             Don't have an account yet?
                         </Typography>
-                        <Link to="/signup">
+                        <Link to="/signup" style={{ textDecoration: 'none' }}>
                             <Button
                                 className="form"
                                 fullWidth
@@ -117,8 +117,8 @@ class Login extends Component {
                         </Link>
                     </form>
                 </Paper>
-            
-           
+
+
             </div>
         )
     }

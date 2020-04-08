@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import TextField from '@material-ui/core/TextField';
 
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -29,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddCRNModal() {
+
+export default function AddCRNModal(props) {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -42,20 +44,33 @@ export default function AddCRNModal() {
     setOpen(false);
   };
 
+  const handleAdd= () => {
+    // props.data : data in textfield.
+    // props.addItem: function that does post stuff.
+    //let data = this.state.crn;
+    // console.log(props.addItem)
+    props.addItem(props.newName)
+    setOpen(false);
+  };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title" align="center">New CRN</h2>
       <p id="simple-modal-description">
       <TextField
           name="crn"
-          //onChange={this.textChange}
+          value={props.newName}
+          onChange={props.handleChange}
           label="eg: 42091"
           fullWidth
+          //onChange={(e) => {handleChange(e)}}
+          //onChange={this.textChange}
           />
       </p>
       <Button type="button"
       variant="outlined"
       color="primary"
+      onClick={handleAdd}
       startIcon={<ArrowUpwardIcon/>}>
       Submit
       </Button>

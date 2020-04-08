@@ -21,7 +21,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-const apiLink = 'https://api.themoviedb.org/3/search/movie?api_key=d2291366f947bf3494364f2693d190af&language=en-US&query=';
+const apiLink = 'http://127.0.0.1:8000/machines/';
 
 class VMinfo extends Component {
     constructor(props) {
@@ -83,7 +83,7 @@ class VMinfo extends Component {
             return (
                 <Redirect to={{ pathname: '/mainfunction', state: { id: this.state.id } }} />
             )
-        } 
+        }
         // const { classes } = this.props;
         return (
             <div className="container">
@@ -99,14 +99,14 @@ class VMinfo extends Component {
                        Find a Vending Machine
                     </Typography>
                     <form className="form">
-                        <TextField 
-                            name="searchinfo" 
-                            onChange={this.textChange} 
-                            label="Please enter keywords" 
+                        <TextField
+                            name="searchinfo"
+                            onChange={this.textChange}
+                            label="Please enter keywords"
                             fullWidth
-                            
+
                         />
-                        
+
                         <br />
                         <Button
                             className="form"
@@ -118,10 +118,10 @@ class VMinfo extends Component {
                             Search
                             </Button>
 
-                        
 
 
-                        
+
+
 
                     </form>
                 </Paper>

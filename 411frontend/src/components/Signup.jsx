@@ -106,7 +106,7 @@ class Signup extends Component {
                         <Typography className="form">
                             Don't have an account yet?
                         </Typography>
-                        <Link to="/">
+                        <Link to="/" style={{ textDecoration: 'none' }}>
                             <Button
                                 className="form"
                                 fullWidth

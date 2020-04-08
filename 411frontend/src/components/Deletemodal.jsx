@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Deletemodal() {
+export default function Deletemodal(props) {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -46,12 +46,22 @@ export default function Deletemodal() {
     setOpen(false);
   };
 
+  const handleDelete= () => {
+    // props.data : data in row.
+    // props.deleteItem: function that does post stuff.
+    // props.oldData
+    // props.newData
+    props.deleteItem(props.data)
+    setOpen(false);
+  };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title" align="center">Are you sure you want to delete this?</h2>
       <Button type="button"
       variant="outlined"
-      startIcon={<CheckIcon/>}>
+      startIcon={<CheckIcon/>}
+      onClick={handleDelete}>
       Yes
       </Button>
 
