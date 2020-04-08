@@ -71,7 +71,7 @@ class Userinfo extends Component {
       this.onChangeCRN = this.onChangeCRN.bind(this);
       this.onChangeProduct = this.onChangeProduct.bind(this);
 
-      this.loadProducts()
+      //this.loadProducts()
       this.loadCRNs()
       console.log('test123')
   }
@@ -117,7 +117,7 @@ class Userinfo extends Component {
 
   addCRN(crn) {
     console.log(`Adding new CRN ${crn}`)
-    const addURL = apiLink + crn
+    const addURL = apiLink + crn + '/'
     axios.post(addURL).then((response)=>{
         this.loadCRNS()
     }).catch((error)=>{
@@ -187,8 +187,10 @@ class Userinfo extends Component {
 
   loadCRNs() {
       axios.get(apiLink).then((response)=>{
+        console.log(response)
+        console.log(response.data)
           this.setState({
-              crn_info: response.data.results
+              crn_info: response.data
           })
           console.log(response.state.data);
       }).catch((error)=>{
@@ -232,7 +234,7 @@ class Userinfo extends Component {
                       </TableHead>
                        <TableBody>
                          {this.state.crn_info.map((row,i) => (
-                           <TableRow key={row.name}>
+                           <TableRow key={row.crnID}>
                            <TableCell align="left">
                           </TableCell>
                              <TableCell align="center" component="th" scope="row">
