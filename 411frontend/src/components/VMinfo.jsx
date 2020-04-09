@@ -64,7 +64,7 @@ class VMinfo extends Component {
         console.log(value);
         axios.get(apiLink +  value.toLowerCase() + '/').then((response)=>{
             this.setState({
-                result: response.data.results
+                result: response.data
             })
             console.log(this.state.result);
         }).catch((error)=>{

@@ -18,6 +18,8 @@ class CRNViewSet(viewsets.ModelViewSet):
     queryset = CRN.objects.all()
     serializer_class = CRNSerializer
 
+    #@action(detail=True, )
+
 
 def index(request):
     return HttpResponse("Hello, world.")
