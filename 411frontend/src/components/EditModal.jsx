@@ -51,7 +51,7 @@ export default function EditModal(props) {
     // props.deleteItem: function that does post stuff.
     // props.oldData
     // props.newData
-    props.editItem(props.data)
+    props.deleteItem(props.data)
     props.addItem(props.newName, props.newSubj, props.newNum, props.newBuildId)
     setOpen(false);
   };
