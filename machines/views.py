@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import VendingMachine, CRN
-from .serializers import VendingMachineSerializer, CRNSerializer
+from .models import VendingMachine, CRN, Product
+from .serializers import VendingMachineSerializer, CRNSerializer, ProductSerializer
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -19,6 +19,9 @@ class CRNViewSet(viewsets.ModelViewSet):
     serializer_class = CRNSerializer
 
     #@action(detail=True, )
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
 
 def index(request):
