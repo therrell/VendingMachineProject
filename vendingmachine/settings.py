@@ -88,10 +88,12 @@ WSGI_APPLICATION = 'vendingmachine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '/etc/mysql/my.cnf',
-        },
-    }
+        'NAME': 'vending_data',
+        'USER': 'bobabase',
+        'PASSWORD' : 'cs411sp20',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    },
 }
 
 
