@@ -57,7 +57,9 @@ class Userinfo extends Component {
         product_info : [],
         catchError: false,
         newCRN: '',
-        newProduct: ''
+        newSubj: '',
+        newNum: '',
+        newBuildId: ''
       }
 
       this.loadProducts = this.loadProducts.bind(this);
@@ -68,7 +70,12 @@ class Userinfo extends Component {
       this.addProduct = this.addProduct.bind(this);
       this.editCRN = this.editCRN.bind(this);
       this.editProduct = this.editProduct.bind(this);
+
       this.onChangeCRN = this.onChangeCRN.bind(this);
+      this.onChangeCRN_subj = this.onChangeCRN_subj.bind(this);
+      this.onChangeCRN_num = this.onChangeCRN_num.bind(this);
+      this.onChangeCRN_build = this.onChangeCRN_build.bind(this);
+
       this.onChangeProduct = this.onChangeProduct.bind(this);
 
       //this.loadProducts()
@@ -78,10 +85,34 @@ class Userinfo extends Component {
 
   onChangeCRN(event) {
     // console.log(`received input ${JSON.stringify(newName)}`)
+    console.log('hi')
     this.setState({
-      newCRN: event.target.value
+      newCRN: event.target.value,
     })
   }
+  onChangeCRN_subj(event) {
+    // console.log(`received input ${JSON.stringify(newName)}`)
+    console.log('hi1')
+    this.setState({
+      newSubj: event.target.value,
+    })
+  }
+  onChangeCRN_num(event) {
+    // console.log(`received input ${JSON.stringify(newName)}`)
+    console.log('hi2')
+    this.setState({
+      newNum: event.target.value,
+    })
+  }
+  onChangeCRN_build(event) {
+    // console.log(`received input ${JSON.stringify(newName)}`)
+    console.log('hi3')
+    this.setState({
+      newBuildId: event.target.value
+    })
+  }
+
+
   onChangeProduct(event){
     this.setState({
       newProduct: event.target.value
@@ -115,10 +146,13 @@ class Userinfo extends Component {
     });
   }
 
-  addCRN(crn) {
-    console.log(`Adding new CRN ${crn}`)
+  addCRN(crn, subj, num, buildId) {
+    console.log(`Adding new CRN ${crn}, ${subj}, ${num}, ${buildId}`)
     const addURL = apiLink
-    axios.post(addURL).then((response)=>{
+    axios.post(addURL, {crnID:crn,
+                        subject:subj,
+                        number:num,
+                        buildingID:buildId}).then((response)=>{
         this.loadCRNS()
     }).catch((error)=>{
         console.log(error);
@@ -126,7 +160,10 @@ class Userinfo extends Component {
             catchError: true
         });
     });
-    this.setState({newCRN: ''})
+    this.setState({newCRN: '',
+                  newSubj: '',
+                  newNum: '',
+                  newBuildId: ''})
   }
 
   addProduct(product) {
@@ -251,7 +288,7 @@ class Userinfo extends Component {
                        </TableBody>
                      </Table>
                      <br/>
-                     <AddCRNModal addItem={this.addCRN} newName={this.state.newCRN} handleChange={this.onChangeCRN}/>
+                     <AddCRNModal addItem={this.addCRN} newName={this.state.newCRN} newSubj={this.state.newSubj} newNum={this.state.newNum} newBuildId={this.state.newBuildId} handleChange={this.onChangeCRN} handleChange_subj={this.onChangeCRN_subj} handleChange_num={this.onChangeCRN_num} handleChange_build={this.onChangeCRN_build}/>
                      <br/>
                    </TableContainer>
 
