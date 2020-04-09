@@ -33,6 +33,7 @@ import "./styles/Userinfo.css"
 
 
 const apiLink = 'http://127.0.0.1:8000/api/courses/';;
+const apiLink_pro = 'http://127.0.0.1:8000/api/courses/';;
 //Once we link the data we can import the crn[], and products[] from mainfunction
 // const products_1 = ['Ruffles','Fritos Twists Honey BBQ','Peanut M&M','Monster Green','Gold Peak Sweet Tea']
 // const crn_1 = ['64977','31352','57409','57419','34290'];
@@ -134,7 +135,7 @@ class Userinfo extends Component {
 
   deleteProduct(product) {
     console.log(`Deleting new Product ${product}`)
-    const deleteURL = '___SPECIAL_DELETE_URL_FROM_BACKEND___' + product
+    const deleteURL = apiLink_pro + product + '/'
     axios.delete(deleteURL).then((response)=>{
         this.loadProduct()
         console.log(this.state.result);
@@ -209,9 +210,9 @@ class Userinfo extends Component {
   }
 
   loadProducts() {
-      axios.get(apiLink).then((response)=>{
+      axios.get(apiLink_pro).then((response)=>{
           this.setState({
-              product_info: response.data.results
+              product_info: response.data
           })
           console.log(this.state.result);
       }).catch((error)=>{
@@ -269,7 +270,7 @@ class Userinfo extends Component {
                         </TableRow>
                       </TableHead>
                        <TableBody>
-                         {this.state.crn_info.map((row,i) => (
+                         {this.state.crn_info.map((row, i) => (
                            <TableRow key={row.crnID}>
                            <TableCell align="left">
                           </TableCell>
@@ -303,18 +304,18 @@ class Userinfo extends Component {
                             </TableRow>
                           </TableHead>
                            <TableBody >
-                             {this.state.product_info.map((row) => (
-                               <TableRow key={row.name}>
+                             {this.state.product_info.map((row, i) => (
+                               <TableRow key={row.productName}>
                                  <TableCell align="left">
                                  </TableCell>
                                  <TableCell align="center" component="th" scope="row">
-                                 {row.title}
+                                 {row.productName}
                                  </TableCell>
                                  <TableCell align="right">
-                                 <EditModal data={row.title} editItem={this.editProduct} addItem={this.addProduct} newName={this.state.newProduct} handleChange={this.onChangeProduct}/>
+                                 <EditModal data={row.productName} editItem={this.editProduct} addItem={this.addProduct} newName={this.state.newProduct} handleChange={this.onChangeProduct}/>
                                  </TableCell>
                                  <TableCell align="left">
-                                 <Deletemodal data={row.title} deleteItem={this.deleteProduct}/>
+                                 <Deletemodal data={row.productName} deleteItem={this.deleteProduct}/>
                                 </TableCell>
                                </TableRow>
                              ))}
