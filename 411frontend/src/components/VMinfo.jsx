@@ -54,12 +54,14 @@ class VMinfo extends Component {
     textChange(event) {
 
         this.setState({
-            [event.target.name]: event.target.value
+            searchinfo: event.target.value
         });
         // console.log(this.state.searchinfo);
     }
     getvminfo() {
+        console.log(this.state.searchinfo);
         let value = this.state.searchinfo;
+        console.log(value);
         axios.get(apiLink +  value.toLowerCase() + '/').then((response)=>{
             this.setState({
                 result: response.data.results
@@ -71,11 +73,7 @@ class VMinfo extends Component {
                 catchError: true
             });
         });
-
     }
-
-
-
 
 
     render() {
@@ -84,7 +82,6 @@ class VMinfo extends Component {
                 <Redirect to={{ pathname: '/mainfunction', state: { id: this.state.id } }} />
             )
         }
-        // const { classes } = this.props;
         return (
             <div className="container">
                 <Button className="form" onClick={this.back} startIcon={<ArrowBackIcon />} variant="contained" color="primary">
@@ -104,7 +101,6 @@ class VMinfo extends Component {
                             onChange={this.textChange}
                             label="Please enter keywords"
                             fullWidth
-
                         />
 
                         <br />
@@ -115,43 +111,34 @@ class VMinfo extends Component {
                             variant="contained"
                             color="primary"
                         >
-                            Search
-                            </Button>
-
-
-
-
-
-
+                        Search
+                        </Button>
                     </form>
                 </Paper>
                 <TableContainer component={Paper}>
                     <Table >
                         <TableHead>
                         <TableRow>
-                            <TableCell align="left">Title</TableCell>
-                            <TableCell align="left">Popularity</TableCell>
-                            <TableCell align="left">release_date</TableCell>
-                            {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                            <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+                            <TableCell align="left">BuildingID</TableCell>
+                            <TableCell align="left">VMID</TableCell>
+                            <TableCell align="left">VMLocation</TableCell>
+                            <TableCell align="left">Status</TableCell>
+                            <TableCell align="left">Type</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
                         {this.state.result.map((row) => (
-                            <TableRow key={row.name}>
-                            {/* <TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell> */}
-                            <TableCell align="left">{row.title}</TableCell>
-                            <TableCell align="left">{row.popularity}</TableCell>
-                            <TableCell align="left">{row.release_date}</TableCell>
-                            {/* <TableCell align="right">{row.protein}</TableCell> */}
+                            <TableRow key={row.vmID}>
+                            <TableCell align="left">{row.buildingID}</TableCell>
+                            <TableCell align="left">{row.vmID}</TableCell>
+                            <TableCell align="left">{row.VMLocation}</TableCell>
+                            <TableCell align="left">{row.status}</TableCell>
+                            <TableCell align="left">{row.type}</TableCell>
                             </TableRow>
                         ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-
 
             </div>
         )
