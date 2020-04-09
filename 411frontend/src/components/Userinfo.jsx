@@ -229,7 +229,6 @@ class Userinfo extends Component {
           this.setState({
               crn_info: response.data
           })
-          console.log(response.state.data);
       }).catch((error)=>{
           console.log('load test')
           console.log(error);

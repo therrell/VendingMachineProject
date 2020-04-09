@@ -21,7 +21,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-const apiLink = 'http://127.0.0.1:8000/machines/';
+const apiLink = 'http://127.0.0.1:8000/api/machines/';
 
 class VMinfo extends Component {
     constructor(props) {
@@ -60,7 +60,7 @@ class VMinfo extends Component {
     }
     getvminfo() {
         let value = this.state.searchinfo;
-        axios.get(apiLink +  value.toLowerCase()).then((response)=>{
+        axios.get(apiLink +  value.toLowerCase() + '/').then((response)=>{
             this.setState({
                 result: response.data.results
             })
