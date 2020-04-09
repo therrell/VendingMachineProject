@@ -4,6 +4,10 @@ from .models import VendingMachine, CRN
 from .serializers import VendingMachineSerializer, CRNSerializer
 from rest_framework import generics
 from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
+
 # Create your views here.
 
 class VendingMachineViewSet(viewsets.ModelViewSet):
@@ -13,6 +17,7 @@ class VendingMachineViewSet(viewsets.ModelViewSet):
 class CRNViewSet(viewsets.ModelViewSet):
     queryset = CRN.objects.all()
     serializer_class = CRNSerializer
+
 
 def index(request):
     return HttpResponse("Hello, world.")

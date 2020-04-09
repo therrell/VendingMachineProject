@@ -32,7 +32,7 @@ import "./styles/Userinfo.css"
 
 
 
-const apiLink = 'http://127.0.0.1:8000/courses/';;
+const apiLink = 'http://127.0.0.1:8000/api/courses/';;
 //Once we link the data we can import the crn[], and products[] from mainfunction
 // const products_1 = ['Ruffles','Fritos Twists Honey BBQ','Peanut M&M','Monster Green','Gold Peak Sweet Tea']
 // const crn_1 = ['64977','31352','57409','57419','34290'];
@@ -90,7 +90,7 @@ class Userinfo extends Component {
 
   deleteCRN(crn) {
     console.log(`123Deleting new CRN ${crn}`)
-    const deleteURL = apiLink + crn
+    const deleteURL = apiLink + crn + '/'
     axios.delete(deleteURL).then((response)=>{
         this.loadCRNS()
     }).catch((error)=>{
@@ -117,7 +117,7 @@ class Userinfo extends Component {
 
   addCRN(crn) {
     console.log(`Adding new CRN ${crn}`)
-    const addURL = apiLink + crn + '/'
+    const addURL = apiLink
     axios.post(addURL).then((response)=>{
         this.loadCRNS()
     }).catch((error)=>{
@@ -146,7 +146,7 @@ class Userinfo extends Component {
 
   editCRN(crn) {
     console.log(`Editing new CRN ${crn}`)
-    const deleteURL = apiLink + crn
+    const deleteURL = apiLink
     axios.delete(deleteURL).then((response)=>{
         this.loadCRNS()
     }).catch((error)=>{
