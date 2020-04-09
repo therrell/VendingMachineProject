@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import VendingMachine, CRN, Product
-from .serializers import VendingMachineSerializer, CRNSerializer, ProductSerializer
+from .models import *
+from .serializers import *
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -23,6 +23,25 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class BuildingViewSet(viewsets.ModelViewSet):
+    queryset = Building.objects.all()
+    serializer_class = BuildingSerializer
+
+class LikesViewSet(viewsets.ModelViewSet):
+    queryset = Likes.objects.all()
+    serializer_class = LikesSerializer
+
+class TakesViewSet(viewsets.ModelViewSet):
+    queryset = Takes.objects.all()
+    serializer_class = TakesSerializer
+
+class IncludesViewSet(viewsets.ModelViewSet):
+    queryset = Includes.objects.all()
+    serializer_class = IncludesSerializer
 
 def index(request):
     return HttpResponse("Hello, world.")
