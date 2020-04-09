@@ -32,7 +32,7 @@ class VMinfo extends Component {
             crn: [],
             products: [],
             searchinfo: '',
-            result: [],
+            findResult: [],
             back: false,
             catchError: false
         }
@@ -61,13 +61,16 @@ class VMinfo extends Component {
     getvminfo() {
         console.log(this.state.searchinfo);
         let value = this.state.searchinfo;
-        console.log(value);
+        console.log('here before axios call');
         axios.get(apiLink +  value.toLowerCase() + '/').then((response)=>{
+            console.log(response.data);
             this.setState({
-                result: response.data
+                findResult: response.data
             })
-            console.log(this.state.result);
+            console.log('here inside axios call');
+            console.log(this.state.findResult);
         }).catch((error)=>{
+            console.log(this.state.findResult);
             console.log(error);
             this.setState({
                 catchError: true
@@ -127,7 +130,7 @@ class VMinfo extends Component {
                         </TableRow>
                         </TableHead>
                         <TableBody>
-                        {this.state.result.map((row) => (
+                        {this.state.findResult.map((row) => (
                             <TableRow key={row.vmID}>
                             <TableCell align="left">{row.buildingID}</TableCell>
                             <TableCell align="left">{row.vmID}</TableCell>
