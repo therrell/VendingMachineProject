@@ -33,7 +33,7 @@ import "./styles/Userinfo.css"
 
 
 const apiLink = 'http://127.0.0.1:8000/api/courses/';;
-const apiLink_pro = 'http://127.0.0.1:8000/api/courses/';;
+const apiLink_pro = 'http://127.0.0.1:8000/api/products/';;
 //Once we link the data we can import the crn[], and products[] from mainfunction
 // const products_1 = ['Ruffles','Fritos Twists Honey BBQ','Peanut M&M','Monster Green','Gold Peak Sweet Tea']
 // const crn_1 = ['64977','31352','57409','57419','34290'];
@@ -79,7 +79,7 @@ class Userinfo extends Component {
 
       this.onChangeProduct = this.onChangeProduct.bind(this);
 
-      //this.loadProducts()
+      this.loadProducts()
       this.loadCRNs()
       console.log('test123')
   }

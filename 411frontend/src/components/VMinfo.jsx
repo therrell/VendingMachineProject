@@ -62,7 +62,7 @@ class VMinfo extends Component {
         console.log(this.state.searchinfo);
         let value = this.state.searchinfo;
         console.log('here before axios call');
-        axios.get(apiLink +  value.toLowerCase() + '/').then((response)=>{
+        axios.get(apiLink).then((response)=>{
             console.log(response.data);
             this.setState({
                 findResult: response.data

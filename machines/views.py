@@ -19,6 +19,7 @@ class CRNViewSet(viewsets.ModelViewSet):
     serializer_class = CRNSerializer
 
     #@action(detail=True, )
+
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
