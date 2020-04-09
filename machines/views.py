@@ -7,12 +7,15 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
+from rest_framework import filters
 
 # Create your views here.
 
 class VendingMachineViewSet(viewsets.ModelViewSet):
     queryset = VendingMachine.objects.all()
     serializer_class = VendingMachineSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['buildingID__buildingName']
 
 class CRNViewSet(viewsets.ModelViewSet):
     queryset = CRN.objects.all()
@@ -31,6 +34,8 @@ class UserViewSet(viewsets.ModelViewSet):
 class BuildingViewSet(viewsets.ModelViewSet):
     queryset = Building.objects.all()
     serializer_class = BuildingSerializer
+    # filter_backends = [filters.SearchFilter]
+    # search_fields = ['buildingName']
 
 class LikesViewSet(viewsets.ModelViewSet):
     queryset = Likes.objects.all()
