@@ -93,6 +93,7 @@ class Signup extends Component {
                             fullWidth
 
                             />
+                        <Link to="/mainfunction" style={{ textDecoration: 'none' }}>
                         <Button
                             className="form"
                             fullWidth
@@ -102,6 +103,7 @@ class Signup extends Component {
                             >
                             Sign Up an account
                         </Button>
+                        </Link>
 
                         <Typography className="form">
                             Don't have an account yet?
