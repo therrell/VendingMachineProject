@@ -315,7 +315,7 @@ class Userinfo extends Component {
                                  <EditModal data={row.productName} editItem={this.editProduct} addItem={this.addProduct} newName={this.state.newProduct} handleChange={this.onChangeProduct}/>
                                  </TableCell>
                                  <TableCell align="left">
-                                 <Deletemodal data={row.productName} deleteItem={this.deleteProduct}/>
+                                 <Deletemodal data={row.productID} deleteItem={this.deleteProduct}/>
                                 </TableCell>
                                </TableRow>
                              ))}
