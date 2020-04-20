@@ -27,6 +27,7 @@ import "./styles/Login.css"
 import AddCRNModal from "./AddCRNModal.jsx"
 import AddProductModal from "./AddProductModal.jsx"
 import EditModal from "./EditModal.jsx"
+import EditModalProduct from "./EditModalProduct.jsx"
 import Deletemodal from "./Deletemodal.jsx"
 import "./styles/Userinfo.css"
 
@@ -34,21 +35,6 @@ import "./styles/Userinfo.css"
 
 const apiLink = 'http://127.0.0.1:8000/api/courses/';;
 const apiLink_pro = 'http://127.0.0.1:8000/api/products/';;
-//Once we link the data we can import the crn[], and products[] from mainfunction
-// const products_1 = ['Ruffles','Fritos Twists Honey BBQ','Peanut M&M','Monster Green','Gold Peak Sweet Tea']
-// const crn_1 = ['64977','31352','57409','57419','34290'];
-//
-// function createData(name) {
-//   return { name };
-// }
-// const rows = []
-// for(var i = 0; i < crn_1.length; i++) {
-//   rows.push(createData(crn_1[i]))
-// };
-// const rows2 = []
-// for(var i = 0; i < products_1.length; i++) {
-//   rows2.push(createData(products_1[i]))
-// };
 
 class Userinfo extends Component {
   constructor(props) {
@@ -60,7 +46,11 @@ class Userinfo extends Component {
         newCRN: '',
         newSubj: '',
         newNum: '',
-        newBuildId: ''
+        newBuildId: '',
+        newProduct: '',
+        newProName: '',
+        newProType: '',
+        newPrice: ''
       }
 
       this.loadProducts = this.loadProducts.bind(this);
@@ -78,6 +68,9 @@ class Userinfo extends Component {
       this.onChangeCRN_build = this.onChangeCRN_build.bind(this);
 
       this.onChangeProduct = this.onChangeProduct.bind(this);
+      this.onChangeProduct_name = this.onChangeProduct_name.bind(this);
+      this.onChangeProduct_type = this.onChangeProduct_type.bind(this);
+      this.onChangeProduct_price = this.onChangeProduct_price.bind(this);
 
       this.loadProducts()
       this.loadCRNs()
@@ -113,15 +106,30 @@ class Userinfo extends Component {
     })
   }
 
-
   onChangeProduct(event){
     this.setState({
-      newProduct: event.target.value
+      newProduct: event.target.value,
+    })
+  }
+  onChangeProduct_name(event) {
+    this.setState({
+      newProName: event.target.value,
+    })
+  }
+  onChangeProduct_type(event) {
+    this.setState({
+      newProType: event.target.value,
+    })
+  }
+  onChangeProduct_price(event) {
+    this.setState({
+      newPrice: event.target.value,
     })
   }
 
+
   deleteCRN(crn) {
-    console.log(`123Deleting new CRN ${crn}`)
+    console.log(`Deleting new CRN ${crn}`)
     const deleteURL = apiLink + crn + '/'
     axios.delete(deleteURL).then((response)=>{
         this.loadCRNS()
@@ -135,10 +143,10 @@ class Userinfo extends Component {
 
   deleteProduct(product) {
     console.log(`Deleting new Product ${product}`)
+    //product here is productName and not productID, not sure if this will work
     const deleteURL = apiLink_pro + product + '/'
     axios.delete(deleteURL).then((response)=>{
         this.loadProduct()
-        console.log(this.state.result);
     }).catch((error)=>{
         console.log(error);
         this.setState({
@@ -162,24 +170,29 @@ class Userinfo extends Component {
         });
     });
     this.setState({newCRN: '',
-                  newSubj: '',
-                  newNum: '',
-                  newBuildId: ''})
+                   newSubj: '',
+                   newNum: '',
+                   newBuildId: ''})
   }
 
-  addProduct(product) {
-    console.log(`Adding new Product ${product}`)
-    const addURL = '___SPECIAL_ADD_URL_FROM_BACKEND___' + product
-    axios.post(addURL).then((response)=>{
+  addProduct(product, proName, proType, price) {
+    console.log(`Adding new Product ${product}, ${proName}, ${proType}, ${price}`)
+    const addURL = apiLink_pro
+    axios.post(addURL, {productID:product,
+                        productName:proName,
+                        productType:proType,
+                        price:price}).then((response)=>{
         this.loadProduct()
-        console.log(this.state.result);
     }).catch((error)=>{
         console.log(error);
         this.setState({
             catchError: true
         });
     });
-    this.setState({newProduct: ''})
+    this.setState({newProduct: '',
+                   newProName: '',
+                   newProType: '',
+                   newPrice: ''})
   }
 
   editCRN(crn) {
@@ -197,10 +210,9 @@ class Userinfo extends Component {
 
   editProduct(product) {
     console.log(`Editing new Product ${product}`)
-    const deleteURL = '___SPECIAL_EDIT_URL_FROM_BACKEND___' + product
+    const deleteURL = apiLink_pro
     axios.delete(deleteURL).then((response)=>{
         this.loadProduct()
-        console.log(this.state.result);
     }).catch((error)=>{
         console.log(error);
         this.setState({
@@ -312,17 +324,17 @@ class Userinfo extends Component {
                                  {row.productName}
                                  </TableCell>
                                  <TableCell align="right">
-                                 <EditModal data={row.productName} editItem={this.editProduct} addItem={this.addProduct} newName={this.state.newProduct} handleChange={this.onChangeProduct}/>
+                                 <EditModalProduct data={row.productName} addItem={this.addProduct} deleteItem={this.deleteProduct} newProduct={this.state.newProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange={this.onChangeProduct} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
                                  </TableCell>
                                  <TableCell align="left">
-                                 <Deletemodal data={row.productID} deleteItem={this.deleteProduct}/>
+                                 <Deletemodal data={row.productName} deleteItem={this.deleteProduct}/>
                                 </TableCell>
                                </TableRow>
                              ))}
                            </TableBody>
                          </Table>
                          <br/>
-                         <AddProductModal addItem={this.addProduct} newName={this.state.newProduct} handleChange={this.onChangeProduct}/>
+                         <AddProductModal addItem={this.addProduct} newProduct={this.state.newProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange={this.onChangeProduct} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
                          <br/>
                        </TableContainer>
                 </Paper>

@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: 400,
     backgroundColor: theme.palette.error.light,
-    //theme.palette.background.paper,
     border: '2px solid #000',
     outline: 'none',
     padding: theme.spacing(2, 4, 3),

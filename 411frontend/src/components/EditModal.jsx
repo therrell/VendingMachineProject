@@ -61,11 +61,9 @@ export default function EditModal(props) {
       <p id="simple-modal-description">
       <TextField
           name="editcrn"
-          //onChange={this.textChange}
           value={props.newName}
           onChange={props.handleChange}
           label={"CRN" , props.data}
-          //"eg: 42091"
           fullWidth
           />
           <TextField

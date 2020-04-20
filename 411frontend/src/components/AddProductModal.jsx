@@ -44,10 +44,7 @@ export default function AddProductModal(props) {
   };
 
   const handleAdd= () => {
-    // props.data : data in textfield.
-    // props.addItem: function that does post stuff.
-    //let data = this.state.crn;
-    props.addItem(props.newName)
+    props.addItem(props.newProduct, props.newProName, props.newProType, props.newPrice)
     setOpen(false);
   };
 
@@ -57,11 +54,32 @@ export default function AddProductModal(props) {
       <p id="simple-modal-description">
       <TextField
           name="product"
-          value={props.newName}
+          value={props.newProduct}
           onChange={props.handleChange}
-          label="eg: Monster Blue"
+          label="ID eg: 1"
           fullWidth
           />
+        <TextField
+            name="proname"
+            value={props.newProName}
+            onChange={props.handleChange_proName}
+            label="Name eg: Monster Blue"
+            fullWidth
+              />
+        <TextField
+            name="protype"
+            value={props.newProType}
+            onChange={props.handleChange_proType}
+            label="Type: DR/FO"
+            fullWidth
+              />
+        <TextField
+            name="proprice"
+            value={props.newPrice}
+            onChange={props.handleChange_proPrice}
+            label="Price eg: 2.25"
+            fullWidth
+            />
       </p>
       <Button type="button"
       variant="outlined"

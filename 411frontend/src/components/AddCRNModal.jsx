@@ -7,7 +7,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import TextField from '@material-ui/core/TextField';
 
-
 function getModalStyle() {
   const top = 50;
   const left = 50;
