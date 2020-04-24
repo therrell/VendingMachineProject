@@ -20,6 +20,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import VMinfoModal from './VMinfoModal.jsx'
 
 const apiLink = 'http://127.0.0.1:8000/api/machines/';
 
@@ -77,6 +78,28 @@ class VMinfo extends Component {
             });
         });
     }
+
+
+    //test
+    // getvminfotest() {
+    //     console.log(this.state.searchinfo);
+    //     let value = this.state.searchinfo;
+    //     console.log('here before axios call');
+    //     axios.get('https://jsonplaceholder.typicode.com/posts').then((response)=>{
+    //         // console.log(response.data);
+    //         this.setState({
+    //             findResult: response.data
+    //         })
+    //         console.log('here inside axios call');
+    //         // console.log(this.state.findResult);
+    //     }).catch((error)=>{
+    //         console.log(this.state.findResult);
+    //         console.log(error);
+    //         this.setState({
+    //             catchError: true
+    //         });
+    //     });
+    // }
 
 
     render() {
@@ -137,8 +160,11 @@ class VMinfo extends Component {
                             <TableCell align="left">{row.VMLocation}</TableCell>
                             <TableCell align="left">{row.status}</TableCell>
                             <TableCell align="left">{row.type}</TableCell>
+                            <TableCell align="left"><VMinfoModal data={row.vmID}/></TableCell>
                             </TableRow>
                         ))}
+
+
                         </TableBody>
                     </Table>
                 </TableContainer>
