@@ -21,7 +21,10 @@ class Signup extends Component {
         super(props);
         this.state = {
             username: '',
-            password: '',
+            password1: '',
+            password2: '',
+            email:'',
+            name:'',
             redirect: false,
             id: undefined,
             catchError: false
@@ -36,7 +39,10 @@ class Signup extends Component {
     submit(){
         const options = {
             username: this.state.username,
-            password: this.state.password
+            password1: this.state.password1,
+            password2: this.state.password2,
+            email: this.state.email,
+            name: this.state.name,
         }
         axios.post(apiLink, options).then((response)=>{
             this.setState({
@@ -86,13 +92,37 @@ class Signup extends Component {
 
                             />
                         <TextField
-                            name="password"
-                            type="password"
+                            name="password1"
+                            type="password1"
                             onChange={this.textChange}
                             label="Password"
                             fullWidth
 
                             />
+                        <TextField
+                                name="password2"
+                                type="password2"
+                                onChange={this.textChange}
+                                label="Please type the password again"
+                                fullWidth
+
+                            />
+                        <TextField
+                                name="name"
+                                type="name"
+                                onChange={this.textChange}
+                                label=" Name"
+                                fullWidth
+
+                              />
+                              <TextField
+                                  name="email"
+                                  type="email"
+                                  onChange={this.textChange}
+                                  label="Email"
+                                  fullWidth
+
+                                  />
                         <Link to="/mainfunction" style={{ textDecoration: 'none' }}>
                         <Button
                             className="form"
