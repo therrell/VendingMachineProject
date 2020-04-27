@@ -138,19 +138,20 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 #REST Auth
-AUTH_USER_MODEL = "machines.User"
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
-SITE_ID = 1
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_EMAIL_FIELD = 'email'
+ACCOUNT_LOGOUT_ON_GET = True
+
+AUTH_USER_MODEL = 'machines.User'
 
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'machines.serializers.UserSerializer'
+    "USER_DETAILS_SERIALIZER": "machines.serializers.CustomUserDetailsSerializer",
 }
-
 REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER' : 'machines.serializers.UserRegisterSerializer'
+    "REGISTER_SERIALIZER": "machines.serializers.CustomRegisterSerializer",
 }
-
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
-}
-

@@ -8,8 +8,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 from rest_framework import filters
-
+from rest_auth.registration.views import RegisterView
 # Create your views here.
+
+
+class CustomRegisterView(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = CustomRegisterSerializer
 
 class VendingMachineViewSet(viewsets.ModelViewSet):
     queryset = VendingMachine.objects.all()
