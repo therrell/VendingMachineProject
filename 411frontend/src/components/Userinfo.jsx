@@ -318,11 +318,14 @@ class Userinfo extends Component {
                                  <TableCell align="center" component="th" scope="row">
                                  {row.productName}
                                  </TableCell>
+                                 <TableCell align="center" component="th" scope="row">
+                                 {row.productID}
+                                 </TableCell>
                                  <TableCell align="right">
-                                 <EditModalProduct data={row.productName} addItem={this.addProduct} deleteItem={this.deleteProduct} newProduct={this.state.newProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange={this.onChangeProduct} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
+                                 <EditModalProduct data={row.productID} addItem={this.addProduct} deleteItem={this.deleteProduct} newProduct={this.state.newProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange={this.onChangeProduct} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
                                  </TableCell>
                                  <TableCell align="left">
-                                 <Deletemodal data={row.productName} deleteItem={this.deleteProduct} />
+                                 <Deletemodal data={row.productID} deleteItem={this.deleteProduct} />
                                 </TableCell>
                                </TableRow>
                              ))}
