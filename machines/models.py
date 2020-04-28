@@ -60,7 +60,7 @@ class CRN(models.Model):
     buildingID = models.ForeignKey('Building', on_delete = models.CASCADE)
 
     def __str__(self):
-        course_name = self.subject + " " + self.number
+        course_name = str(self.subject + " " + str(self.number))
         return course_name
 
 class Building(models.Model):
@@ -80,7 +80,7 @@ class VendingMachine(models.Model):
     TYPE_CHOICES = [(DRINK, 'DRINK'), (FOOD, 'FOOD')]
 
     buildingID = models.ForeignKey('Building', on_delete=models.CASCADE)
-    vmID = models.IntegerField(primary_key=True)
+    vmID = models.AutoField(primary_key=True)
     VMLocation = models.CharField(max_length=256)
     status = models.CharField(choices=STATUS_CHOICES, default=WORKING, max_length=2)
     type = models.CharField(choices = TYPE_CHOICES, default=FOOD, max_length=2)
@@ -90,8 +90,8 @@ class Product(models.Model):
     FOOD = 'FO'
     TYPE_CHOICES = [(DRINK, 'DRINK'), (FOOD, 'FOOD')]
 
-    productID = models.IntegerField()
-    productName = models.CharField(max_length=255, primary_key=True, unique=True)
+    productID = models.AutoField(primary_key=True)
+    productName = models.CharField(max_length=255, unique=True)
     productType = models.CharField(choices = TYPE_CHOICES, default=FOOD, max_length=2)
     price = models.DecimalField(max_digits=5, decimal_places=2)
 

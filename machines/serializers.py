@@ -43,7 +43,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('userID')
+        fields = ('username')
 
 class BuildingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -53,14 +53,14 @@ class BuildingSerializer(serializers.ModelSerializer):
 class LikesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Likes
-        fields = ('userID', 'productID')
+        fields = ('username', 'productName')
 
 class TakesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Takes
-        fields = ('userID', 'crnID')
+        fields = ('username', 'crnID')
 
 class IncludesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Takes
-        fields = ('vmID', 'productID')
+        model = Includes
+        fields = ('vmID', 'productName')
