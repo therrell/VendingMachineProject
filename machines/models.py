@@ -80,7 +80,7 @@ class VendingMachine(models.Model):
     TYPE_CHOICES = [(DRINK, 'DRINK'), (FOOD, 'FOOD')]
 
     buildingID = models.ForeignKey('Building', on_delete=models.CASCADE)
-    vmID = models.AutoField(primary_key=True)
+    vmID = models.IntegerField(primary_key=True)
     VMLocation = models.CharField(max_length=256)
     status = models.CharField(choices=STATUS_CHOICES, default=WORKING, max_length=2)
     type = models.CharField(choices = TYPE_CHOICES, default=FOOD, max_length=2)
@@ -90,7 +90,7 @@ class Product(models.Model):
     FOOD = 'FO'
     TYPE_CHOICES = [(DRINK, 'DRINK'), (FOOD, 'FOOD')]
 
-    productID = models.AutoField(primary_key=True)
+    productID = models.IntegerField(primary_key=True, null=False)
     productName = models.CharField(max_length=255, unique=True)
     productType = models.CharField(choices = TYPE_CHOICES, default=FOOD, max_length=2)
     price = models.DecimalField(max_digits=5, decimal_places=2)
