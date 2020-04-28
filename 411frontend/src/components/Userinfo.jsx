@@ -78,28 +78,24 @@ class Userinfo extends Component {
   }
 
   onChangeCRN(event) {
-    // console.log(`received input ${JSON.stringify(newName)}`)
     console.log('hi')
     this.setState({
       newCRN: event.target.value,
     })
   }
   onChangeCRN_subj(event) {
-    // console.log(`received input ${JSON.stringify(newName)}`)
     console.log('hi1')
     this.setState({
       newSubj: event.target.value,
     })
   }
   onChangeCRN_num(event) {
-    // console.log(`received input ${JSON.stringify(newName)}`)
     console.log('hi2')
     this.setState({
       newNum: event.target.value,
     })
   }
   onChangeCRN_build(event) {
-    // console.log(`received input ${JSON.stringify(newName)}`)
     console.log('hi3')
     this.setState({
       newBuildId: event.target.value
@@ -143,7 +139,6 @@ class Userinfo extends Component {
 
   deleteProduct(product) {
     console.log(`Deleting new Product ${product}`)
-    //product here is productName and not productID, not sure if this will work
     const deleteURL = apiLink_pro + product + '/'
     axios.delete(deleteURL).then((response)=>{
         this.loadProduct()
@@ -327,7 +322,7 @@ class Userinfo extends Component {
                                  <EditModalProduct data={row.productName} addItem={this.addProduct} deleteItem={this.deleteProduct} newProduct={this.state.newProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange={this.onChangeProduct} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
                                  </TableCell>
                                  <TableCell align="left">
-                                 <Deletemodal data={row.productName} deleteItem={this.deleteProduct}/>
+                                 <Deletemodal data={row.productName} deleteItem={this.deleteProduct} />
                                 </TableCell>
                                </TableRow>
                              ))}

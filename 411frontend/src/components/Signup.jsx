@@ -14,7 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import "./styles/Login.css"
 
 
-const apiLink = '';
+const apiLink = 'http://127.0.0.1:8000/api/user/';;
 
 class Signup extends Component {
     constructor(props){
@@ -44,6 +44,7 @@ class Signup extends Component {
             email: this.state.email,
             name: this.state.name,
         }
+        console.log(`Adding user ${this.state.username}, ${this.state.password1}, ${this.state.email},${this.state.name}`)
         axios.post(apiLink, options).then((response)=>{
             this.setState({
                 id: response.data.id,
