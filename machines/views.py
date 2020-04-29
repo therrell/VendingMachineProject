@@ -46,13 +46,25 @@ class LikesViewSet(viewsets.ModelViewSet):
     queryset = Likes.objects.all()
     serializer_class = LikesSerializer
 
+    def get_queryset(self):
+        queryset = self.queryset
+        query_set = queryset.filter(user=self.request.user)
+        return query_set
+
 class TakesViewSet(viewsets.ModelViewSet):
     queryset = Takes.objects.all()
     serializer_class = TakesSerializer
 
+    def get_queryset(self):
+        queryset = self.queryset
+        query_set = queryset.filter(user=self.request.user)
+        return query_set
+
 class IncludesViewSet(viewsets.ModelViewSet):
     queryset = Includes.objects.all()
     serializer_class = IncludesSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['vmID']
 
 def index(request):
     return HttpResponse("Hello, world.")
