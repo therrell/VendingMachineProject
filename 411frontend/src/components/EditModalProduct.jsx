@@ -60,33 +60,33 @@ export default function EditModal(props) {
       <h2 id="simple-modal-title" align="center">Update Product</h2>
       <p id="simple-modal-description">
       <TextField
-          name="editpro"
+          name="product"
           value={props.newProduct}
           onChange={props.handleChange}
-          label={"ID" , props.data}
+          label="ID"
           fullWidth
           />
-          <TextField
-              name="name"
-              value={props.newProName}
-              onChange={props.handleChange_proName}
-              label="Name eg: Coke Zero"
-              fullWidth
+        <TextField
+            name="proname"
+            value={props.newProName}
+            onChange={props.handleChange_proName}
+            label="Name"
+            fullWidth
               />
-          <TextField
-              name="type"
-              value={props.newProType}
-              onChange={props.handleChange_proType}
-              label="Type DR/FO"
-              fullWidth
+        <TextField
+            name="protype"
+            value={props.newProType}
+            onChange={props.handleChange_proType}
+            label="Type: DR/FO"
+            fullWidth
               />
-          <TextField
-              name="price"
-              value={props.newPrice}
-              onChange={props.handleChange_proPrice}
-              label="Price eg: 2.25"
-              fullWidth
-              />
+        <TextField
+            name="proprice"
+            value={props.newPrice}
+            onChange={props.handleChange_proPrice}
+            label="Price"
+            fullWidth
+            />
       </p>
       <Button type="button"
       variant="outlined"
