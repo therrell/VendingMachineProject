@@ -44,7 +44,7 @@ export default function AddProductModal(props) {
   };
 
   const handleAdd= () => {
-    props.addItem(props.newProduct, props.newProName, props.newProType, props.newPrice)
+    props.addItem(props.newProName, props.newProType, props.newPrice)
     setOpen(false);
   };
 
@@ -52,13 +52,6 @@ export default function AddProductModal(props) {
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title" align="center">New Product</h2>
       <p id="simple-modal-description">
-      <TextField
-          name="product"
-          value={props.newProduct}
-          onChange={props.handleChange}
-          label="ID eg: 1"
-          fullWidth
-          />
         <TextField
             name="proname"
             value={props.newProName}

@@ -52,20 +52,13 @@ export default function EditModal(props) {
     // props.oldData
     // props.newData
     props.deleteItem(props.data)
-    props.addItem(props.newProduct, props.newProName, props.newProType, props.newPrice)
+    props.addItem(props.newProName, props.newProType, props.newPrice)
     setOpen(false);
   };
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title" align="center">Update Product</h2>
       <p id="simple-modal-description">
-      <TextField
-          name="product"
-          value={props.newProduct}
-          onChange={props.handleChange}
-          label="ID"
-          fullWidth
-          />
         <TextField
             name="proname"
             value={props.newProName}

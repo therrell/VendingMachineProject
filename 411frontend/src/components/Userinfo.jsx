@@ -47,7 +47,6 @@ class Userinfo extends Component {
         newSubj: '',
         newNum: '',
         newBuildId: '',
-        newProduct: '',
         newProName: '',
         newProType: '',
         newPrice: ''
@@ -67,7 +66,6 @@ class Userinfo extends Component {
       this.onChangeCRN_num = this.onChangeCRN_num.bind(this);
       this.onChangeCRN_build = this.onChangeCRN_build.bind(this);
 
-      this.onChangeProduct = this.onChangeProduct.bind(this);
       this.onChangeProduct_name = this.onChangeProduct_name.bind(this);
       this.onChangeProduct_type = this.onChangeProduct_type.bind(this);
       this.onChangeProduct_price = this.onChangeProduct_price.bind(this);
@@ -102,11 +100,6 @@ class Userinfo extends Component {
     })
   }
 
-  onChangeProduct(event){
-    this.setState({
-      newProduct: event.target.value,
-    })
-  }
   onChangeProduct_name(event) {
     this.setState({
       newProName: event.target.value,
@@ -170,11 +163,10 @@ class Userinfo extends Component {
                    newBuildId: ''})
   }
 
-  addProduct(product, proName, proType, price) {
-    console.log(`Adding new Product ${product}, ${proName}, ${proType}, ${price}`)
+  addProduct(proName, proType, price) {
+    console.log(`Adding new Product ${proName}, ${proType}, ${price}`)
     const addURL = apiLink_pro
-    axios.post(addURL, {productID:product,
-                        productName:proName,
+    axios.post(addURL, {productName:proName,
                         productType:proType,
                         price:price}).then((response)=>{
         this.loadProduct()
@@ -184,8 +176,7 @@ class Userinfo extends Component {
             catchError: true
         });
     });
-    this.setState({newProduct: '',
-                   newProName: '',
+    this.setState({newProName: '',
                    newProType: '',
                    newPrice: ''})
   }
@@ -318,21 +309,18 @@ class Userinfo extends Component {
                                  <TableCell align="center" component="th" scope="row">
                                  {row.productName}
                                  </TableCell>
-                                 <TableCell align="center" component="th" scope="row">
-                                 {row.productID}
-                                 </TableCell>
                                  <TableCell align="right">
-                                 <EditModalProduct data={row.productID} addItem={this.addProduct} deleteItem={this.deleteProduct} newProduct={this.state.newProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange={this.onChangeProduct} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
+                                 <EditModalProduct data={row.productName} addItem={this.addProduct} deleteItem={this.deleteProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
                                  </TableCell>
                                  <TableCell align="left">
-                                 <Deletemodal data={row.productID} deleteItem={this.deleteProduct} />
+                                 <Deletemodal data={row.productName} deleteItem={this.deleteProduct} />
                                 </TableCell>
                                </TableRow>
                              ))}
                            </TableBody>
                          </Table>
                          <br/>
-                         <AddProductModal addItem={this.addProduct} newProduct={this.state.newProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange={this.onChangeProduct} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
+                         <AddProductModal addItem={this.addProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
                          <br/>
                        </TableContainer>
                 </Paper>
