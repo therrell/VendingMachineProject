@@ -63,8 +63,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Product',
             fields=[
-                ('productID', models.AutoField(primary_key=True, serialize=False)),
-                ('productName', models.CharField(max_length=255, unique=True)),
+                ('productID', models.IntegerField()),
+                ('productName', models.CharField(primary_key=True, serialize=False, max_length=255, unique=True)),
                 ('productType', models.CharField(choices=[('DR', 'DRINK'), ('FO', 'FOOD')], default='FO', max_length=2)),
                 ('price', models.DecimalField(decimal_places=2, max_digits=5)),
             ],
