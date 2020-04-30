@@ -1,28 +1,19 @@
 from rest_framework import serializers
 from .models import *
-from rest_auth.registration.serializers import RegisterSerializer
+from django.contrib.auth.models import User, Group
 
-class CustomRegisterSerializer(RegisterSerializer):
 
-    email = serializers.EmailField(required=True)
-    password1 = serializers.CharField(write_only=True)
-    name = serializers.CharField(required=True)
-
-    def get_cleaned_data(self):
-        super(CustomRegisterSerializer, self).get_cleaned_data()
-
-        return {
-            'password1': self.validated_data.get('password1', ''),
-            'email': self.validated_data.get('email', ''),
-            'name': self.validated_data.get('name', ''),
-        }
-
-class CustomUserDetailsSerializer(serializers.ModelSerializer):
-
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('email','name','date_of_birth')
-        read_only_fields = ('email')
+        fields = ['url', 'username', 'email', 'groups']
+
+
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Group
+        fields = ['url', 'name']
+
 
 class VendingMachineSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,11 +30,6 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ('productID', 'productName', 'productType', 'price')
 
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username')
 
 class BuildingSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,20 +1,30 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-# from .models import *
+from .models import *
+from django.contrib.auth.models import User, Group
 from .serializers import *
-from rest_framework import generics
+from rest_framework import permissions
 from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import action
-from django.shortcuts import get_object_or_404
 from rest_framework import filters
-from rest_auth.registration.views import RegisterView
 # Create your views here.
 
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-class CustomRegisterView(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = CustomRegisterSerializer
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 class VendingMachineViewSet(viewsets.ModelViewSet):
     queryset = VendingMachine.objects.all()
@@ -32,33 +42,24 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
 class BuildingViewSet(viewsets.ModelViewSet):
     queryset = Building.objects.all()
     serializer_class = BuildingSerializer
-    # filter_backends = [filters.SearchFilter]
-    # search_fields = ['buildingName']
 
+
+#likes and takes need updated views for individual users
 class LikesViewSet(viewsets.ModelViewSet):
     queryset = Likes.objects.all()
     serializer_class = LikesSerializer
 
-    def get_queryset(self):
-        queryset = self.queryset
-        query_set = queryset.filter(user=self.request.user)
-        return query_set
 
 class TakesViewSet(viewsets.ModelViewSet):
     queryset = Takes.objects.all()
     serializer_class = TakesSerializer
 
-    def get_queryset(self):
-        queryset = self.queryset
-        query_set = queryset.filter(user=self.request.user)
-        return query_set
+class IncludesAPIViewSet(viewsets.ModelViewSet):
+    queryset = Includes.objects.all()
+    serializer_class = IncludesSerializer
 
 class IncludesViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()

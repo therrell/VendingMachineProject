@@ -1,57 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
-import datetime
+from django.contrib.auth.models import User
+from django.conf import settings
 #userID breaks authentication
-
-class UserManager(BaseUserManager):
-
-    use_in_migrations = True
-    def create_user(self, username, email, name, password=None):
-        user = self.model(
-            username=username,
-            email=self.normalize_email(email),
-            name=name,
-        )
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_staffuser(self, username, email, name, password):
-        user = self.create_user(
-            username=username,
-            email=self.normalize_email(email),
-            name=name,
-        )
-        user.staff = True
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, username, email, name, password):
-        user = self.create_user(
-            username=username,
-            email=self.normalize_email(email),
-            name="True",
-        )
-        user.staff = True
-        user.admin = True
-        user.save(using=self._db)
-        return user
-
-class User(AbstractUser):
-    username = models.CharField(max_length=100, unique=True, primary_key=True)
-    email = models.EmailField(('email address'), unique=True)
-    name = models.CharField(max_length=100)
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'name']
-
-    def __str__(self):
-        return self.username
-
-    objects = UserManager()
-
-
 
 class CRN(models.Model):
     crnID = models.IntegerField(primary_key=True)
@@ -96,15 +46,15 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
 
-#change this to user username instead of userID
-class Likes(models.Model):
-    username = models.ForeignKey('User', on_delete = models.CASCADE)
-    productName = models.ForeignKey('Product', on_delete = models.CASCADE)
-
-class Takes(models.Model):
-    username = models.ForeignKey('User', on_delete = models.CASCADE)
-    crnID = models.ForeignKey('CRN', on_delete = models.CASCADE)
-
 class Includes(models.Model):
     vmID = models.ForeignKey('VendingMachine', on_delete = models.CASCADE)
     productName = models.ForeignKey('Product', on_delete = models.CASCADE)
+
+
+class Likes(models.Model):
+    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    productName = models.ForeignKey('Product', on_delete = models.CASCADE)
+
+class Takes(models.Model):
+    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    crnID = models.ForeignKey('CRN', on_delete = models.CASCADE)

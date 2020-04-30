@@ -40,12 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'machines.apps.MachinesConfig',
     'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth',
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
     'corsheaders',
     'django_filters'
 ]
@@ -136,22 +131,3 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-#REST Auth
-ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_USER_EMAIL_FIELD = 'email'
-ACCOUNT_LOGOUT_ON_GET = True
-
-AUTH_USER_MODEL = 'machines.User'
-
-REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "machines.serializers.CustomUserDetailsSerializer",
-}
-REST_AUTH_REGISTER_SERIALIZERS = {
-    "REGISTER_SERIALIZER": "machines.serializers.CustomRegisterSerializer",
-}
