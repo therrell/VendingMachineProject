@@ -31,8 +31,7 @@ class Signup extends Component {
         }
         this.submit = this.submit.bind(this);
         this.textChange = this.textChange.bind(this);
-        // this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
-        // this.handleEnter = this.handleEnter.bind(this);
+       
     }
 
     // try to call the api to get users result
@@ -104,7 +103,7 @@ class Signup extends Component {
                                 name="password2"
                                 type="password2"
                                 onChange={this.textChange}
-                                label="Please type the password again"
+                                label="Type the password again"
                                 fullWidth
 
                             />

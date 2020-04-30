@@ -80,8 +80,8 @@ class VMinfo extends Component {
     }
 
 
-    //test
-    // getvminfotest() {
+ 
+    // testgetvminfo() {
     //     console.log(this.state.searchinfo);
     //     let value = this.state.searchinfo;
     //     console.log('here before axios call');
@@ -160,7 +160,7 @@ class VMinfo extends Component {
                             <TableCell align="left">{row.VMLocation}</TableCell>
                             <TableCell align="left">{row.status}</TableCell>
                             <TableCell align="left">{row.type}</TableCell>
-                            <TableCell align="left"><VMinfoModal data={row.vmID}/></TableCell>
+                            <TableCell align="left" ><VMinfoModal vmId={row.vmID}/></TableCell>
                             </TableRow>
                         ))}
 

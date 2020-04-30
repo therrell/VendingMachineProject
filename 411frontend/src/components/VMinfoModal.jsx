@@ -1,132 +1,155 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import CloseIcon from '@material-ui/icons/Close';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import TextField from '@material-ui/core/TextField';
+
+
+
+import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
+import Snackbar from '@material-ui/core/Snackbar';
+import LockIcon from '@material-ui/icons/LockOutlined';
+import { withStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
+import "./styles/mainfunction.css"
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
 
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
+import Modal from '@material-ui/core/Modal';
+const apiLink = 'http://127.0.0.1:8000/api/includes/';
+  
+class VMinfoModal extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+            crn: [],
+            products: [],
+            searchinfo: '',
+            findResult: [],
+            detailInfo: [],
+            back: false,
+            open:false,
+            catchError: false
+        }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.default,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.getDetailVMinfo = this.getDetailVMinfo.bind(this);
+        
+    }
+     handleOpen() {
+      this.setState({
+        open: true
+    });
+          this.getDetailVMinfo();
+        
+      
+        };
+      
+         handleClose  ()  {
+          this.setState({
+            open: false
+        });
+        };
 
-  },
-}));
+ 
+    
+   
+   getDetailVMinfo(){
+   console.log(this.props.vmId);
+          axios.get(apiLink, {params: {vmid: this.props.vmId}}).then((response)=>{
 
-
-export default function VMinfoModal(props) {
-  const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-    getDetailVMinfo();
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-
-  let result = [];
-  //need to change apiLink
-  const apiLink = 'http://127.0.0.1:8000/api/includes/';
-  const getDetailVMinfo= () =>{
-
-          axios.get(apiLink, {params: {vmid: props.data}}).then((response)=>{
-
-              result = response.data;
+            this.setState({
+                detailInfo: response.data
+            })
+            console.log(this.state.detailInfo);
 
           }).catch((error)=>{
-              // console.log(this.state.findResult);
+              
               console.log(error);
 
           });
       }
 
-  const body = (
-    <div style={modalStyle} className={classes.paper} >
-      <h2 id="simple-modal-title" align="center"></h2>
-      <TableContainer component={Paper}>
-          <Table >
-              <TableHead>
-              <TableRow>
-                  <TableCell align="left">VMID</TableCell>
-                  <TableCell align="left">Product Name</TableCell>
-                  <TableCell align="left">Product Type</TableCell>
-                  <TableCell align="left">Product Price</TableCell>
-              </TableRow>
-              </TableHead>
-              <TableBody>
-              // may change line 88 - 92 according to the schema
-                {result.map((row) => (
-                    <TableRow key={row.vmID}>
-                    <TableCell align="left">{row.vmID}</TableCell>
-                    <TableCell align="left">{row.productName}</TableCell>
-                    <TableCell align="left">{row.productType}</TableCell>
-                    <TableCell align="left">{row.productPrice}</TableCell>
-                    </TableRow>
-                ))}
-              </TableBody>
-          </Table>
-      </TableContainer>
-
-
-
-      <Button type="button"
-      variant="outlined"
-      color="primary"
-      onClick={handleClose}
-      startIcon={<CloseIcon />}>
-      Close
-      </Button>
-
-    </div>
-  );
-
-  return (
-    <div>
-      <Button type="button"
-       variant="outlined"
-       color="primary"
-       onClick={handleOpen}>
-        More
-      </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-
-      {body}
-      </Modal>
-    </div>
-  );
+    render() {
+     
+      
+        return (
+          <div onLoad={this.getDetailVMinfo}>
+                  <Button type="button"
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.handleOpen}>
+                    More
+                </Button>
+                
+                  <Modal
+                    open={this.state.open}
+                    onClose={this.handleClose}
+          
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                  >
+         
+          <div className="Modal" component={Paper}>
+          <Paper className="paper">
+                 <h2 id="simple-modal-title" align="center">Detail Product Info</h2>
+                  <TableContainer component={Paper} >
+                    <Table >
+                      <TableHead>
+                        <TableRow>
+                         <TableCell align="left">VMID</TableCell>
+                           <TableCell align="left">Product Name</TableCell>
+                           <TableCell align="left">Product Type</TableCell>
+                          <TableCell align="left">Product Price</TableCell>
+                         </TableRow>
+                      </TableHead>
+                      <TableBody>
+          
+                      {this.state.detailInfo.map((row) => (
+                          <TableRow key={row.vmID}>
+                            <TableCell align="left">{row.vmID}</TableCell>
+                            <TableCell align="left">{row.productName}</TableCell>
+                            <TableCell align="left">{row.productType}</TableCell>
+                            <TableCell align="left">{row.productPrice}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+          
+          <br></br>
+          
+                  <Button type="button"
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.handleClose}
+                    startIcon={<CloseIcon />}>
+                    Close
+                      </Button>
+          
+                      </Paper>
+          
+                </div>
+               
+                  </Modal>
+                </div>
+                
+        )
+    }
 }
+VMinfoModal.defaultProps = {
+  vmId: undefined
+}
+export default (VMinfoModal);
