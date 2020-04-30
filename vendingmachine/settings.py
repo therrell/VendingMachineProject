@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'machines.apps.MachinesConfig',
     'rest_framework',
-    'django.contrib.sites',
     'corsheaders',
     'django_filters'
 ]

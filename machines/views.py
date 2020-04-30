@@ -71,7 +71,7 @@ class IncludesProductInfoViewSet(viewsets.ModelViewSet):
         SELECT mi.vmID_id as vmID, mp.productName as productName, mp.productType as productType, mp.price as productPrice
         FROM machines_includes AS mi
         LEFT OUTER JOIN machines_product AS mp
-        ON mi.productName_id = mp.productName
+        ON mi.productName = mp.productName
         WHERE vmID_id = %s;''', [self.request.GET['vmid']])
         return query_set
 

@@ -28,7 +28,7 @@ class CRNSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('productID', 'productName', 'productType', 'price')
+        fields = ('productName', 'productType', 'price')
 
 
 class BuildingSerializer(serializers.ModelSerializer):
@@ -39,17 +39,17 @@ class BuildingSerializer(serializers.ModelSerializer):
 class LikesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Likes
-        fields = ('username', 'productName')
+        fields = ('id', 'username', 'productName')
 
 class TakesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Takes
-        fields = ('username', 'crnID')
+        fields = ('id', 'username', 'crnID')
 
 class IncludesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Includes
-        fields = ('vmID', 'productName')
+        fields = ('id', 'vmID', 'productName')
 
 class IncludesProductInfoSerializer(serializers.Serializer):
     vmID = serializers.IntegerField(required=True)

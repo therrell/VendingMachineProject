@@ -40,7 +40,6 @@ class Product(models.Model):
     FOOD = 'FO'
     TYPE_CHOICES = [(DRINK, 'DRINK'), (FOOD, 'FOOD')]
 
-    productID = models.IntegerField(null=False)
     productName = models.CharField(primary_key=True, max_length=255, unique=True)
     productType = models.CharField(choices = TYPE_CHOICES, default=FOOD, max_length=2)
     price = models.DecimalField(max_digits=5, decimal_places=2)
@@ -48,7 +47,7 @@ class Product(models.Model):
 
 class Includes(models.Model):
     vmID = models.ForeignKey('VendingMachine', on_delete = models.CASCADE)
-    productName = models.ForeignKey('Product', on_delete = models.CASCADE)
+    productName = models.ForeignKey('Product', on_delete = models.CASCADE, to_field="productName", db_column="productName")
 
 
 class Likes(models.Model):
