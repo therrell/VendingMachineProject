@@ -25,8 +25,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import Modal from '@material-ui/core/Modal';
-const apiLink = 'http://127.0.0.1:8000/api/includes/';
-  
+const apiLink = 'http://127.0.0.1:8000/api/includesinfo/';
+
 class VMinfoModal extends Component {
     constructor(props) {
         super(props);
@@ -46,26 +46,26 @@ class VMinfoModal extends Component {
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.getDetailVMinfo = this.getDetailVMinfo.bind(this);
-        
+
     }
      handleOpen() {
       this.setState({
         open: true
     });
           this.getDetailVMinfo();
-        
-      
+
+
         };
-      
+
          handleClose  ()  {
           this.setState({
             open: false
         });
         };
 
- 
-    
-   
+
+
+
    getDetailVMinfo(){
    console.log(this.props.vmId);
           axios.get(apiLink, {params: {vmid: this.props.vmId}}).then((response)=>{
@@ -76,15 +76,15 @@ class VMinfoModal extends Component {
             console.log(this.state.detailInfo);
 
           }).catch((error)=>{
-              
+
               console.log(error);
 
           });
       }
 
     render() {
-     
-      
+
+
         return (
           <div onLoad={this.getDetailVMinfo}>
                   <Button type="button"
@@ -93,15 +93,15 @@ class VMinfoModal extends Component {
                     onClick={this.handleOpen}>
                     More
                 </Button>
-                
+
                   <Modal
                     open={this.state.open}
                     onClose={this.handleClose}
-          
+
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                   >
-         
+
           <div className="Modal" component={Paper}>
           <Paper className="paper">
                  <h2 id="simple-modal-title" align="center">Detail Product Info</h2>
@@ -116,7 +116,7 @@ class VMinfoModal extends Component {
                          </TableRow>
                       </TableHead>
                       <TableBody>
-          
+
                       {this.state.detailInfo.map((row) => (
                           <TableRow key={row.vmID}>
                             <TableCell align="left">{row.vmID}</TableCell>
@@ -128,9 +128,9 @@ class VMinfoModal extends Component {
                       </TableBody>
                     </Table>
                   </TableContainer>
-          
+
           <br></br>
-          
+
                   <Button type="button"
                     variant="outlined"
                     color="primary"
@@ -138,14 +138,14 @@ class VMinfoModal extends Component {
                     startIcon={<CloseIcon />}>
                     Close
                       </Button>
-          
+
                       </Paper>
-          
+
                 </div>
-               
+
                   </Modal>
                 </div>
-                
+
         )
     }
 }

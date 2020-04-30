@@ -57,11 +57,11 @@ class TakesViewSet(viewsets.ModelViewSet):
     queryset = Takes.objects.all()
     serializer_class = TakesSerializer
 
-class IncludesAPIViewSet(viewsets.ModelViewSet):
+class IncludesViewSet(viewsets.ModelViewSet):
     queryset = Includes.objects.all()
     serializer_class = IncludesSerializer
 
-class IncludesViewSet(viewsets.ModelViewSet):
+class IncludesProductInfoViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = IncludesProductInfoSerializer
 
