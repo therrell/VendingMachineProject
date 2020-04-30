@@ -55,10 +55,10 @@ export default function VMinfoModal(props) {
 
   let result = [];
   //need to change apiLink
-  const apiLink = 'http://127.0.0.1:8000/api/machines/';
+  const apiLink = 'http://127.0.0.1:8000/api/includes/';
   const getDetailVMinfo= () =>{
 
-          axios.get(apiLink + props.data).then((response)=>{
+          axios.get(apiLink, {params: {vmid: props.data}}).then((response)=>{
 
               result = response.data;
 

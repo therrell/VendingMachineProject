@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import *
+# from .models import *
 from .serializers import *
 from rest_framework import generics
 from rest_framework import viewsets
@@ -61,10 +61,19 @@ class TakesViewSet(viewsets.ModelViewSet):
         return query_set
 
 class IncludesViewSet(viewsets.ModelViewSet):
-    queryset = Includes.objects.all()
-    serializer_class = IncludesSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['vmID']
+    queryset = Product.objects.all()
+    serializer_class = IncludesProductInfoSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        query_set = queryset.raw('''
+        SELECT mi.vmID_id as vmID, mp.productName as productName, mp.productType as productType, mp.price as productPrice
+        FROM machines_includes AS mi
+        LEFT OUTER JOIN machines_product AS mp
+        ON mi.productName_id = mp.productName
+        WHERE vmID_id = %s;''', [self.request.GET['vmid']])
+        return query_set
+
 
 def index(request):
     return HttpResponse("Hello, world.")

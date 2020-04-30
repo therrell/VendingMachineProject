@@ -64,3 +64,11 @@ class IncludesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Includes
         fields = ('vmID', 'productName')
+
+class IncludesProductInfoSerializer(serializers.Serializer):
+    vmID = serializers.IntegerField(required=True)
+    productName = serializers.CharField(max_length=200, required=True)
+    productType = serializers.CharField(max_length=200, required=True)
+    productPrice = serializers.DecimalField(max_digits=5, decimal_places=2, required=True)
+    class Meta:
+        fields = ('vmID', 'productName', 'productType', 'productPrice')

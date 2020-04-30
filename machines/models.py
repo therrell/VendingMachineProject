@@ -90,8 +90,8 @@ class Product(models.Model):
     FOOD = 'FO'
     TYPE_CHOICES = [(DRINK, 'DRINK'), (FOOD, 'FOOD')]
 
-    productID = models.IntegerField(primary_key=True, null=False)
-    productName = models.CharField(max_length=255, unique=True)
+    productID = models.IntegerField(null=False)
+    productName = models.CharField(primary_key=True, max_length=255, unique=True)
     productType = models.CharField(choices = TYPE_CHOICES, default=FOOD, max_length=2)
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
