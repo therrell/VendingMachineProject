@@ -25,7 +25,7 @@ SECRET_KEY = '_m!hhtg-71(-o_i4l-d0*wz@i3&b=tspx$@!gj5h^b)_o#v5wr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 CORS_ORIGIN_ALLOW_ALL=True
 
@@ -41,8 +41,20 @@ INSTALLED_APPS = [
     'machines.apps.MachinesConfig',
     'rest_framework',
     'corsheaders',
-    'django_filters'
+    'django_filters',
+    'rest_framework.authtoken'
 ]
+
+REST_FRAMEWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+  ],
+  'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+  ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

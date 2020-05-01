@@ -5,15 +5,12 @@ from django.contrib.auth.models import User, Group
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
 
-    password = serializers.CharField(write_only=True)
-
     def create(self, validated_data):
 
-        user = User.objects.create(
-            username=validated_data['username']
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password']
         )
-        user.set_password(validated_data['password'])
-        user.save()
 
         return user
 
