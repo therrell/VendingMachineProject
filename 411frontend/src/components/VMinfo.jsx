@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
@@ -20,7 +19,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import VMinfoModal from './VMinfoModal.jsx'
+import VMinfoModal from './VMinfoModal.jsx';
+import Location from './Location.jsx'
 
 const apiLink = 'http://127.0.0.1:8000/api/machines/';
 
@@ -35,10 +35,12 @@ class VMinfo extends Component {
             searchinfo: '',
             findResult: [],
             back: false,
+            redirect_popular: false,
             catchError: false
         }
 
         this.back = this.back.bind(this);
+        this.popular_Redirect = this.popular_Redirect.bind(this);
         this.textChange = this.textChange.bind(this);
         this.getvminfo = this.getvminfo.bind(this);
     }
@@ -48,6 +50,11 @@ class VMinfo extends Component {
 
         this.setState({
             back: true
+        });
+    }
+    popular_Redirect() {
+        this.setState({
+            redirect_popular: true
         });
     }
 
@@ -80,7 +87,7 @@ class VMinfo extends Component {
     }
 
 
- 
+
     // testgetvminfo() {
     //     console.log(this.state.searchinfo);
     //     let value = this.state.searchinfo;
@@ -107,7 +114,12 @@ class VMinfo extends Component {
             return (
                 <Redirect to={{ pathname: '/mainfunction', state: { id: this.state.id } }} />
             )
+        } else if (this.state.redirect_popular) {
+          return (
+            <Redirect to={{ pathname: '/location', state: { id: this.state.id } }} />
+            )
         }
+
         return (
             <div className="container">
                 <Button className="form" onClick={this.back} startIcon={<ArrowBackIcon />} variant="contained" color="primary">
@@ -117,11 +129,19 @@ class VMinfo extends Component {
                     Vending Machine Locator
                 </Typography>
                 <Paper className="paper">
-
                     <Typography variant="h4">
                        Find a Vending Machine
                     </Typography>
                     <form className="form">
+                    <Button
+                        className="form"
+                        fullWidth
+                        onClick={this.popular_Redirect}
+                        variant="contained"
+                        color="primary"
+                    >
+                    All
+                    </Button>
                         <TextField
                             name="searchinfo"
                             onChange={this.textChange}

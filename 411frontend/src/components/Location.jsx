@@ -4,12 +4,21 @@ import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Button from '@material-ui/core/Button';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import "./styles/loc.css"
+import VMinfoModal from './VMinfoModal.jsx';
+import VMinfo from './VMinfo.jsx';
 
-
+const apiLink_vm = 'http://127.0.0.1:8000/api/machines/';;
 const apiLink = 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyAVDsmLtJdg7kUJb_eiFPJhKkf0uZvPjTY';;
 
 class Location extends Component {
@@ -18,14 +27,43 @@ class Location extends Component {
         this.state = {
           a:'',
           b:'',
+          findResult: [],
+          vm_info : [],
+          back: false,
           dcl: {buildId:210, latitude:40.113132, longitude:-88.226455},
           siebal: {buildId:563, latitude:40.11385483196672,longitude:-88.22493553161621},
           grainger: {buildId:324, latitude:40.1125317,longitude:-88.2269931},
           union: {buildId:23, latitude:40.1093460, longitude:-88.2272315},
         }
+        this.back = this.back.bind(this);
       this.distance = this.distance.bind(this);
       this.componentDidMount = this.componentDidMount.bind(this);
+      this.loadVMs = this.loadVMs.bind(this);
+
+      this.loadVMs()
+
     };
+
+    back() {
+        this.setState({
+            back: true
+        });
+    }
+
+    loadVMs() {
+        axios.get(apiLink_vm).then((response)=>{
+            this.setState({
+                vm_info: response.data
+            })
+            console.log(this.state.result);
+        }).catch((error)=>{
+            console.log(error);
+            this.setState({
+                catchError: true
+            });
+        });
+    }
+
 
 distance(lat1, lon1, lat2, lon2, unit) {
     	if ((lat1 == lat2) && (lon1 == lon2)) {
@@ -63,17 +101,27 @@ componentDidMount(props) {
 }
 
 render() {
+  if (this.state.back) {
+      return (
+          <Redirect to={{ pathname: '/vminfo', state: { id: this.state.id } }} />
+      )
+  }
   const self = this;
         return (
             <div className="container">
-                <Typography variant="h2">
+            <Button className="form" onClick={this.back} startIcon={<ArrowBackIcon />} variant="contained" color="primary">
+            Find a Vending Machine
+            </Button>
+                <Typography variant="h3">
                     Vending Machine Locator
                 </Typography>
                 <Paper className="paper">
                     <Typography variant="h4">
-                        Distance from my Location (km)
+                        Based on Location and Popularity
                     </Typography>
                     <Typography variant="h6">
+                    Distance in km
+                    <br/>
                     Dcl (210) is : {this.distance(self.state.a, self.state.b, self.state.dcl.latitude, self.state.dcl.longitude, "K")}
                     <br/>
                     Siebal (563) is : {this.distance(self.state.a, self.state.b, self.state.siebal.latitude, self.state.siebal.longitude, "K")}
@@ -84,6 +132,31 @@ render() {
                     <br/>
                     </Typography>
               </Paper>
+              <TableContainer component={Paper}>
+                  <Table >
+                      <TableHead>
+                      <TableRow>
+                          <TableCell align="left">BuildingID</TableCell>
+                          <TableCell align="left">VMID</TableCell>
+                          <TableCell align="left">VMLocation</TableCell>
+                          <TableCell align="left">Status</TableCell>
+                          <TableCell align="left">Type</TableCell>
+                      </TableRow>
+                      </TableHead>
+                      <TableBody >
+                        {this.state.vm_info.map((row, i) => (
+                          <TableRow key={row.vmID}>
+                          <TableCell align="left">{row.buildingID}</TableCell>
+                          <TableCell align="left">{row.vmID}</TableCell>
+                          <TableCell align="left">{row.VMLocation}</TableCell>
+                          <TableCell align="left">{row.status}</TableCell>
+                          <TableCell align="left">{row.type}</TableCell>
+                          <TableCell align="left" ><VMinfoModal vmId={row.vmID}/></TableCell>
+                          </TableRow>
+                      ))}
+                      </TableBody>
+                  </Table>
+              </TableContainer>
             </div>
         )
     }
