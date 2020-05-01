@@ -14,36 +14,30 @@ import CloseIcon from '@material-ui/icons/Close';
 import "./styles/Login.css"
 
 
-const apiLink = 'http://127.0.0.1:8000/api/user/';;
+const apiLink = 'http://127.0.0.1:8000/api/users/';;
 
 class Signup extends Component {
     constructor(props){
         super(props);
         this.state = {
             username: '',
-            password1: '',
-            password2: '',
-            email:'',
-            name:'',
+            password: '',
             redirect: false,
             id: undefined,
             catchError: false
         }
         this.submit = this.submit.bind(this);
         this.textChange = this.textChange.bind(this);
-       
+
     }
 
     // try to call the api to get users result
     submit(){
         const options = {
             username: this.state.username,
-            password1: this.state.password1,
-            password2: this.state.password2,
-            email: this.state.email,
-            name: this.state.name,
+            password: this.state.password,
         }
-        console.log(`Adding user ${this.state.username}, ${this.state.password1}, ${this.state.email},${this.state.name}`)
+        console.log(`Adding user ${this.state.username}, ${this.state.password}`)
         axios.post(apiLink, options).then((response)=>{
             this.setState({
                 id: response.data.id,
@@ -92,37 +86,13 @@ class Signup extends Component {
 
                             />
                         <TextField
-                            name="password1"
-                            type="password1"
+                            name="password"
+                            type="password"
                             onChange={this.textChange}
                             label="Password"
                             fullWidth
 
                             />
-                        <TextField
-                                name="password2"
-                                type="password2"
-                                onChange={this.textChange}
-                                label="Type the password again"
-                                fullWidth
-
-                            />
-                        <TextField
-                                name="name"
-                                type="name"
-                                onChange={this.textChange}
-                                label=" Name"
-                                fullWidth
-
-                              />
-                              <TextField
-                                  name="email"
-                                  type="email"
-                                  onChange={this.textChange}
-                                  label="Email"
-                                  fullWidth
-
-                                  />
                         <Link to="/mainfunction" style={{ textDecoration: 'none' }}>
                         <Button
                             className="form"

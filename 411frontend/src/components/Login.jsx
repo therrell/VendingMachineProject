@@ -14,7 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import "./styles/Login.css"
 
 
-const apiLink = 'http://127.0.0.1:8000/api/user/';;
+const apiLink = 'http://127.0.0.1:8000/api/users/';;
 
 class Login extends Component {
     constructor(props){
