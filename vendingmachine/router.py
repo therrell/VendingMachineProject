@@ -1,5 +1,7 @@
 from rest_framework.routers import DefaultRouter
 from machines.views import *
+from user.views import *
+
 
 router = DefaultRouter()
 router.register('courses', CRNViewSet, 'course')

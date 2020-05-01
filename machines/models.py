@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
-#userID breaks authentication
 
 class CRN(models.Model):
     crnID = models.IntegerField(primary_key=True)
