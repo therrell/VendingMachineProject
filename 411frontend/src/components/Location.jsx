@@ -19,7 +19,7 @@ class Location extends Component {
           a:'',
           b:'',
           dcl: {buildId:210, latitude:40.113132, longitude:-88.226455},
-          siebal: {buildId:563, latitude:40.112460,longitude:-88.207460},
+          siebal: {buildId:563, latitude:40.11385483196672,longitude:-88.22493553161621},
           grainger: {buildId:324, latitude:40.1125317,longitude:-88.2269931},
           union: {buildId:23, latitude:40.1093460, longitude:-88.2272315},
         }
