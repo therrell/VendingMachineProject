@@ -85,7 +85,9 @@ class Login extends Component {
          localStorage.setItem('token', json.token);
          this.setState({
            logged_in: true,
-           username: json.user.username
+           username: json.user.username,
+           id: json.id,
+           redirect: true
          });
        });
     }

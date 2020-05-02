@@ -68,7 +68,9 @@ class Signup extends Component {
         this.setState({
           logged_in: true,
           // may change
-          username: json.username
+          username: json.username,
+          id: json.id,
+          redirect: true
         });
       });
   }
