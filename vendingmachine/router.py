@@ -14,6 +14,3 @@ router.register('takes', TakesViewSet, 'take')
 
 router.register('includes', IncludesViewSet, 'include')
 router.register('includesinfo', IncludesProductInfoViewSet, 'include-info')
-
-router.register('users', UserViewSet, 'user')
-router.register('groups', GroupViewSet, 'group')

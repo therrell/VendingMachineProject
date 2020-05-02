@@ -25,7 +25,7 @@ SECRET_KEY = '_m!hhtg-71(-o_i4l-d0*wz@i3&b=tspx$@!gj5h^b)_o#v5wr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -152,5 +152,6 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'user.utils.jwt_response_handler'
+    'JWT_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_payload_handler',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'user.utils.jwt_response_handler',
 }

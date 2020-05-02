@@ -35,7 +35,7 @@ class Login extends Component {
     componentDidMount() {
     if (this.state.logged_in) {
       // need to change apilink
-      fetch('http://localhost:8000/core/current_user/', {
+      fetch('http://localhost:8000/user/current_user/', {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }
