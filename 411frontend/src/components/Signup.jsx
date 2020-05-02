@@ -43,7 +43,10 @@ class Signup extends Component {
         .then(res => res.json())
         .then(json => {
             // may change
-          this.setState({ username: json.username });
+          this.setState({
+            username: json.username,
+            id: json.id,
+            redirect: true });
         });
     }
   }

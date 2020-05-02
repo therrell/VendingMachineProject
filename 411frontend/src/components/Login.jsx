@@ -42,7 +42,10 @@ class Login extends Component {
       })
         .then(res => res.json())
         .then(json => {
-          this.setState({ username: json.username });
+          this.setState({
+            username: json.username,
+            id: json.id,
+            redirect: true });
         });
     }
   }

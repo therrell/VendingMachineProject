@@ -37,7 +37,7 @@ class Mainfunction extends Component {
 
 
     signout() {
-
+        localStorage.removeItem('token');
         this.setState({
             signout: true
         });
