@@ -24,6 +24,7 @@ class Signup extends Component {
             password: '',
             redirect: false,
             id: undefined,
+            logged_in: localStorage.getItem('token') ? true : false,
             catchError: false
         }
         this.submit = this.submit.bind(this);
@@ -31,24 +32,66 @@ class Signup extends Component {
 
     }
 
-    // try to call the api to get users result
-    submit(){
-        const options = {
+    componentDidMount() {
+    if (this.state.logged_in) {
+      // need to change apilink
+      fetch('http://localhost:8000/core/current_user/', {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`
+        }
+      })
+        .then(res => res.json())
+        .then(json => {
+            // may change
+          this.setState({ username: json.username });
+        });
+    }
+  }
+
+  submit(e){
+    e.preventDefault();
+    const options = {
             username: this.state.username,
             password: this.state.password,
         }
-        console.log(`Adding user ${this.state.username}, ${this.state.password}`)
-        axios.post(apiLink, options).then((response)=>{
-            this.setState({
-                id: response.data.id,
-                redirect: true
-            })
-        }).catch((error)=>{
-            this.setState({
-                catchError: true
-            });
+    // need to change apilink
+    fetch('http://localhost:8000/core/users/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(options)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem('token', json.token);
+        this.setState({
+          logged_in: true,
+          // may change
+          username: json.username
         });
-    }
+      });
+  }
+
+    // try to call the api to get users result
+    // submit(e){
+    //   e.preventDefault();
+    //     const options = {
+    //         username: this.state.username,
+    //         password: this.state.password,
+    //     }
+    //     console.log(`Adding user ${this.state.username}, ${this.state.password}`)
+    //     axios.post(apiLink, options).then((response)=>{
+    //         this.setState({
+    //             id: response.data.id,
+    //             redirect: true
+    //         })
+    //     }).catch((error)=>{
+    //         this.setState({
+    //             catchError: true
+    //         });
+    //     });
+    // }
     // when text change, change the corresponding state
     textChange(event) {
         this.setState({

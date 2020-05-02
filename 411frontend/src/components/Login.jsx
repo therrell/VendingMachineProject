@@ -24,6 +24,7 @@ class Login extends Component {
             password: '',
             redirect: false,
             id: undefined,
+            logged_in: localStorage.getItem('token') ? true : false,
             catchError: false
         }
         this.login = this.login.bind(this);
@@ -31,24 +32,67 @@ class Login extends Component {
 
     }
 
-    // try to call the api to get users result
-    login(){
-        const options = {
-            username: this.state.username,
-            password: this.state.password
+    componentDidMount() {
+    if (this.state.logged_in) {
+      // need to change apilink
+      fetch('http://localhost:8000/core/current_user/', {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`
         }
-        console.log(`Logging in user ${this.state.username}, ${this.state.password}`)
-        axios.post(apiLink, options).then((response)=>{
-            this.setState({
-                id: response.data.id,
-                redirect: true
-            })
-        }).catch((error)=>{
-            this.setState({
-                catchError: true
-            });
+      })
+        .then(res => res.json())
+        .then(json => {
+          this.setState({ username: json.username });
         });
     }
+  }
+
+    // // try to call the api to get users result
+    // login(){
+    //     const options = {
+    //         username: this.state.username,
+    //         password: this.state.password
+    //     }
+    //     console.log(`Logging in user ${this.state.username}, ${this.state.password}`)
+    //     axios.post(apiLink, options).then((response)=>{
+    //         this.setState({
+    //             id: response.data.id,
+    //             redirect: true
+    //         })
+    //     }).catch((error)=>{
+    //         this.setState({
+    //             catchError: true
+    //         });
+    //     });
+    // }
+
+    login(e) {
+      e.preventDefault();
+      const options = {
+              username: this.state.username,
+              password: this.state.password
+          }
+        // need to change apilink
+     fetch('http://localhost:8000/token-auth/', {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify(options)
+     })
+       .then(res => res.json())
+       .then(json => {
+         localStorage.setItem('token', json.token);
+         this.setState({
+           logged_in: true,
+           username: json.user.username
+         });
+       });
+    }
+
+
+
+
     // when text change, change the corresponding state
     textChange(event) {
         this.setState({
