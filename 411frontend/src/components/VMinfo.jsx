@@ -48,7 +48,7 @@ class VMinfo extends Component {
     componentDidMount() {
 
       // need to change apilink
-      fetch('http://localhost:8000/user/current_user/', {
+      fetch('http://localhost:8000/user/token_refresh/', {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }
@@ -59,6 +59,7 @@ class VMinfo extends Component {
           this.setState({
             username: json.username,
           });
+          console.log(json.username);
         });
 
   }

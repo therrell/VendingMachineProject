@@ -7,13 +7,11 @@ from rest_framework import permissions, generics
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework.response import Response
-from rest_framework.authentication import TokenAuthentication
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
 #might want to change viewing all items in db to permissions.IsAdmin
 class VendingMachineViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.AllowAny,)
 
     queryset = VendingMachine.objects.all()
     serializer_class = VendingMachineSerializer
@@ -21,23 +19,16 @@ class VendingMachineViewSet(viewsets.ModelViewSet):
     search_fields = ['buildingID__buildingName']
 
 class CRNViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.AllowAny,)
-
     queryset = CRN.objects.all()
     serializer_class = CRNSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.AllowAny,)
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 class BuildingViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.AllowAny,)
 
     queryset = Building.objects.all()
     serializer_class = BuildingSerializer
@@ -45,31 +36,23 @@ class BuildingViewSet(viewsets.ModelViewSet):
 
 #likes and takes need updated views for individual users
 class LikesViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.AllowAny,)
 
     queryset = Likes.objects.all()
     serializer_class = LikesSerializer
 
 
 class TakesViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.AllowAny,)
 
     queryset = Takes.objects.all()
     serializer_class = TakesSerializer
 
 class IncludesViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.AllowAny,)
 
     queryset = Includes.objects.all()
     serializer_class = IncludesSerializer
 
 class IncludesProductInfoViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.AllowAny,)
-    
+
     queryset = Product.objects.all()
     serializer_class = IncludesProductInfoSerializer
 
