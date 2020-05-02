@@ -45,6 +45,24 @@ class VMinfo extends Component {
         this.getvminfo = this.getvminfo.bind(this);
     }
 
+    componentDidMount() {
+
+      // need to change apilink
+      fetch('http://localhost:8000/user/current_user/', {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`
+        }
+      })
+        .then(res => res.json())
+        .then(json => {
+            // may change
+          this.setState({
+            username: json.username,
+          });
+        });
+
+  }
+
 
     back() {
 
@@ -72,6 +90,7 @@ class VMinfo extends Component {
         console.log('here before axios call');
         axios.get(apiLink + '?search=' + value).then((response)=>{
             console.log(response.data);
+            localStorage.setItem('token', response.token);
             this.setState({
                 findResult: response.data
             })
