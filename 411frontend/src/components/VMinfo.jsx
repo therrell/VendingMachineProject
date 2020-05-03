@@ -49,7 +49,7 @@ class VMinfo extends Component {
     componentDidMount() {
 
       // need to change apilink
-      fetch('http://localhost:8000/user/token_refresh/', {
+      fetch('http://localhost:8000/user/token/refresh/', {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }
