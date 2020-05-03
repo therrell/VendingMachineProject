@@ -58,6 +58,25 @@ class Mainfunction extends Component {
 
 
 
+  componentDidMount() {
+
+  // need to change apilink
+    fetch('http://localhost:8000/user/token/refresh/', {
+      headers: {
+        Authorization: `JWT ${localStorage.getItem('token')}`
+      }
+    })
+    .then(res => res.json())
+    .then(json => {
+      // may change
+      this.setState({
+        username: json.username,
+      });
+        console.log(json.username);
+    });
+
+  }
+
 
 
     render() {
