@@ -85,7 +85,8 @@ class Login extends Component {
      })
        .then(res => res.json())
        .then(json => {
-         localStorage.setItem('token', json.token);
+         localStorage.setItem('refresh_token', json.refresh);
+         localStorage.setItem('access_token', json.access);
          this.setState({
            logged_in: true,
            username: json.username,

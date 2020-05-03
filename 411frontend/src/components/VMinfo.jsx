@@ -23,6 +23,15 @@ import VMinfoModal from './VMinfoModal.jsx';
 import Location from './Location.jsx'
 
 const apiLink = 'http://127.0.0.1:8000/api/machines/';
+const axiosInstance = axios.create({
+    baseURL: 'http://127.0.0.1:8000/api/',
+    timeout: 5000,
+    headers: {
+        'Authorization': "JWT " + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+    }
+});
 
 class VMinfo extends Component {
     constructor(props) {
@@ -50,17 +59,20 @@ class VMinfo extends Component {
 
       // need to change apilink
       fetch('http://localhost:8000/user/token/refresh/', {
+        method: 'POST',
         headers: {
-          Authorization: `JWT ${localStorage.getItem('token')}`
+          'Content-Type': 'application/json',
+          Authorization: `JWT ${localStorage.getItem('refresh_token')}`
         }
       })
         .then(res => res.json())
         .then(json => {
             // may change
           this.setState({
-            username: json.username,
+            refresh_token: json.refresh,
+            access_token: json.access,
           });
-          console.log(json.username);
+          console.log(json.access_token);
         });
 
   }
@@ -90,14 +102,17 @@ class VMinfo extends Component {
         console.log(this.state.searchinfo);
         let value = this.state.searchinfo;
         console.log('here before axios call');
-        axios.get(apiLink + '?search=' + value).then((response)=>{
+        axiosInstance.get(apiLink + '?search=' + value).then((response)=>{
             console.log(response.data);
-            localStorage.setItem('token', response.token);
+            //localStorage.setItem('token', response.token);
             this.setState({
                 findResult: response.data
             })
             console.log('here inside axios call');
             console.log(this.state.findResult);
+            axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
+            localStorage.setItem('access_token', response.data.access);
+            localStorage.setItem('refresh_token', response.data.refresh);
         }).catch((error)=>{
             console.log(this.state.findResult);
             console.log(error);

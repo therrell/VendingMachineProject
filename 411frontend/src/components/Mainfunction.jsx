@@ -58,24 +58,27 @@ class Mainfunction extends Component {
 
 
 
-  componentDidMount() {
+    componentDidMount() {
 
-  // need to change apilink
-    fetch('http://localhost:8000/user/token/refresh/', {
-      headers: {
-        Authorization: `JWT ${localStorage.getItem('token')}`
-      }
-    })
-    .then(res => res.json())
-    .then(json => {
-      // may change
-      this.setState({
-        username: json.username,
-      });
-        console.log(json.username);
-    });
+      // need to change apilink
+      fetch('http://localhost:8000/user/token/refresh/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `JWT ${localStorage.getItem('refresh_token')}`
+        }
+      })
+        .then(res => res.json())
+        .then(json => {
+            // may change
+          this.setState({
+            refresh_token: json.refresh,
+            access_token: json.access,
+          });
+          console.log(json.access_token);
+        });
 
-  }
+    }
 
 
 
