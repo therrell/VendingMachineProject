@@ -35,7 +35,7 @@ class Login extends Component {
     componentDidMount() {
     if (this.state.logged_in) {
       // need to change apilink
-      fetch('http://localhost:8000/user/token/obtain/', {
+      fetch('http://localhost:8000/user/current_user/', {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }
@@ -76,7 +76,7 @@ class Login extends Component {
               password: this.state.password
           }
         // need to change apilink
-     fetch('http://localhost:8000/user/token/obtain/', {
+     fetch('http://localhost:8000/token-auth/', {
        method: 'POST',
        headers: {
          'Content-Type': 'application/json'
@@ -88,7 +88,7 @@ class Login extends Component {
          localStorage.setItem('token', json.token);
          this.setState({
            logged_in: true,
-           username: json.username,
+           username: json.user.username,
            id: json.id,
            redirect: true
          });

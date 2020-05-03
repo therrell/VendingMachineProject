@@ -35,7 +35,7 @@ class Signup extends Component {
     componentDidMount() {
     if (this.state.logged_in) {
       // need to change apilink
-      fetch('http://localhost:8000/user/token/obtain/', {
+      fetch('http://localhost:8000/user/current_user/', {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }
@@ -58,7 +58,7 @@ class Signup extends Component {
             password: this.state.password,
         }
     // need to change apilink
-    fetch('http://localhost:8000/user/create/', {
+    fetch('http://localhost:8000/user/users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
