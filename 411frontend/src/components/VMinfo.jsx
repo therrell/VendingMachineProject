@@ -23,6 +23,15 @@ import VMinfoModal from './VMinfoModal.jsx';
 import Location from './Location.jsx'
 
 const apiLink = 'http://127.0.0.1:8000/api/machines/';
+const axiosInstance = axios.create({
+    baseURL: 'http://127.0.0.1:8000/api/',
+    timeout: 5000,
+    headers: {
+        'Authorization': "JWT " + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+    }
+});
 
 class VMinfo extends Component {
     constructor(props) {
@@ -43,12 +52,13 @@ class VMinfo extends Component {
         this.popular_Redirect = this.popular_Redirect.bind(this);
         this.textChange = this.textChange.bind(this);
         this.getvminfo = this.getvminfo.bind(this);
+        this.sortByPopularity = this.sortByPopularity.bind(this);
     }
 
     componentDidMount() {
 
       // need to change apilink
-      fetch('http://localhost:8000/user/current_user/', {
+      fetch('http://localhost:8000/user/token_refresh/', {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }
@@ -59,6 +69,7 @@ class VMinfo extends Component {
           this.setState({
             username: json.username,
           });
+          console.log(json.username);
         });
 
   }
@@ -88,14 +99,17 @@ class VMinfo extends Component {
         console.log(this.state.searchinfo);
         let value = this.state.searchinfo;
         console.log('here before axios call');
-        axios.get(apiLink + '?search=' + value).then((response)=>{
+        axiosInstance.get(apiLink + '?search=' + value).then((response)=>{
             console.log(response.data);
-            localStorage.setItem('token', response.token);
+            // localStorage.setItem('token', response.token);
             this.setState({
                 findResult: response.data
             })
             console.log('here inside axios call');
             console.log(this.state.findResult);
+            axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
+           localStorage.setItem('access_token', response.data.access);
+           localStorage.setItem('refresh_token', response.data.refresh);
         }).catch((error)=>{
             console.log(this.state.findResult);
             console.log(error);
@@ -104,7 +118,29 @@ class VMinfo extends Component {
             });
         });
     }
+    sortByPopularity() {
+      var findResult = this.state.findResult;
+      var newfindResult = sortBy(findResult);
+      this.setState({
+          findResult: newfindResult
+      })
+      console.log(this.state.findResult);
+      function sortBy(arr) {
+        let n = arr.length;
+        for (let i = 0; i < n - 1; i++)
+          for (let j = 0; j < n - i - 1; j++)
+          // need to change this to popularity
+              if (arr[j].vmID > arr[j + 1].vmID) {
+                // swap arr[j+1] and arr[i]
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+              }
 
+        return arr;
+      }
+
+    }
 
 
     // testgetvminfo() {
@@ -177,6 +213,16 @@ class VMinfo extends Component {
                             color="primary"
                         >
                         Search
+                        </Button>
+                        <br />
+                        <Button
+                            className="form"
+                            fullWidth
+                            onClick={this.sortByPopularity}
+                            variant="contained"
+                            color="secondary"
+                        >
+                        Sort by Popularity
                         </Button>
                     </form>
                 </Paper>
