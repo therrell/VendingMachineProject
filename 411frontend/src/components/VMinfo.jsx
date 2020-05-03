@@ -43,6 +43,7 @@ class VMinfo extends Component {
         this.popular_Redirect = this.popular_Redirect.bind(this);
         this.textChange = this.textChange.bind(this);
         this.getvminfo = this.getvminfo.bind(this);
+        this.sortByPopularity = this.sortByPopularity.bind(this);
     }
 
     componentDidMount() {
@@ -105,7 +106,29 @@ class VMinfo extends Component {
             });
         });
     }
+    sortByPopularity() {
+      var findResult = this.state.findResult;
+      var newfindResult = sortBy(findResult);
+      this.setState({
+          findResult: newfindResult
+      })
+      console.log(this.state.findResult);
+      function sortBy(arr) {
+        let n = arr.length;
+        for (let i = 0; i < n - 1; i++)
+          for (let j = 0; j < n - i - 1; j++)
+          // need to change this to popularity
+              if (arr[j].vmID > arr[j + 1].vmID) {
+                // swap arr[j+1] and arr[i]
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+              }
 
+        return arr;
+      }
+
+    }
 
 
     // testgetvminfo() {
@@ -178,6 +201,16 @@ class VMinfo extends Component {
                             color="primary"
                         >
                         Search
+                        </Button>
+                        <br />
+                        <Button
+                            className="form"
+                            fullWidth
+                            onClick={this.sortByPopularity}
+                            variant="contained"
+                            color="secondary"
+                        >
+                        Sort by Popularity
                         </Button>
                     </form>
                 </Paper>
