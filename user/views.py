@@ -5,6 +5,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer
+from rest_framework import viewsets
+from machines.models import Likes, Takes
+from machines.serializers import LikesSerializer, TakesSerializer
 
 @api_view(['GET'])
 def current_user(request):
@@ -32,3 +35,25 @@ class UserCreate(APIView):
 class TestView(APIView):
     def get(self, request):
         return Response(data={"hello":"world"}, status=status.HTTP_200_OK)
+
+#user view for frontend displan
+class UserLikesViewSet(viewsets.ModelViewSet):
+
+    queryset = Likes.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset.filter(user_id=user.id)
+        return queryset
+
+    serializer_class = LikesSerializer
+
+class UserTakesViewSet(viewsets.ModelViewSet):
+    queryset = Takes.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset.filter(user_id=user.id)
+        return queryset
+
+    serializer_class = TakesSerializer

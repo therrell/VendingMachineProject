@@ -44,27 +44,6 @@ class TakesViewSet(viewsets.ModelViewSet):
     queryset = Takes.objects.all()
     serializer_class = TakesSerializer
 
-#user view for frontend displan
-class UserLikesViewSet(viewsets.ModelViewSet):
-
-    queryset = Likes.objects.all()
-
-    def get_queryset(self):
-        user = self.request.user
-        queryset = self.queryset.filter(user_id=user.id)
-        return queryset
-        
-    serializer_class = LikesSerializer
-
-class UserTakesViewSet(viewsets.ModelViewSet):
-    queryset = Takes.objects.all()
-
-    def get_queryset(self):
-        user = self.request.user
-        queryset = self.queryset.filter(user_id=user.id)
-        return queryset
-
-    serializer_class = TakesSerializer
 
 class IncludesViewSet(viewsets.ModelViewSet):
 

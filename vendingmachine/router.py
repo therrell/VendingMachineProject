@@ -12,8 +12,8 @@ router.register('buildings', BuildingViewSet, 'building')
 router.register('likes', LikesViewSet, 'like')
 router.register('takes', TakesViewSet, 'take')
 
-router.register('userlikes', UserLikesViewSet, 'ulike')
-router.register('usertakes', UserTakesViewSet, 'utake')
-
 router.register('includes', IncludesViewSet, 'include')
 router.register('includesinfo', IncludesProductInfoViewSet, 'include-info')
+
+router.register('userlikes', UserLikesViewSet, 'like')
+router.register('usertakes', UserTakesViewSet, 'take')
