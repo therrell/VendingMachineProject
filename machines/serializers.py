@@ -26,7 +26,7 @@ class BuildingSerializer(serializers.ModelSerializer):
 class LikesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Likes
-        fields = ('id', 'user_id', 'productName')
+        fields = ('id', 'productName')
 
 class TakesSerializer(serializers.ModelSerializer):
     class Meta:

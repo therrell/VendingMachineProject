@@ -80,9 +80,10 @@ class VMinfoModal extends Component {
           //     console.log(error);
 
           // });
-          var url = new URL(apiLink),
-           params= {vmid: this.props.vmId}
-          Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+          // var url = new URL(apiLink),
+          //  params= {vmid: this.props.vmId}
+          // Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+          var url = apiLink + "?vmid=" +this.props.vmId; 
           console.log(url);
           fetch(url , {
             method: 'GET',

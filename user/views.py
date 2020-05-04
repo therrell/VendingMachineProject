@@ -28,7 +28,7 @@ class TestView(APIView):
 
 #user view for frontend displan
 class UserLikesViewSet(viewsets.ModelViewSet):
-
+    permission_classes = (permissions.AllowAny,)
     queryset = Likes.objects.all()
 
     def get_queryset(self):
@@ -37,6 +37,9 @@ class UserLikesViewSet(viewsets.ModelViewSet):
         return queryset
 
     serializer_class = LikesSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user_id=self.request.user)
 
 class UserTakesViewSet(viewsets.ModelViewSet):
     queryset = Takes.objects.all()
@@ -47,3 +50,6 @@ class UserTakesViewSet(viewsets.ModelViewSet):
         return queryset
 
     serializer_class = TakesSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user_id=self.request.user)

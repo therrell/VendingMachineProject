@@ -35,7 +35,8 @@ class BuildingViewSet(viewsets.ModelViewSet):
 
 #likes and takes view for admin api
 class LikesViewSet(viewsets.ModelViewSet):
-
+    permission_classes = (permissions.AllowAny,)
+    
     queryset = Likes.objects.all()
     serializer_class = LikesSerializer
 
