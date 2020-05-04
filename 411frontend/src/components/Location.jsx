@@ -19,6 +19,7 @@ import VMinfoModal from './VMinfoModal.jsx';
 import VMinfo from './VMinfo.jsx';
 
 const apiLink_vm = 'http://127.0.0.1:8000/api/machines/';;
+const apiLink_dist = 'INSERT DISTANCE API HERE';;
 const apiLink = 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyAVDsmLtJdg7kUJb_eiFPJhKkf0uZvPjTY';;
 
 class Location extends Component {
@@ -36,6 +37,7 @@ class Location extends Component {
           union: {buildId:23, latitude:40.1093460, longitude:-88.2272315},
         }
         this.back = this.back.bind(this);
+        this.addDist = this.addDist.bind(this);
       this.distance = this.distance.bind(this);
       this.componentDidMount = this.componentDidMount.bind(this);
       this.loadVMs = this.loadVMs.bind(this);
@@ -48,6 +50,74 @@ class Location extends Component {
         this.setState({
             back: true
         });
+    }
+
+    addDist(dcl_dist, siebal_dist, grainger_dist, union_dist) {
+    console.log(`Adding new Distances eg Siebal has ${this.state.dcl.buildId}:${dcl_dist}`)
+      const distURL = apiLink_dist;
+      const options = {
+        buildingID: this.state.dcl.buildId,
+        distance: dcl_dist,
+      };
+      fetch(distURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `JWT ${localStorage.getItem('access_token')}`
+        },
+        body: JSON.stringify(options)
+      })
+        .then(res => res.json())
+        .then(json => {
+        });
+
+        const options2 = {
+          buildingID: this.state.siebal.buildId,
+          distance: siebal_dist,
+        };
+        fetch(distURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.getItem('access_token')}`
+          },
+          body: JSON.stringify(options2)
+        })
+          .then(res => res.json())
+          .then(json => {
+          });
+
+          const options3 = {
+            buildingID: this.state.grainger.buildId,
+            distance: grainger_dist,
+          };
+          fetch(distURL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `JWT ${localStorage.getItem('access_token')}`
+            },
+            body: JSON.stringify(options3)
+          })
+            .then(res => res.json())
+            .then(json => {
+            });
+
+            const options4 = {
+              buildingID: this.state.union.buildId,
+              distance: union_dist,
+            };
+            fetch(distURL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `JWT ${localStorage.getItem('access_token')}`
+              },
+              body: JSON.stringify(options4)
+            })
+              .then(res => res.json())
+              .then(json => {
+              });
     }
 
     loadVMs() {
@@ -107,6 +177,14 @@ render() {
       )
   }
   const self = this;
+
+var dcl_dist = this.distance(self.state.a, self.state.b, self.state.dcl.latitude, self.state.dcl.longitude, "K");
+var siebal_dist = this.distance(self.state.a, self.state.b, self.state.siebal.latitude, self.state.siebal.longitude, "K");
+var grainger_dist =  this.distance(self.state.a, self.state.b, self.state.grainger.latitude, self.state.grainger.longitude, "K");
+var union_dist = this.distance(self.state.a, self.state.b, self.state.union.latitude, self.state.union.longitude, "K");
+
+this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist);
+
         return (
             <div className="container">
             <Button className="form" onClick={this.back} startIcon={<ArrowBackIcon />} variant="contained" color="primary">
@@ -122,13 +200,12 @@ render() {
                     <Typography variant="h6">
                     Distance in km
                     <br/>
-                    Dcl (210) is : {this.distance(self.state.a, self.state.b, self.state.dcl.latitude, self.state.dcl.longitude, "K")}
+                    Dcl (210) is : {dcl_dist} <br/>
+                    Siebal (563) is : {siebal_dist}
                     <br/>
-                    Siebal (563) is : {this.distance(self.state.a, self.state.b, self.state.siebal.latitude, self.state.siebal.longitude, "K")}
+                    Grainger (324) is : {grainger_dist}
                     <br/>
-                    Grainger (324) is : {this.distance(self.state.a, self.state.b, self.state.grainger.latitude, self.state.grainger.longitude, "K")}
-                    <br/>
-                    Union (23) is : {this.distance(self.state.a, self.state.b, self.state.union.latitude, self.state.union.longitude, "K")}
+                    Union (23) is : {union_dist}
                     <br/>
                     </Typography>
               </Paper>
