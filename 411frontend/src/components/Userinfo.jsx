@@ -281,9 +281,10 @@ class Userinfo extends Component {
     })
   }
 
-  editCRN(crn) {
+  editCRN(crn, subj, num, buildId) {
     console.log(`Editing new CRN ${crn}`)
-    const deleteURL = apiLink
+    this.deleteCRN(crn);
+    this.addCRN(crn, subj, num, buildId);
     // axios.delete(deleteURL).then((response)=>{
     //     this.loadCRNS()
     // }).catch((error)=>{
@@ -292,17 +293,7 @@ class Userinfo extends Component {
     //         catchError: true
     //     });
     // });
-    fetch(deleteURL, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.getItem('access_token')}`
-      }
-    })
-      .then(res => res.json())
-      .then(json => {
-        this.loadCRNS()
-      });
+
   }
 
   editProduct(product) {
