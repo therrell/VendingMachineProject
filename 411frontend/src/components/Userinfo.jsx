@@ -33,8 +33,8 @@ import "./styles/Userinfo.css"
 
 
 
-const apiLink = 'http://127.0.0.1:8000/api/courses/';;
-const apiLink_pro = 'http://127.0.0.1:8000/api/products/';;
+const apiLink = 'http://127.0.0.1:8000/api/usertakes/';;
+const apiLink_pro = 'http://127.0.0.1:8000/api/userlikes/';;
 
 class Userinfo extends Component {
   constructor(props) {
