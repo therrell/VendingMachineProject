@@ -411,7 +411,7 @@ class Userinfo extends Component {
                       {row.crnID}
                     </TableCell>
                     <TableCell align="right">
-                      <EditModal data={row.crnID} editItem={this.editCRN} deleteItem={this.deleteCRN} newName={this.state.newCRN} newSubj={this.state.newSubj} newNum={this.state.newNum} newBuildId={this.state.newBuildId} handleChange={this.onChangeCRN} handleChange_subj={this.onChangeCRN_subj} handleChange_num={this.onChangeCRN_num} handleChange_build={this.onChangeCRN_build} />
+                      <EditModal data={row.id} addItem={this.addCRN} deleteItem={this.deleteCRN} newName={this.state.newCRN} newSubj={this.state.newSubj} newNum={this.state.newNum} newBuildId={this.state.newBuildId} handleChange={this.onChangeCRN} handleChange_subj={this.onChangeCRN_subj} handleChange_num={this.onChangeCRN_num} handleChange_build={this.onChangeCRN_build} />
                     </TableCell>
                     <TableCell align="left">
                       <Deletemodal data={row.id} deleteItem={this.deleteCRN} />
