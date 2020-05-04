@@ -26,7 +26,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 import Modal from '@material-ui/core/Modal';
 const apiLink = 'http://127.0.0.1:8000/api/includesinfo/';
-
+const { URL, URLSearchParams } = require('url');
 class VMinfoModal extends Component {
     constructor(props) {
         super(props);
@@ -68,18 +68,36 @@ class VMinfoModal extends Component {
 
    getDetailVMinfo(){
    console.log(this.props.vmId);
-          axios.get(apiLink, {params: {vmid: this.props.vmId}}).then((response)=>{
+          // axios.get(apiLink, {params: {vmid: this.props.vmId}}).then((response)=>{
 
-            this.setState({
-                detailInfo: response.data
-            })
-            console.log(this.state.detailInfo);
+          //   this.setState({
+          //       detailInfo: response.data
+          //   })
+          //   console.log(this.state.detailInfo);
 
-          }).catch((error)=>{
+          // }).catch((error)=>{
 
-              console.log(error);
+          //     console.log(error);
 
-          });
+          // });
+          var url = new URL(apiLink),
+           params= {vmid: this.props.vmId}
+          Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+          console.log(url);
+          fetch(url , {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `JWT ${localStorage.getItem('access_token')}`
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                this.setState({
+                  detailInfo: json
+                });
+            });
       }
 
     render() {

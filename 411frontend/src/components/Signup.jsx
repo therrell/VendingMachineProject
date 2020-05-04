@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
@@ -17,7 +17,7 @@ import "./styles/Login.css"
 const apiLink = 'http://127.0.0.1:8000/api/users/';;
 
 class Signup extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             username: '',
@@ -32,51 +32,55 @@ class Signup extends Component {
 
     }
 
-  //   componentDidMount() {
-  //   if (this.state.logged_in) {
-  //     // need to change apilink
-  //     fetch('http://localhost:8000/user/token/obtain/', {
-  //       headers: {
-  //         Authorization: `JWT ${localStorage.getItem('token')}`
-  //       }
-  //     })
-  //       .then(res => res.json())
-  //       .then(json => {
-  //           // may change
-  //         this.setState({
-  //           username: json.username,
-  //           id: json.id,
-  //           redirect: true });
-  //       });
-  //   }
-  // }
+    //   componentDidMount() {
+    //   if (this.state.logged_in) {
+    //     // need to change apilink
+    //     fetch('http://localhost:8000/user/token/obtain/', {
+    //       headers: {
+    //         Authorization: `JWT ${localStorage.getItem('token')}`
+    //       }
+    //     })
+    //       .then(res => res.json())
+    //       .then(json => {
+    //           // may change
+    //         this.setState({
+    //           username: json.username,
+    //           id: json.id,
+    //           redirect: true });
+    //       });
+    //   }
+    // }
 
-  submit(e){
-    e.preventDefault();
-    const options = {
+    submit(e) {
+        e.preventDefault();
+        const options = {
             username: this.state.username,
             password: this.state.password,
         }
-    // need to change apilink
-    fetch('http://localhost:8000/user/create/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(options)
-    })
-      .then(res => res.json())
-      .then(json => {
-        localStorage.setItem('token', json.token);
-        this.setState({
-          logged_in: true,
-          // may change
-          username: json.username,
-          id: json.id,
-          redirect: true
-        });
-      });
-  }
+        // need to change apilink
+        fetch('http://localhost:8000/user/create/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(options)
+        })
+            .then(res => res.json())
+            .then(json => {
+                // localStorage.setItem('token', json.token);
+                localStorage.setItem('refresh_token', json.refresh);
+                localStorage.setItem('access_token', json.access);
+                console.log(localStorage.getItem('access_token'));
+                console.log(localStorage.getItem('refresh_token'));
+                this.setState({
+                    logged_in: true,
+                    // may change
+                    username: json.username,
+                    id: json.id,
+                    redirect: true
+                });
+            });
+    }
 
     // try to call the api to get users result
     // submit(e){
@@ -108,21 +112,21 @@ class Signup extends Component {
 
 
 
-    render(){
-        if (this.state.redirect){
+    render() {
+        if (this.state.redirect) {
             return (
-                <Redirect to= {{ pathname: '/mainfunction', state: { id: this.state.id } }} />
+                <Redirect to={{ pathname: '/mainfunction', state: { id: this.state.id } }} />
             )
         }
-        const {classes} = this.props;
-        return(
+        const { classes } = this.props;
+        return (
             <div className="container">
                 <Typography variant="h2">
-                Vending Machine Locator
+                    Vending Machine Locator
                 </Typography>
                 <Paper className="paper">
 
-                    <Typography  variant="h4">
+                    <Typography variant="h4">
                         Please Sign Up
                     </Typography>
                     <form className="form">
@@ -132,7 +136,7 @@ class Signup extends Component {
                             label="Username"
                             fullWidth
 
-                            />
+                        />
                         <TextField
                             name="password"
                             type="password"
@@ -140,16 +144,16 @@ class Signup extends Component {
                             label="Password"
                             fullWidth
 
-                            />
+                        />
                         <Link to="/mainfunction" style={{ textDecoration: 'none' }}>
-                        <Button
-                            className="form"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            onClick={this.submit}
+                            <Button
+                                className="form"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                onClick={this.submit}
                             >
-                            Sign Up an account
+                                Sign Up an account
                         </Button>
                         </Link>
 
@@ -162,7 +166,7 @@ class Signup extends Component {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                >
+                            >
                                 Back to Login
                             </Button>
                         </Link>

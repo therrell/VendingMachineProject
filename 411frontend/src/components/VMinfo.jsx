@@ -55,27 +55,27 @@ class VMinfo extends Component {
         this.sortByPopularity = this.sortByPopularity.bind(this);
     }
 
-  //   componentDidMount() {
-  //
-  //     // need to change apilink
-  //     fetch('http://localhost:8000/user/token/refresh/', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `JWT ${localStorage.getItem('refresh_token')}`
-  //       }
-  //     })
-  //       .then(res => res.json())
-  //       .then(json => {
-  //           // may change
-  //         this.setState({
-  //           refresh_token: json.refresh,
-  //           access_token: json.access,
-  //         });
-  //         console.log(json.access_token);
-  //       });
-  //
-  // }
+    //   componentDidMount() {
+    //
+    //     // need to change apilink
+    //     fetch('http://localhost:8000/user/token/refresh/', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         Authorization: `JWT ${localStorage.getItem('refresh_token')}`
+    //       }
+    //     })
+    //       .then(res => res.json())
+    //       .then(json => {
+    //           // may change
+    //         this.setState({
+    //           refresh_token: json.refresh,
+    //           access_token: json.access,
+    //         });
+    //         console.log(json.access_token);
+    //       });
+    //
+    // }
 
 
     back() {
@@ -122,48 +122,49 @@ class VMinfo extends Component {
     //     });
     // }
     getvminfo(e) {
-      e.preventDefault();
+        e.preventDefault();
+        let value = this.state.searchinfo;
 
         // need to change apilink
-     fetch(apiLink, {
-       method: 'GET',
-       headers: {
-         'Content-Type': 'application/json',
-         Authorization: `JWT ${localStorage.getItem('access_token')}`
-       }
-     })
-       .then(res => res.json())
-       .then(json => {
-         // console.log(localStorage.getItem('access_token'));
-         // console.log(localStorage.getItem('refresh_token'));
-         console.log(json)
-         this.setState({
-           findResult: json
-         });
-       });
+        fetch(apiLink + '?search=' + value, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `JWT ${localStorage.getItem('access_token')}`
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                // console.log(localStorage.getItem('access_token'));
+                // console.log(localStorage.getItem('refresh_token'));
+                console.log(json)
+                this.setState({
+                    findResult: json
+                });
+            });
 
     }
     sortByPopularity() {
-      var findResult = this.state.findResult;
-      var newfindResult = sortBy(findResult);
-      this.setState({
-          findResult: newfindResult
-      })
-      console.log(this.state.findResult);
-      function sortBy(arr) {
-        let n = arr.length;
-        for (let i = 0; i < n - 1; i++)
-          for (let j = 0; j < n - i - 1; j++)
-          // need to change this to popularity
-              if (arr[j].vmID > arr[j + 1].vmID) {
-                // swap arr[j+1] and arr[i]
-                let temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-              }
+        var findResult = this.state.findResult;
+        var newfindResult = sortBy(findResult);
+        this.setState({
+            findResult: newfindResult
+        })
+        console.log(this.state.findResult);
+        function sortBy(arr) {
+            let n = arr.length;
+            for (let i = 0; i < n - 1; i++)
+                for (let j = 0; j < n - i - 1; j++)
+                    // need to change this to popularity
+                    if (arr[j].vmID > arr[j + 1].vmID) {
+                        // swap arr[j+1] and arr[i]
+                        let temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
 
-        return arr;
-      }
+            return arr;
+        }
 
     }
 
@@ -195,32 +196,32 @@ class VMinfo extends Component {
                 <Redirect to={{ pathname: '/mainfunction', state: { id: this.state.id } }} />
             )
         } else if (this.state.redirect_popular) {
-          return (
-            <Redirect to={{ pathname: '/location', state: { id: this.state.id } }} />
+            return (
+                <Redirect to={{ pathname: '/location', state: { id: this.state.id } }} />
             )
         }
 
         return (
             <div className="container">
                 <Button className="form" onClick={this.back} startIcon={<ArrowBackIcon />} variant="contained" color="primary">
-                Main Functions
+                    Main Functions
                 </Button>
                 <Typography variant="h2">
                     Vending Machine Locator
                 </Typography>
                 <Paper className="paper">
                     <Typography variant="h4">
-                       Find a Vending Machine
+                        Find a Vending Machine
                     </Typography>
                     <form className="form">
-                    <Button
-                        className="form"
-                        fullWidth
-                        onClick={this.popular_Redirect}
-                        variant="contained"
-                        color="primary"
-                    >
-                    All
+                        <Button
+                            className="form"
+                            fullWidth
+                            onClick={this.popular_Redirect}
+                            variant="contained"
+                            color="primary"
+                        >
+                            All
                     </Button>
                         <TextField
                             name="searchinfo"
@@ -237,7 +238,7 @@ class VMinfo extends Component {
                             variant="contained"
                             color="primary"
                         >
-                        Search
+                            Search
                         </Button>
                         <br />
                         <Button
@@ -247,32 +248,32 @@ class VMinfo extends Component {
                             variant="contained"
                             color="secondary"
                         >
-                        Sort by Popularity
+                            Sort by Popularity
                         </Button>
                     </form>
                 </Paper>
                 <TableContainer component={Paper}>
                     <Table >
                         <TableHead>
-                        <TableRow>
-                            <TableCell align="left">BuildingID</TableCell>
-                            <TableCell align="left">VMID</TableCell>
-                            <TableCell align="left">VMLocation</TableCell>
-                            <TableCell align="left">Status</TableCell>
-                            <TableCell align="left">Type</TableCell>
-                        </TableRow>
+                            <TableRow>
+                                <TableCell align="left">BuildingID</TableCell>
+                                <TableCell align="left">VMID</TableCell>
+                                <TableCell align="left">VMLocation</TableCell>
+                                <TableCell align="left">Status</TableCell>
+                                <TableCell align="left">Type</TableCell>
+                            </TableRow>
                         </TableHead>
                         <TableBody>
-                        {this.state.findResult.map((row) => (
-                            <TableRow key={row.vmID}>
-                            <TableCell align="left">{row.buildingID}</TableCell>
-                            <TableCell align="left">{row.vmID}</TableCell>
-                            <TableCell align="left">{row.VMLocation}</TableCell>
-                            <TableCell align="left">{row.status}</TableCell>
-                            <TableCell align="left">{row.type}</TableCell>
-                            <TableCell align="left" ><VMinfoModal vmId={row.vmID}/></TableCell>
-                            </TableRow>
-                        ))}
+                            {this.state.findResult.map((row) => (
+                                <TableRow key={row.vmID}>
+                                    <TableCell align="left">{row.buildingID}</TableCell>
+                                    <TableCell align="left">{row.vmID}</TableCell>
+                                    <TableCell align="left">{row.VMLocation}</TableCell>
+                                    <TableCell align="left">{row.status}</TableCell>
+                                    <TableCell align="left">{row.type}</TableCell>
+                                    <TableCell align="left" ><VMinfoModal vmId={row.vmID} /></TableCell>
+                                </TableRow>
+                            ))}
 
 
                         </TableBody>
