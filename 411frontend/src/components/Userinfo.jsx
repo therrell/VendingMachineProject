@@ -35,6 +35,9 @@ import "./styles/Userinfo.css"
 
 const apiLink = 'http://127.0.0.1:8000/api/usertakes/';;
 const apiLink_pro = 'http://127.0.0.1:8000/api/userlikes/';;
+const apiLink_takes = 'INSERT API FOR TAKES HERE';;
+const apiLink_likes = 'INSERT API FOR LIKES HERE';;
+
 
 class Userinfo extends Component {
   constructor(props) {
@@ -119,7 +122,8 @@ class Userinfo extends Component {
 
   deleteCRN(crn) {
     console.log(`Deleting new CRN ${crn}`)
-    const deleteURL = apiLink + crn + '/'
+    //CHANGED HERE
+    const deleteURL = apiLink_takes + crn + '/'
     // axios.delete(deleteURL).then((response)=>{
     //     this.loadCRNS()
     // }).catch((error)=>{
@@ -143,7 +147,7 @@ class Userinfo extends Component {
 
   deleteProduct(product) {
     console.log(`Deleting new Product ${product}`)
-    const deleteURL = apiLink_pro + product + '/'
+    const deleteURL = apiLink_likes + product + '/'
     // axios.delete(deleteURL).then((response)=>{
     //     this.loadProduct()
     // }).catch((error)=>{
@@ -168,6 +172,7 @@ class Userinfo extends Component {
   addCRN(crn, subj, num, buildId) {
     console.log(`Adding new CRN ${crn}, ${subj}, ${num}, ${buildId}`)
     const addURL = apiLink
+    const takesURL = apiLink_takes
     // axios.post(addURL, {crnID:crn,
     //                     subject:subj,
     //                     number:num,
@@ -197,6 +202,23 @@ class Userinfo extends Component {
       .then(json => {
         this.loadCRNS()
       });
+      //ADDED HERE
+      const options2 = {
+        crnID: crn
+      };
+      fetch(takesURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `JWT ${localStorage.getItem('access_token')}`
+        },
+        body: JSON.stringify(options2)
+      })
+        .then(res => res.json())
+        .then(json => {
+          this.loadCRNS()
+        });
+        //
     this.setState({
       newCRN: '',
       newSubj: '',
@@ -208,6 +230,7 @@ class Userinfo extends Component {
   addProduct(proName, proType, price) {
     console.log(`Adding new Product ${proName}, ${proType}, ${price}`)
     const addURL = apiLink_pro;
+    const likesURL = apiLink_likes;
     // axios.post(addURL, {productName:proName,
     //                     productType:proType,
     //                     price:price}).then((response)=>{
@@ -235,7 +258,23 @@ class Userinfo extends Component {
       .then(json => {
         this.loadProduct();
       });
-
+      //added here
+      const options2 = {
+        productName: proName
+      };
+      fetch(likesURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `JWT ${localStorage.getItem('access_token')}`
+        },
+        body: JSON.stringify(options2)
+      })
+        .then(res => res.json())
+        .then(json => {
+          this.loadProduct();
+        });
+        //
     this.setState({
       newProName: '',
       newProType: '',
