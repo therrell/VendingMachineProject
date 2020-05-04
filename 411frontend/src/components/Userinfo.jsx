@@ -33,8 +33,8 @@ import "./styles/Userinfo.css"
 
 
 
-const apiLink = 'http://127.0.0.1:8000/api/crn/';;
-const apiLink_pro = 'http://127.0.0.1:8000/api/product/';;
+const apiLink = 'http://127.0.0.1:8000/api/courses/';;
+const apiLink_pro = 'http://127.0.0.1:8000/api/products/';;
 const apiLink_takes = 'http://127.0.0.1:8000/api/usertakes/';;
 const apiLink_likes = 'http://127.0.0.1:8000/api/userlikes/';;
 
@@ -141,7 +141,7 @@ class Userinfo extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        this.loadCRNS()
+        //this.loadCRNS()
       });
   }
 
@@ -165,7 +165,7 @@ class Userinfo extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        this.loadProduct()
+        //this.loadProduct()
       });
   }
 
@@ -200,7 +200,6 @@ class Userinfo extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        this.loadCRNS()
       });
       //ADDED HERE
       const options2 = {
@@ -216,7 +215,7 @@ class Userinfo extends Component {
       })
         .then(res => res.json())
         .then(json => {
-          this.loadCRNS()
+          //this.loadCRNS()
         });
         //
     this.setState({
@@ -256,7 +255,7 @@ class Userinfo extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        this.loadProduct();
+        //this.loadProduct();
       });
       //added here
       const options2 = {
@@ -272,7 +271,7 @@ class Userinfo extends Component {
       })
         .then(res => res.json())
         .then(json => {
-          this.loadProduct();
+          //this.loadProduct();
         });
         //
     this.setState({
@@ -326,7 +325,7 @@ class Userinfo extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        this.loadProduct()
+        //this.loadProduct()
       });
   }
 
@@ -355,7 +354,9 @@ class Userinfo extends Component {
         this.setState({
           product_info: json
         });
+        console.log(this.product_info);
       });
+
   }
 
   loadCRNs() {
@@ -465,7 +466,7 @@ class Userinfo extends Component {
                       <EditModalProduct data={row.productName} addItem={this.addProduct} deleteItem={this.deleteProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
                     </TableCell>
                     <TableCell align="left">
-                      <Deletemodal data={row.productName} deleteItem={this.deleteProduct} />
+                      <Deletemodal data={row.id} deleteItem={this.deleteProduct} />
                     </TableCell>
                   </TableRow>
                 ))}

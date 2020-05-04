@@ -31,7 +31,7 @@ class LikesSerializer(serializers.ModelSerializer):
 class TakesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Takes
-        fields = ('id', 'user_id', 'crnID')
+        fields = ('id', 'crnID')
 
 class IncludesSerializer(serializers.ModelSerializer):
     class Meta:
