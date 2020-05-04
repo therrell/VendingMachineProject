@@ -65,6 +65,89 @@ class IncludesProductInfoViewSet(viewsets.ModelViewSet):
         WHERE vmID_id = %s;''', [self.request.GET['vmid']])
         return query_set
 
+class PopularEnrlVMViewSet(viewsets.ModelViewSet):
+    queryset = VendingMachine.objects.all()
+    serializer_class = PopularEnrlVMSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        query_set = queryset.raw('''select vm.vmID, vm.VMLocation, vm.type as VMtype, building_enrl.building_enrl_cnt as EnrollmentCount
+        from machines_vendingmachine as vm
+        join
+        (select crn.buildingID_id as buidlingID, sum(enrollment.cnt) as building_enrl_cnt
+        from machines_crn as crn
+        join
+        (select crnID_id, count(distinct username_id) as cnt
+        from machines_takes
+        group by crnID_id) as enrollment
+        on crn.crnID = enrollment.crnID_id
+        group by crn.buildingID_id) as building_enrl
+        on vm.buildingID_id = building_enrl.buidlingID
+        where status = 'OK'
+        order by building_enrl_cnt desc''')
+        return query_set
+
+class PopularLikesVMViewSet(viewsets.ModelViewSet):
+    queryset = VendingMachine.objects.all()
+    serializer_class = PopularLikesVMSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        query_set = queryset.raw('''
+        select vm.vmID, vm.VMLocation, vm.type as VMtype, count(distinct productName) as LikesCount
+        from
+        (SELECT vmID_id, productName
+        FROM machines_includes
+        WHERE productName IN
+        (SELECT productName_id
+        FROM machines_likes)) as vm_likes
+        join machines_vendingmachine as vm
+        on vm_likes.vmID_id = vm.vmID
+        where vm.status = 'OK'
+        group by vmID_id
+        order by LikesCount desc''')
+        return query_set
+
+class PopularityIndexViewSet(viewsets.ModelViewSet):
+    queryset = VendingMachine.objects.all()
+    serializer_class = PopularityIndexSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        query_set = queryset.raw('''
+        select likes.vmID as vmID, likes.VMLocation as VMLocation, likes.VMtype as VMtype, likes.likes_cnt * 0.3 + enrl.enrl_cnt * 0.7 as PopularityIndex
+        from
+        (select vm.vmID as vmID, vm.VMLocation as VMLocation, vm.type as VMtype, count(distinct productName) as likes_cnt
+        from
+        (SELECT vmID_id, productName
+        FROM machines_includes
+        WHERE productName IN
+        (SELECT productName_id
+        FROM machines_likes)) as vm_likes
+        join machines_vendingmachine as vm
+        on vm_likes.vmID_id = vm.vmID
+        where vm.status = 'OK'
+        group by vmID_id
+        order by likes_cnt desc) as likes
+        join
+        (select vm.vmID as vmID, building_enrl.building_enrl_cnt as enrl_cnt
+        from machines_vendingmachine as vm
+        join
+        (select crn.buildingID_id as buidlingID, sum(enrollment.cnt) as building_enrl_cnt
+        from machines_crn as crn
+        join
+        (select crnID_id, count(distinct username_id) as cnt
+        from machines_takes
+        group by crnID_id) as enrollment
+        on crn.crnID = enrollment.crnID_id
+        group by crn.buildingID_id) as building_enrl
+        on vm.buildingID_id = building_enrl.buidlingID
+        where status = 'OK'
+        order by building_enrl_cnt desc) as enrl
+        on enrl.vmID = likes.vmID
+        order by PopularityIndex desc''')
+        return query_set
+
 
 def index(request):
     return HttpResponse("Hello, world.")

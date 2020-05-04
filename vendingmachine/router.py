@@ -17,3 +17,7 @@ router.register('includesinfo', IncludesProductInfoViewSet, 'include-info')
 
 router.register('userlikes', UserLikesViewSet, 'like')
 router.register('usertakes', UserTakesViewSet, 'take')
+
+router.register('popularenrlvms', PopularEnrlVMViewSet, 'popular-enrl-vm')
+router.register('popularlikesvms', PopularLikesVMViewSet, 'popular-likes-vm')
+router.register('popularityindex', PopularityIndexViewSet, 'popularity-index')

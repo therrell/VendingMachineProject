@@ -45,3 +45,27 @@ class IncludesProductInfoSerializer(serializers.Serializer):
     productPrice = serializers.DecimalField(max_digits=5, decimal_places=2, required=True)
     class Meta:
         fields = ('vmID', 'productName', 'productType', 'productPrice')
+
+class PopularEnrlVMSerializer(serializers.Serializer):
+    vmID = serializers.IntegerField(required=True)
+    VMLocation = serializers.CharField(max_length=200, required=True)
+    VMtype = serializers.CharField(max_length=200, required=True)
+    EnrollmentCount = serializers.IntegerField(required=True)
+    class Meta:
+        fields = ('vmID', 'VMLocation', 'VMtype', 'EnrollmentCount')
+
+class PopularLikesVMSerializer(serializers.Serializer):
+    vmID = serializers.IntegerField(required=True)
+    VMLocation = serializers.CharField(max_length=200, required=True)
+    VMtype = serializers.CharField(max_length=200, required=True)
+    LikesCount = serializers.IntegerField(required=True)
+    class Meta:
+        fields = ('vmID', 'VMLocation', 'VMtype', 'LikesCount')
+
+class PopularityIndexSerializer(serializers.Serializer):
+    vmID = serializers.IntegerField(required=True)
+    VMLocation = serializers.CharField(max_length=200, required=True)
+    VMtype = serializers.CharField(max_length=200, required=True)
+    PopularityIndex = serializers.DecimalField(max_digits=5, decimal_places=2, required=True)
+    class Meta:
+        fields = ('vmID', 'VMLocation', 'VMtype', 'PopularityIndex')
