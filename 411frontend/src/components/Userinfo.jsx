@@ -281,6 +281,7 @@ class Userinfo extends Component {
     })
   }
 
+<<<<<<< HEAD
   editCRN(crn, subj, num, buildId) {
     console.log(`Editing new CRN ${crn}`)
     this.deleteCRN(crn);
@@ -294,6 +295,12 @@ class Userinfo extends Component {
     //     });
     // });
 
+=======
+  editCRN(crn, subj, num, buildId, old) {
+    console.log(`Editing new CRN ${crn}`)
+    this.deleteCRN(old);
+    this.addCRN(crn, subj, num, buildId);
+>>>>>>> 9fc54aa174c573d5d7bfd008ed8fbfa0263dcdd9
   }
 
   editProduct(product) {
@@ -420,10 +427,10 @@ class Userinfo extends Component {
                       {row.crnID}
                     </TableCell>
                     <TableCell align="right">
-                      <EditModal data={row.crnID} addItem={this.addCRN} deleteItem={this.deleteCRN} newName={this.state.newCRN} newSubj={this.state.newSubj} newNum={this.state.newNum} newBuildId={this.state.newBuildId} handleChange={this.onChangeCRN} handleChange_subj={this.onChangeCRN_subj} handleChange_num={this.onChangeCRN_num} handleChange_build={this.onChangeCRN_build} />
+                      <EditModal data={row.crnID} editItem={this.editCRN} deleteItem={this.deleteCRN} newName={this.state.newCRN} newSubj={this.state.newSubj} newNum={this.state.newNum} newBuildId={this.state.newBuildId} handleChange={this.onChangeCRN} handleChange_subj={this.onChangeCRN_subj} handleChange_num={this.onChangeCRN_num} handleChange_build={this.onChangeCRN_build} />
                     </TableCell>
                     <TableCell align="left">
-                      <Deletemodal data={row.crnID} deleteItem={this.deleteCRN} />
+                      <Deletemodal data={row.id} deleteItem={this.deleteCRN} />
                     </TableCell>
                   </TableRow>
                 ))}

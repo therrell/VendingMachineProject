@@ -51,8 +51,13 @@ export default function EditModal(props) {
     // props.deleteItem: function that does post stuff.
     // props.oldData
     // props.newData
+<<<<<<< HEAD
     // props.deleteItem(props.data)
     props.editItem(props.newName, props.newSubj, props.newNum, props.newBuildId)
+=======
+    //props.deleteItem(props.data)
+    props.editItem(props.newName, props.newSubj, props.newNum, props.newBuildId, props.data)
+>>>>>>> 9fc54aa174c573d5d7bfd008ed8fbfa0263dcdd9
     setOpen(false);
   };
   const body = (
