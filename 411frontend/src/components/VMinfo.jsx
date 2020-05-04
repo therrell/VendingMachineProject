@@ -134,12 +134,14 @@ class VMinfo extends Component {
      })
        .then(res => res.json())
        .then(json => {
-         console.log(localStorage.getItem('access_token'));
-         console.log(localStorage.getItem('refresh_token'));
+         // console.log(localStorage.getItem('access_token'));
+         // console.log(localStorage.getItem('refresh_token'));
+         console.log(json)
          this.setState({
-           findResult: json.data
+           findResult: json
          });
        });
+
     }
     sortByPopularity() {
       var findResult = this.state.findResult;
