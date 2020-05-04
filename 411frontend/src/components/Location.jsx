@@ -28,9 +28,11 @@ class Location extends Component {
         this.state = {
           a:'',
           b:'',
+          union_dist:'',
           findResult: [],
           vm_info : [],
           back: false,
+          visited: true,
           dcl: {buildId:210, latitude:40.113132, longitude:-88.226455},
           siebal: {buildId:563, latitude:40.11385483196672,longitude:-88.22493553161621},
           grainger: {buildId:324, latitude:40.1125317,longitude:-88.2269931},
@@ -118,6 +120,9 @@ class Location extends Component {
               .then(res => res.json())
               .then(json => {
               });
+              this.setState({
+                visited: false
+              });
     }
 
     loadVMs() {
@@ -170,6 +175,7 @@ componentDidMount(props) {
       });
 }
 
+
 render() {
   if (this.state.back) {
       return (
@@ -178,12 +184,13 @@ render() {
   }
   const self = this;
 
-var dcl_dist = this.distance(self.state.a, self.state.b, self.state.dcl.latitude, self.state.dcl.longitude, "K");
-var siebal_dist = this.distance(self.state.a, self.state.b, self.state.siebal.latitude, self.state.siebal.longitude, "K");
-var grainger_dist =  this.distance(self.state.a, self.state.b, self.state.grainger.latitude, self.state.grainger.longitude, "K");
-var union_dist = this.distance(self.state.a, self.state.b, self.state.union.latitude, self.state.union.longitude, "K");
-
-this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist);
+var dcl_dist =  this.distance(self.state.a, self.state.b, self.state.dcl.latitude, self.state.dcl.longitude, "K")
+var siebal_dist = this.distance(self.state.a, self.state.b, self.state.siebal.latitude, self.state.siebal.longitude, "K")
+var grainger_dist = this.distance(self.state.a, self.state.b, self.state.grainger.latitude, self.state.grainger.longitude, "K")
+var union_dist = this.distance(self.state.a, self.state.b, self.state.union.latitude, self.state.union.longitude, "K")
+if (this.visited) {
+  this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist)
+};
 
         return (
             <div className="container">
@@ -194,6 +201,8 @@ this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist);
                     Vending Machine Locator
                 </Typography>
                 <Paper className="paper">
+                <form className="form">
+                    </form>
                     <Typography variant="h4">
                         Based on Location and Popularity
                     </Typography>
