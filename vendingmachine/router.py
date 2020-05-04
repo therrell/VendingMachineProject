@@ -21,3 +21,5 @@ router.register('usertakes', UserTakesViewSet, 'take')
 router.register('popularenrlvms', PopularEnrlVMViewSet, 'popular-enrl-vm')
 router.register('popularlikesvms', PopularLikesVMViewSet, 'popular-likes-vm')
 router.register('popularityindex', PopularityIndexViewSet, 'popularity-index')
+
+router.register('distance', DistanceViewSet, 'building-distance')

@@ -69,3 +69,8 @@ class PopularityIndexSerializer(serializers.Serializer):
     PopularityIndex = serializers.DecimalField(max_digits=5, decimal_places=2, required=True)
     class Meta:
         fields = ('vmID', 'VMLocation', 'VMtype', 'PopularityIndex')
+
+class DistanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Distance
+        fields = ('buildingID', 'distance')

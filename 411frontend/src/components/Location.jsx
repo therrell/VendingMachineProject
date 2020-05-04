@@ -19,7 +19,7 @@ import VMinfoModal from './VMinfoModal.jsx';
 import VMinfo from './VMinfo.jsx';
 
 const apiLink_vm = 'http://127.0.0.1:8000/api/machines/';;
-const apiLink_dist = 'INSERT DISTANCE API HERE';;
+const apiLink_dist = 'http://127.0.0.1:8000/api/distance/';;
 const apiLink = 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyAVDsmLtJdg7kUJb_eiFPJhKkf0uZvPjTY';;
 
 class Location extends Component {

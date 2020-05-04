@@ -149,6 +149,9 @@ class PopularityIndexViewSet(viewsets.ModelViewSet):
         order by PopularityIndex desc''')
         return query_set
 
+class DistanceViewSet(viewsets.ModelViewSet):
+    queryset = Distance.objects.all()
+    serializer_class = DistanceSerializer
 
 def index(request):
     return HttpResponse("Hello, world.")

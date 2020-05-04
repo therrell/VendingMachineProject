@@ -56,3 +56,7 @@ class Likes(models.Model):
 class Takes(models.Model):
     user_id = models.ForeignKey(User, on_delete = models.CASCADE)
     crnID = models.ForeignKey('CRN', on_delete = models.CASCADE)
+
+class Distance(models.Model):
+    buildingID = models.ForeignKey('Building', on_delete=models.CASCADE)
+    distance = models.DecimalField(max_digits=10, decimal_places=5)

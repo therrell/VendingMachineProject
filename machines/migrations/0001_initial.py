@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('crnID', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='machines.CRN')),
-                ('username', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('productName', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='machines.Product')),
-                ('username', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -72,6 +72,14 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('productName', models.ForeignKey(db_column='productName', on_delete=django.db.models.deletion.CASCADE, to='machines.Product')),
                 ('vmID', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='machines.VendingMachine')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Distance',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('buildingID', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='machines.Building')),
+                ('distance', models.DecimalField(decimal_places=5, max_digits=10)),
             ],
         ),
     ]
