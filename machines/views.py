@@ -36,7 +36,7 @@ class BuildingViewSet(viewsets.ModelViewSet):
 #likes and takes view for admin api
 class LikesViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)
-    
+
     queryset = Likes.objects.all()
     serializer_class = LikesSerializer
 
@@ -78,13 +78,13 @@ class PopularEnrlVMViewSet(viewsets.ModelViewSet):
         (select crn.buildingID_id as buidlingID, sum(enrollment.cnt) as building_enrl_cnt
         from machines_crn as crn
         join
-        (select crnID_id, count(distinct username_id) as cnt
+        (select crnID_id, count(user_id_id) as cnt
         from machines_takes
         group by crnID_id) as enrollment
         on crn.crnID = enrollment.crnID_id
         group by crn.buildingID_id) as building_enrl
         on vm.buildingID_id = building_enrl.buidlingID
-        where status = 'OK'
+        where status = 'WO'
         order by building_enrl_cnt desc''')
         return query_set
 
@@ -104,7 +104,7 @@ class PopularLikesVMViewSet(viewsets.ModelViewSet):
         FROM machines_likes)) as vm_likes
         join machines_vendingmachine as vm
         on vm_likes.vmID_id = vm.vmID
-        where vm.status = 'OK'
+        where vm.status = 'WO'
         group by vmID_id
         order by LikesCount desc''')
         return query_set
@@ -127,7 +127,7 @@ class PopularityIndexViewSet(viewsets.ModelViewSet):
         FROM machines_likes)) as vm_likes
         join machines_vendingmachine as vm
         on vm_likes.vmID_id = vm.vmID
-        where vm.status = 'OK'
+        where vm.status = 'WO'
         group by vmID_id
         order by likes_cnt desc) as likes
         join
@@ -137,13 +137,13 @@ class PopularityIndexViewSet(viewsets.ModelViewSet):
         (select crn.buildingID_id as buidlingID, sum(enrollment.cnt) as building_enrl_cnt
         from machines_crn as crn
         join
-        (select crnID_id, count(distinct username_id) as cnt
+        (select crnID_id, count(distinct user_id_id) as cnt
         from machines_takes
         group by crnID_id) as enrollment
         on crn.crnID = enrollment.crnID_id
         group by crn.buildingID_id) as building_enrl
         on vm.buildingID_id = building_enrl.buidlingID
-        where status = 'OK'
+        where status = 'WO'
         order by building_enrl_cnt desc) as enrl
         on enrl.vmID = likes.vmID
         order by PopularityIndex desc''')
