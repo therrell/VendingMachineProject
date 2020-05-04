@@ -50,9 +50,9 @@ class Includes(models.Model):
 
 
 class Likes(models.Model):
-    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete = models.CASCADE)
     productName = models.ForeignKey('Product', on_delete = models.CASCADE)
 
 class Takes(models.Model):
-    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete = models.CASCADE)
     crnID = models.ForeignKey('CRN', on_delete = models.CASCADE)

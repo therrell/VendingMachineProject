@@ -7,7 +7,6 @@ from rest_framework import permissions, generics
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework.response import Response
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
 #might want to change viewing all items in db to permissions.IsAdmin
@@ -34,16 +33,37 @@ class BuildingViewSet(viewsets.ModelViewSet):
     serializer_class = BuildingSerializer
 
 
-#likes and takes need updated views for individual users
+#likes and takes view for admin api
 class LikesViewSet(viewsets.ModelViewSet):
 
     queryset = Likes.objects.all()
     serializer_class = LikesSerializer
 
-
 class TakesViewSet(viewsets.ModelViewSet):
 
     queryset = Takes.objects.all()
+    serializer_class = TakesSerializer
+
+#user view for frontend displan
+class UserLikesViewSet(viewsets.ModelViewSet):
+
+    queryset = Likes.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset.filter(user_id=user.id)
+        return queryset
+        
+    serializer_class = LikesSerializer
+
+class UserTakesViewSet(viewsets.ModelViewSet):
+    queryset = Takes.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.queryset.filter(user_id=user.id)
+        return queryset
+
     serializer_class = TakesSerializer
 
 class IncludesViewSet(viewsets.ModelViewSet):
