@@ -55,27 +55,27 @@ class VMinfo extends Component {
         this.sortByPopularity = this.sortByPopularity.bind(this);
     }
 
-    componentDidMount() {
-
-      // need to change apilink
-      fetch('http://localhost:8000/user/token/refresh/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `JWT ${localStorage.getItem('refresh_token')}`
-        }
-      })
-        .then(res => res.json())
-        .then(json => {
-            // may change
-          this.setState({
-            refresh_token: json.refresh,
-            access_token: json.access,
-          });
-          console.log(json.access_token);
-        });
-
-  }
+  //   componentDidMount() {
+  //
+  //     // need to change apilink
+  //     fetch('http://localhost:8000/user/token/refresh/', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `JWT ${localStorage.getItem('refresh_token')}`
+  //       }
+  //     })
+  //       .then(res => res.json())
+  //       .then(json => {
+  //           // may change
+  //         this.setState({
+  //           refresh_token: json.refresh,
+  //           access_token: json.access,
+  //         });
+  //         console.log(json.access_token);
+  //       });
+  //
+  // }
 
 
     back() {
@@ -98,28 +98,50 @@ class VMinfo extends Component {
         });
         // console.log(this.state.searchinfo);
     }
-    getvminfo() {
-        console.log(this.state.searchinfo);
-        let value = this.state.searchinfo;
-        console.log('here before axios call');
-        axiosInstance.get(apiLink + '?search=' + value).then((response)=>{
-            console.log(response.data);
-            //localStorage.setItem('token', response.token);
-            this.setState({
-                findResult: response.data
-            })
-            console.log('here inside axios call');
-            console.log(this.state.findResult);
-            axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
-            localStorage.setItem('access_token', response.data.access);
-            localStorage.setItem('refresh_token', response.data.refresh);
-        }).catch((error)=>{
-            console.log(this.state.findResult);
-            console.log(error);
-            this.setState({
-                catchError: true
-            });
-        });
+    // getvminfo() {
+    //     console.log(this.state.searchinfo);
+    //     let value = this.state.searchinfo;
+    //     console.log('here before axios call');
+    //     axiosInstance.get(apiLink + '?search=' + value).then((response)=>{
+    //         console.log(response.data);
+    //         //localStorage.setItem('token', response.token);
+    //         this.setState({
+    //             findResult: response.data
+    //         })
+    //         console.log('here inside axios call');
+    //         console.log(this.state.findResult);
+    //         axiosInstance.defaults.headers['Authorization'] = "JWT " + response.data.access;
+    //         localStorage.setItem('access_token', response.data.access);
+    //         localStorage.setItem('refresh_token', response.data.refresh);
+    //     }).catch((error)=>{
+    //         console.log(this.state.findResult);
+    //         console.log(error);
+    //         this.setState({
+    //             catchError: true
+    //         });
+    //     });
+    // }
+    getvminfo(e) {
+      e.preventDefault();
+
+        // need to change apilink
+     fetch(apiLink, {
+       method: 'GET',
+       headers: {
+         'Content-Type': 'application/json',
+         Authorization: `JWT ${localStorage.getItem('access_token')}`
+       }
+     })
+       .then(res => res.json())
+       .then(json => {
+         localStorage.setItem('refresh_token', json.refresh);
+         localStorage.setItem('access_token', json.access);
+         console.log(localStorage.getItem('access_token'));
+         console.log(localStorage.getItem('refresh_token'));
+         this.setState({
+           findResult: json.data
+         });
+       });
     }
     sortByPopularity() {
       var findResult = this.state.findResult;

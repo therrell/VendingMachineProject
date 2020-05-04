@@ -32,24 +32,24 @@ class Signup extends Component {
 
     }
 
-    componentDidMount() {
-    if (this.state.logged_in) {
-      // need to change apilink
-      fetch('http://localhost:8000/user/token/obtain/', {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem('token')}`
-        }
-      })
-        .then(res => res.json())
-        .then(json => {
-            // may change
-          this.setState({
-            username: json.username,
-            id: json.id,
-            redirect: true });
-        });
-    }
-  }
+  //   componentDidMount() {
+  //   if (this.state.logged_in) {
+  //     // need to change apilink
+  //     fetch('http://localhost:8000/user/token/obtain/', {
+  //       headers: {
+  //         Authorization: `JWT ${localStorage.getItem('token')}`
+  //       }
+  //     })
+  //       .then(res => res.json())
+  //       .then(json => {
+  //           // may change
+  //         this.setState({
+  //           username: json.username,
+  //           id: json.id,
+  //           redirect: true });
+  //       });
+  //   }
+  // }
 
   submit(e){
     e.preventDefault();
