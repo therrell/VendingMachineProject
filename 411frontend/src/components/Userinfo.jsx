@@ -281,26 +281,10 @@ class Userinfo extends Component {
     })
   }
 
-<<<<<<< HEAD
-  editCRN(crn, subj, num, buildId) {
-    console.log(`Editing new CRN ${crn}`)
-    this.deleteCRN(crn);
-    this.addCRN(crn, subj, num, buildId);
-    // axios.delete(deleteURL).then((response)=>{
-    //     this.loadCRNS()
-    // }).catch((error)=>{
-    //     console.log(error);
-    //     this.setState({
-    //         catchError: true
-    //     });
-    // });
-
-=======
   editCRN(crn, subj, num, buildId, old) {
     console.log(`Editing new CRN ${crn}`)
     this.deleteCRN(old);
     this.addCRN(crn, subj, num, buildId);
->>>>>>> 9fc54aa174c573d5d7bfd008ed8fbfa0263dcdd9
   }
 
   editProduct(product) {
