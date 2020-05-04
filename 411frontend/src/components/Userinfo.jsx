@@ -33,10 +33,10 @@ import "./styles/Userinfo.css"
 
 
 
-const apiLink = 'http://127.0.0.1:8000/api/usertakes/';;
-const apiLink_pro = 'http://127.0.0.1:8000/api/userlikes/';;
-const apiLink_takes = 'INSERT API FOR TAKES HERE';;
-const apiLink_likes = 'INSERT API FOR LIKES HERE';;
+const apiLink = 'http://127.0.0.1:8000/api/crn/';;
+const apiLink_pro = 'http://127.0.0.1:8000/api/product/';;
+const apiLink_takes = 'http://127.0.0.1:8000/api/usertakes/';;
+const apiLink_likes = 'http://127.0.0.1:8000/api/userlikes/';;
 
 
 class Userinfo extends Component {
@@ -342,7 +342,7 @@ class Userinfo extends Component {
     //         catchError: true
     //     });
     // });
-    fetch(apiLink_pro, {
+    fetch(apiLink_likes, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -373,7 +373,7 @@ class Userinfo extends Component {
     //     });
     // });
 
-    fetch(apiLink, {
+    fetch(apiLink_takes, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
