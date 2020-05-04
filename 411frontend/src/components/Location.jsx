@@ -120,23 +120,23 @@ class Location extends Component {
               .then(res => res.json())
               .then(json => {
               });
-              this.setState({
-                visited: false
-              });
+               this.setState({
+                 visited: false
+               });
     }
 
     loadVMs() {
-        axios.get(apiLink_vm).then((response)=>{
-            this.setState({
-                vm_info: response.data
-            })
-            console.log(this.state.result);
-        }).catch((error)=>{
-            console.log(error);
-            this.setState({
-                catchError: true
-            });
-        });
+        // axios.get(apiLink_vm).then((response)=>{
+        //     this.setState({
+        //         vm_info: response.data
+        //     })
+        //     console.log(this.state.result);
+        // }).catch((error)=>{
+        //     console.log(error);
+        //     this.setState({
+        //         catchError: true
+        //     });
+        // });
     }
 
 
