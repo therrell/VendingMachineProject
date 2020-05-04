@@ -10,3 +10,5 @@ admin.site.register(mm.Product)
 admin.site.register(mm.Likes)
 admin.site.register(mm.Takes)
 admin.site.register(mm.Includes)
+
+admin.site.register(mm.Distance)
