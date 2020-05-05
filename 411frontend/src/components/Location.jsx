@@ -22,7 +22,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+// import InputLabel from "@material-ui/core/InputLabel";
+// import FormHelperText from "@material-ui/core/FormHelperText";
+// import FormControl from "@material-ui/core/FormControl";
+// import Select from "@material-ui/core/Select";
+import NativeSelect from "@material-ui/core/NativeSelect";
 
 const apiLink_vm = 'http://127.0.0.1:8000/api/machines/';;
 const apiLink_dist = 'http://127.0.0.1:8000/api/distance/';;
@@ -50,6 +54,7 @@ class Location extends Component {
       this.loadVMs = this.loadVMs.bind(this);
       this.textChange = this.textChange.bind(this);
       this.handleClick = this.handleClick.bind(this);
+      this.sortByPopularity = this.sortByPopularity.bind(this);
 
       this.loadVMs()
 
@@ -129,6 +134,7 @@ class Location extends Component {
               });
     }
     handleClick() {
+      console.log("inside handle click");
       let self = this
       var dcl_dist = this.distance(self.state.a, self.state.b, self.state.dcl.latitude, self.state.dcl.longitude, "K");
       var siebal_dist = this.distance(self.state.a, self.state.b, self.state.siebal.latitude, self.state.siebal.longitude, "K");
@@ -151,6 +157,7 @@ class Location extends Component {
         //     });
         // });
         let type = this.state.sortType;
+        console.log("sort type is",type);
         if (type === 1) {
             fetch('http://127.0.0.1:8000/api/popularlikesvms/ ', {
                 method: 'GET',
@@ -215,13 +222,30 @@ class Location extends Component {
         }
     }
     textChange(event) {
-
-        this.setState({
+      console.log(event.target.value);
+      event.preventDefault();
+      this.setState({
             sortType: event.target.value
-        });
-        this.loadVMs();
+        },() => this.loadVMs());
+        // console.log(this.state.sortType);
+        // this.loadVMs();
     }
-
+    sortByPopularity() {
+      fetch('http://127.0.0.1:8000/api/popularityindex/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.getItem('access_token')}`
+        }
+    })
+        .then(res => res.json())
+        .then(json => {
+            console.log(json)
+            this.setState({
+                vm_info: json
+            });
+        });
+    }
 distance(lat1, lon1, lat2, lon2, unit) {
     	if ((lat1 == lat2) && (lon1 == lon2)) {
         // console.log("Distance is :", "0");
@@ -297,7 +321,7 @@ var union_dist = this.distance(self.state.a, self.state.b, self.state.union.lati
                 <Button
                     className="form"
                     fullWidth
-                    onClick={this.sortByVMID}
+                    onClick={this.sortByPopularity}
                     variant="contained"
                     color="secondary"
                 >
@@ -307,25 +331,24 @@ var union_dist = this.distance(self.state.a, self.state.b, self.state.union.lati
                     <Typography variant="h4">
                           <br/>
                     </Typography>
-                    <FormControl >
-                    <InputLabel id="demo-simple-select-label">Sort By</InputLabel>
-                    <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    fullWidth
+                  
+                <FormControl >
+                  <InputLabel htmlFor="sort by">Sort BY</InputLabel>
+                  <Select
+                    native
                     value={this.state.sortType}
                     onChange={this.textChange}
-                    >
-                    <MenuItem value={1}>Sort By Product Likes</MenuItem>
-                    <MenuItem value={2}>Sort By CRN Enrollments</MenuItem>
-                    <MenuItem value={3}>Sort By Distances</MenuItem>
-                    <MenuItem value={4}>Sort By All Factors</MenuItem>
-                    </Select>
+                  >
+                    <option value={1}>Sort By Product Likes</option>
+                    <option value={2}>Sort By CRN Enrollments</option>
+                    <option value={3}>Sort By Distances</option>
+                    <option value={4}>Sort By All Factors</option>
+                  </Select>
                 </FormControl>
               </Paper>
 
               <TableContainer component={Paper}>
-                  <Table >
+                  <Table onLoad={this.loadVMs}>
                       <TableHead>
                       <TableRow>
                           <TableCell align="left">BuildingID</TableCell>
@@ -333,6 +356,7 @@ var union_dist = this.distance(self.state.a, self.state.b, self.state.union.lati
                           <TableCell align="left">VMLocation</TableCell>
                           <TableCell align="left">Status</TableCell>
                           <TableCell align="left">Type</TableCell>
+                          <TableCell align="left">Popularity</TableCell>
                       </TableRow>
                       </TableHead>
                       <TableBody >
@@ -343,6 +367,7 @@ var union_dist = this.distance(self.state.a, self.state.b, self.state.union.lati
                           <TableCell align="left">{row.VMLocation}</TableCell>
                           <TableCell align="left">{row.VMstatus}</TableCell>
                           <TableCell align="left">{row.VMtype}</TableCell>
+                          <TableCell align="left">{row.score}</TableCell>
                           <TableCell align="left" ><VMinfoModal vmId={row.vmID}/></TableCell>
                           </TableRow>
                       ))}
