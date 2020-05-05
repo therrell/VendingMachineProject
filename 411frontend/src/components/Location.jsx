@@ -129,17 +129,80 @@ class Location extends Component {
     }
 
     loadVMs() {
-        axios.get(apiLink_vm).then((response)=>{
-            this.setState({
-                vm_info: response.data
+        // axios.get(apiLink_vm).then((response)=>{
+        //     this.setState({
+        //         vm_info: response.data
+        //     })
+        //     console.log(this.state.result);
+        // }).catch((error)=>{
+        //     console.log(error);
+        //     this.setState({
+        //         catchError: true
+        //     });
+        // });
+        let type = this.state.sortType;
+        if (type === 1) {
+            fetch('http://127.0.0.1:8000/api/popularlikesvms/ ', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `JWT ${localStorage.getItem('access_token')}`
+                }
             })
-            console.log(this.state.result);
-        }).catch((error)=>{
-            console.log(error);
-            this.setState({
-                catchError: true
-            });
-        });
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    this.setState({
+                        vm_info: json
+                    });
+                });
+    
+        } else if (type === 2) {
+            fetch('http://127.0.0.1:8000/api/popularenrlvms/ ', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `JWT ${localStorage.getItem('access_token')}`
+                }
+            })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    this.setState({
+                        vm_info: json
+                    });
+                });
+        } else if (type === 3) {
+            fetch('http://127.0.0.1:8000/api/populardistancevms/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `JWT ${localStorage.getItem('access_token')}`
+                }
+            })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    this.setState({
+                        vm_info: json
+                    });
+                });
+        } else if (type === 4) {
+            fetch('http://127.0.0.1:8000/api/popularityindex/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `JWT ${localStorage.getItem('access_token')}`
+                }
+            })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    this.setState({
+                        vm_info: json
+                    });
+                });
+        }
     }
     textChange(event) {
 
@@ -264,8 +327,8 @@ var union_dist = this.distance(self.state.a, self.state.b, self.state.union.lati
                           <TableCell align="left">{row.buildingID}</TableCell>
                           <TableCell align="left">{row.vmID}</TableCell>
                           <TableCell align="left">{row.VMLocation}</TableCell>
-                          <TableCell align="left">{row.status}</TableCell>
-                          <TableCell align="left">{row.type}</TableCell>
+                          <TableCell align="left">{row.VMstatus}</TableCell>
+                          <TableCell align="left">{row.VMtype}</TableCell>
                           <TableCell align="left" ><VMinfoModal vmId={row.vmID}/></TableCell>
                           </TableRow>
                       ))}

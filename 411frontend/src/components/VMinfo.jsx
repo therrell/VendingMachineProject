@@ -52,7 +52,7 @@ class VMinfo extends Component {
         this.popular_Redirect = this.popular_Redirect.bind(this);
         this.textChange = this.textChange.bind(this);
         this.getvminfo = this.getvminfo.bind(this);
-        this.sortByPopularity = this.sortByPopularity.bind(this);
+        this.sortByVMID = this.sortByVMID.bind(this);
     }
 
     //   componentDidMount() {
