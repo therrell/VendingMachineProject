@@ -49,6 +49,7 @@ class Location extends Component {
       this.componentDidMount = this.componentDidMount.bind(this);
       this.loadVMs = this.loadVMs.bind(this);
       this.textChange = this.textChange.bind(this);
+      this.handleClick = this.handleClick.bind(this);
 
       this.loadVMs()
 
@@ -127,6 +128,15 @@ class Location extends Component {
               .then(json => {
               });
     }
+    handleClick() {
+      let self = this
+      var dcl_dist = this.distance(self.state.a, self.state.b, self.state.dcl.latitude, self.state.dcl.longitude, "K");
+      var siebal_dist = this.distance(self.state.a, self.state.b, self.state.siebal.latitude, self.state.siebal.longitude, "K");
+      var grainger_dist =  this.distance(self.state.a, self.state.b, self.state.grainger.latitude, self.state.grainger.longitude, "K");
+      var union_dist = this.distance(self.state.a, self.state.b, self.state.union.latitude, self.state.union.longitude, "K");
+
+      this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist);
+    }
 
     loadVMs() {
         // axios.get(apiLink_vm).then((response)=>{
@@ -156,7 +166,7 @@ class Location extends Component {
                         vm_info: json
                     });
                 });
-    
+
         } else if (type === 2) {
             fetch('http://127.0.0.1:8000/api/popularenrlvms/ ', {
                 method: 'GET',
@@ -214,7 +224,7 @@ class Location extends Component {
 
 distance(lat1, lon1, lat2, lon2, unit) {
     	if ((lat1 == lat2) && (lon1 == lon2)) {
-        console.log("Distance is :", "0");
+        // console.log("Distance is :", "0");
     		return 0;
     	}
     	else {
@@ -231,7 +241,7 @@ distance(lat1, lon1, lat2, lon2, unit) {
     		dist = dist * 60 * 1.1515;
     		if (unit=="K") { dist = dist * 1.609344 }
     		if (unit=="N") { dist = dist * 0.8684 }
-        console.log("Distance is :", dist);
+        // console.log("Distance is :", dist);
     		return dist.toFixed(4);
     	}
 }
@@ -246,12 +256,6 @@ componentDidMount(props) {
         console.log("Longitude is :", position.coords.longitude);
       });
       const self = this;
-      var dcl_dist = this.distance(self.state.a, self.state.b, self.state.dcl.latitude, self.state.dcl.longitude, "K");
-      var siebal_dist = this.distance(self.state.a, self.state.b, self.state.siebal.latitude, self.state.siebal.longitude, "K");
-      var grainger_dist =  this.distance(self.state.a, self.state.b, self.state.grainger.latitude, self.state.grainger.longitude, "K");
-      var union_dist = this.distance(self.state.a, self.state.b, self.state.union.latitude, self.state.union.longitude, "K");
-
-      this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist);
 
 }
 
@@ -279,6 +283,17 @@ var union_dist = this.distance(self.state.a, self.state.b, self.state.union.lati
                     Vending Machine Locator
                 </Typography>
                 <Paper className="paper">
+                <form className="form">
+                    <Button
+                        className="form"
+                        fullWidth
+                        onClick={this.handleClick}
+                        variant="contained"
+                        color="primary"
+                    >
+                        All
+                </Button>
+                </form>
                     <Typography variant="h4">
                         Based on Location and Popularity
                     </Typography>
