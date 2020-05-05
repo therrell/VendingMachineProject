@@ -67,12 +67,12 @@ class IncludesProductInfoViewSet(viewsets.ModelViewSet):
         return query_set
 
 class PopularEnrlVMViewSet(viewsets.ModelViewSet):
-    queryset = VendingMachine.objects.all()
+    queryset = Building.objects.all()
     serializer_class = PopularEnrlVMSerializer
 
     def get_queryset(self):
         queryset = self.queryset
-        query_set = queryset.raw('''select vm.vmID, vm.VMLocation, vm.type as VMtype, building_enrl.building_enrl_cnt as EnrollmentCount
+        query_set = queryset.raw('''select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype
         from machines_vendingmachine as vm
         join
         (select crn.buildingID_id as buidlingID, sum(enrollment.cnt) as building_enrl_cnt
@@ -85,17 +85,17 @@ class PopularEnrlVMViewSet(viewsets.ModelViewSet):
         group by crn.buildingID_id) as building_enrl
         on vm.buildingID_id = building_enrl.buidlingID
         where status = 'WO'
-        order by building_enrl_cnt desc''')
+        order by building_enrl.building_enrl_cnt desc''')
         return query_set
 
 class PopularLikesVMViewSet(viewsets.ModelViewSet):
-    queryset = VendingMachine.objects.all()
+    queryset = Building.objects.all()
     serializer_class = PopularLikesVMSerializer
 
     def get_queryset(self):
         queryset = self.queryset
         query_set = queryset.raw('''
-        select vm.vmID, vm.VMLocation, vm.type as VMtype, count(distinct productName) as LikesCount
+        select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype
         from
         (SELECT vmID_id, productName
         FROM machines_includes
@@ -106,19 +106,39 @@ class PopularLikesVMViewSet(viewsets.ModelViewSet):
         on vm_likes.vmID_id = vm.vmID
         where vm.status = 'WO'
         group by vmID_id
-        order by LikesCount desc''')
+        order by (count(distinct productName)) desc''')
+        return query_set
+
+class PopularDistanceVMViewSet(viewsets.ModelViewSet):
+    queryset = Building.objects.all()
+    serializer_class = PopularDistanceVMSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        query_set = queryset.raw('''
+        select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype
+        from
+        (SELECT distinct buildingID_id, distance
+        FROM vending_machine.machines_distance
+        where distance < 10) as vm_distance
+        join
+        machines_vendingmachine as vm
+        on vm_distance.buildingID_id = vm.buildingID_id
+        order by distance''')
         return query_set
 
 class PopularityIndexViewSet(viewsets.ModelViewSet):
-    queryset = VendingMachine.objects.all()
+    queryset = Building.objects.all()
     serializer_class = PopularityIndexSerializer
 
     def get_queryset(self):
         queryset = self.queryset
         query_set = queryset.raw('''
-        select likes.vmID as vmID, likes.VMLocation as VMLocation, likes.VMtype as VMtype, likes.likes_cnt * 0.3 + enrl.enrl_cnt * 0.7 as PopularityIndex
+        select vm_distance.buildingID_id as buildingID, enrl_like.vmID as vmID, enrl_like.VMLocation as VMLocation, enrl_like.VMstatus as VMstatus, enrl_like.VMtype as VMtype
         from
-        (select vm.vmID as vmID, vm.VMLocation as VMLocation, vm.type as VMtype, count(distinct productName) as likes_cnt
+        (select likes.buildingID, likes.vmID as vmID, likes.VMLocation as VMLocation, likes.VMstatus as VMstatus, likes.VMtype as VMtype, likes.likes_cnt as likes_cnt, enrl.enrl_cnt as enrl_cnt
+        from
+        (select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype, count(distinct productName) as likes_cnt
         from
         (SELECT vmID_id, productName
         FROM machines_includes
@@ -145,8 +165,12 @@ class PopularityIndexViewSet(viewsets.ModelViewSet):
         on vm.buildingID_id = building_enrl.buidlingID
         where status = 'WO'
         order by building_enrl_cnt desc) as enrl
-        on enrl.vmID = likes.vmID
-        order by PopularityIndex desc''')
+        on enrl.vmID = likes.vmID) as enrl_like
+        join
+        (SELECT distinct buildingID_id, distance FROM vending_machine.machines_distance
+        where distance < 10) as vm_distance
+        on enrl_like.buildingID = vm_distance.buildingID_id
+        order by (enrl_like.likes_cnt * enrl_like.enrl_cnt / vm_distance.distance) desc''')
         return query_set
 
 class DistanceViewSet(viewsets.ModelViewSet):
