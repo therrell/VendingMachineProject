@@ -51,6 +51,25 @@ class Signup extends Component {
     //   }
     // }
 
+    componentDidMount() {
+        if (this.state.logged_in) {
+            // need to change apilink
+            fetch('http://localhost:8000/user/token/obtain/', {
+                headers: {
+                    Authorization: `JWT ${localStorage.getItem('token')}`
+                }
+            })
+                .then(res => res.json())
+                .then(json => {
+                    this.setState({
+                        username: json.username,
+                        id: json.id,
+                        redirect: true
+                    });
+                });
+        }
+    }
+
     submit(e) {
         e.preventDefault();
         const options = {
@@ -67,14 +86,36 @@ class Signup extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                // localStorage.setItem('token', json.token);
+                // // localStorage.setItem('token', json.token);
+                // localStorage.setItem('refresh_token', json.refresh);
+                // localStorage.setItem('access_token', json.access);
+                // console.log(localStorage.getItem('access_token'));
+                // console.log(localStorage.getItem('refresh_token'));
+                // this.setState({
+                //     logged_in: true,
+                //     // may change
+                //     username: json.username,
+                //     id: json.id,
+                //     redirect: true
+                // });
+            });
+
+
+        fetch('http://localhost:8000/user/token/obtain/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(options)
+        })
+            .then(res => res.json())
+            .then(json => {
                 localStorage.setItem('refresh_token', json.refresh);
                 localStorage.setItem('access_token', json.access);
                 console.log(localStorage.getItem('access_token'));
                 console.log(localStorage.getItem('refresh_token'));
                 this.setState({
                     logged_in: true,
-                    // may change
                     username: json.username,
                     id: json.id,
                     redirect: true
