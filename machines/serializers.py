@@ -52,8 +52,9 @@ class PopularEnrlVMSerializer(serializers.Serializer):
     VMLocation = serializers.CharField(max_length=200, required=True)
     VMstatus = serializers.CharField(max_length=200, required=True)
     VMtype = serializers.CharField(max_length=200, required=True)
+    score = serializers.IntegerField(required=True)
     class Meta:
-        fields = ('buildingID', 'vmID', 'VMLocation', 'VMstatus', 'VMtype')
+        fields = ('buildingID', 'vmID', 'VMLocation', 'VMstatus', 'VMtype', 'score')
 
 class PopularLikesVMSerializer(serializers.Serializer):
     buildingID = serializers.IntegerField(required=True)
@@ -61,8 +62,9 @@ class PopularLikesVMSerializer(serializers.Serializer):
     VMLocation = serializers.CharField(max_length=200, required=True)
     VMstatus = serializers.CharField(max_length=200, required=True)
     VMtype = serializers.CharField(max_length=200, required=True)
+    score = serializers.IntegerField(required=True)
     class Meta:
-        fields = ('buildingID', 'vmID', 'VMLocation', 'VMstatus', 'VMtype')
+        fields = ('buildingID', 'vmID', 'VMLocation', 'VMstatus', 'VMtype', 'score')
 
 class PopularDistanceVMSerializer(serializers.Serializer):
     buildingID = serializers.IntegerField(required=True)
@@ -70,8 +72,9 @@ class PopularDistanceVMSerializer(serializers.Serializer):
     VMLocation = serializers.CharField(max_length=200, required=True)
     VMstatus = serializers.CharField(max_length=200, required=True)
     VMtype = serializers.CharField(max_length=200, required=True)
+    score = serializers.DecimalField(max_digits=5, decimal_places=2, required=True)
     class Meta:
-        fields = ('buildingID', 'vmID', 'VMLocation', 'VMstatus', 'VMtype')
+        fields = ('buildingID', 'vmID', 'VMLocation', 'VMstatus', 'VMtype', 'score')
 
 class PopularityIndexSerializer(serializers.Serializer):
     buildingID = serializers.IntegerField(required=True)
@@ -79,8 +82,9 @@ class PopularityIndexSerializer(serializers.Serializer):
     VMLocation = serializers.CharField(max_length=200, required=True)
     VMstatus = serializers.CharField(max_length=200, required=True)
     VMtype = serializers.CharField(max_length=200, required=True)
+    score = serializers.DecimalField(max_digits=5, decimal_places=2, required=True)
     class Meta:
-        fields = ('buildingID', 'vmID', 'VMLocation', 'VMstatus', 'VMtype')
+        fields = ('buildingID', 'vmID', 'VMLocation', 'VMstatus', 'VMtype', 'score')
 
 class DistanceSerializer(serializers.ModelSerializer):
     class Meta:

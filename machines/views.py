@@ -72,7 +72,8 @@ class PopularEnrlVMViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = self.queryset
-        query_set = queryset.raw('''select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype
+        query_set = queryset.raw('''select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype,
+        building_enrl.building_enrl_cnt as score
         from machines_vendingmachine as vm
         join
         (select crn.buildingID_id as buidlingID, sum(enrollment.cnt) as building_enrl_cnt
@@ -85,7 +86,7 @@ class PopularEnrlVMViewSet(viewsets.ModelViewSet):
         group by crn.buildingID_id) as building_enrl
         on vm.buildingID_id = building_enrl.buidlingID
         where status = 'WO'
-        order by building_enrl.building_enrl_cnt desc''')
+        order by score desc''')
         return query_set
 
 class PopularLikesVMViewSet(viewsets.ModelViewSet):
@@ -95,7 +96,8 @@ class PopularLikesVMViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset
         query_set = queryset.raw('''
-        select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype
+        select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype,
+        count(distinct productName) as score
         from
         (SELECT vmID_id, productName
         FROM machines_includes
@@ -106,7 +108,7 @@ class PopularLikesVMViewSet(viewsets.ModelViewSet):
         on vm_likes.vmID_id = vm.vmID
         where vm.status = 'WO'
         group by vmID_id
-        order by (count(distinct productName)) desc''')
+        order by score desc''')
         return query_set
 
 class PopularDistanceVMViewSet(viewsets.ModelViewSet):
@@ -116,14 +118,15 @@ class PopularDistanceVMViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset
         query_set = queryset.raw('''
-        select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype
+        select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype,
+        distance as score
         from
         (SELECT distinct buildingID_id, distance
         FROM vending_machine.machines_distance) as vm_distance
         join
         machines_vendingmachine as vm
         on vm_distance.buildingID_id = vm.buildingID_id
-        order by distance''')
+        order by score''')
         return query_set
 
 class PopularityIndexViewSet(viewsets.ModelViewSet):
@@ -133,7 +136,8 @@ class PopularityIndexViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset
         query_set = queryset.raw('''
-        select vm_distance.buildingID_id as buildingID, enrl_like.vmID as vmID, enrl_like.VMLocation as VMLocation, enrl_like.VMstatus as VMstatus, enrl_like.VMtype as VMtype
+        select vm_distance.buildingID_id as buildingID, enrl_like.vmID as vmID, enrl_like.VMLocation as VMLocation, enrl_like.VMstatus as VMstatus, enrl_like.VMtype as VMtype,
+        (enrl_like.likes_cnt * enrl_like.enrl_cnt / vm_distance.distance) as score
         from
         (select likes.buildingID, likes.vmID as vmID, likes.VMLocation as VMLocation, likes.VMstatus as VMstatus, likes.VMtype as VMtype, likes.likes_cnt as likes_cnt, enrl.enrl_cnt as enrl_cnt
         from
@@ -169,7 +173,7 @@ class PopularityIndexViewSet(viewsets.ModelViewSet):
         (SELECT distinct buildingID_id, distance FROM vending_machine.machines_distance
         ) as vm_distance
         on enrl_like.buildingID = vm_distance.buildingID_id
-        order by (enrl_like.likes_cnt * enrl_like.enrl_cnt / vm_distance.distance) desc''')
+        order by score desc''')
         return query_set
 
 class DistanceViewSet(viewsets.ModelViewSet):
