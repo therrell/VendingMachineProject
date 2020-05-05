@@ -144,7 +144,7 @@ class VMinfo extends Component {
             });
 
     }
-    sortByPopularity() {
+    sortByVMID() {
         var findResult = this.state.findResult;
         var newfindResult = sortBy(findResult);
         this.setState({
@@ -244,11 +244,11 @@ class VMinfo extends Component {
                         <Button
                             className="form"
                             fullWidth
-                            onClick={this.sortByPopularity}
+                            onClick={this.sortByVMID}
                             variant="contained"
                             color="secondary"
                         >
-                            Sort by Popularity
+                            Sort by VM ID
                         </Button>
                     </form>
                 </Paper>

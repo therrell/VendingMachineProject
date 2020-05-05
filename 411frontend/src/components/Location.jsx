@@ -17,6 +17,12 @@ import Paper from '@material-ui/core/Paper';
 import "./styles/loc.css"
 import VMinfoModal from './VMinfoModal.jsx';
 import VMinfo from './VMinfo.jsx';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 
 const apiLink_vm = 'http://127.0.0.1:8000/api/machines/';;
 const apiLink_dist = 'http://127.0.0.1:8000/api/distance/';;
@@ -30,6 +36,7 @@ class Location extends Component {
           b:'',
           findResult: [],
           vm_info : [],
+          sortType: 1,
           back: false,
           dcl: {buildId:210, latitude:40.113132, longitude:-88.226455},
           siebal: {buildId:563, latitude:40.11385483196672,longitude:-88.22493553161621},
@@ -41,6 +48,7 @@ class Location extends Component {
       this.distance = this.distance.bind(this);
       this.componentDidMount = this.componentDidMount.bind(this);
       this.loadVMs = this.loadVMs.bind(this);
+      this.textChange = this.textChange.bind(this);
 
       this.loadVMs()
 
@@ -133,7 +141,13 @@ class Location extends Component {
             });
         });
     }
+    textChange(event) {
 
+        this.setState({
+            sortType: event.target.value
+        });
+       
+    }
 
 distance(lat1, lon1, lat2, lon2, unit) {
     	if ((lat1 == lat2) && (lon1 == lon2)) {
@@ -208,7 +222,23 @@ this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist);
                     Union (23) is : {union_dist}
                     <br/>
                     </Typography>
+                    <FormControl >
+                    <InputLabel id="demo-simple-select-label">Sort By</InputLabel>
+                    <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    fullWidth
+                    value={this.state.sortType}
+                    onChange={this.textChange}
+                    >
+                    <MenuItem value={1}>Sort By Product Likes</MenuItem>
+                    <MenuItem value={2}>Sort By CRN Enrollments</MenuItem>
+                    <MenuItem value={3}>Sort By Distances</MenuItem>
+                    <MenuItem value={4}>Sort By All Factors</MenuItem>
+                    </Select>
+                </FormControl>
               </Paper>
+              
               <TableContainer component={Paper}>
                   <Table >
                       <TableHead>
