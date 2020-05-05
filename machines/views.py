@@ -167,7 +167,7 @@ class PopularityIndexViewSet(viewsets.ModelViewSet):
         on enrl.vmID = likes.vmID) as enrl_like
         join
         (SELECT distinct buildingID_id, distance FROM vending_machine.machines_distance
-        where distance < 10) as vm_distance
+        ) as vm_distance
         on enrl_like.buildingID = vm_distance.buildingID_id
         order by (enrl_like.likes_cnt * enrl_like.enrl_cnt / vm_distance.distance) desc''')
         return query_set
