@@ -291,22 +291,11 @@ var union_dist = this.distance(self.state.a, self.state.b, self.state.union.lati
                         variant="contained"
                         color="primary"
                     >
-                        All
+                        Search
                 </Button>
                 </form>
                     <Typography variant="h4">
-                        Based on Location and Popularity
-                    </Typography>
-                    <Typography variant="h6">
-                    Distance in km
-                    <br/>
-                    Dcl (210) is : {dcl_dist} <br/>
-                    Siebal (563) is : {siebal_dist}
-                    <br/>
-                    Grainger (324) is : {grainger_dist}
-                    <br/>
-                    Union (23) is : {union_dist}
-                    <br/>
+                          <br/>
                     </Typography>
                     <FormControl >
                     <InputLabel id="demo-simple-select-label">Sort By</InputLabel>

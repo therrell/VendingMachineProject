@@ -221,7 +221,7 @@ class VMinfo extends Component {
                             variant="contained"
                             color="primary"
                         >
-                            All
+                            Sort By Other Factors
                     </Button>
                         <TextField
                             name="searchinfo"
