@@ -219,7 +219,7 @@ class Location extends Component {
         this.setState({
             sortType: event.target.value
         });
-
+        this.loadVMs();
     }
 
 distance(lat1, lon1, lat2, lon2, unit) {
