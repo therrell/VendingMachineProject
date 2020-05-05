@@ -289,40 +289,9 @@ class Userinfo extends Component {
 
   editProduct(product) {
     console.log(`Editing new Product ${product}`)
-    const deleteURL = apiLink_pro
-    // axios.delete(deleteURL).then((response)=>{
-    //     this.loadProduct()
-    // }).catch((error)=>{
-    //     console.log(error);
-    //     this.setState({
-    //         catchError: true
-    //     });
-    // });
-    fetch(deleteURL, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.getItem('access_token')}`
-      }
-    })
-      .then(res => res.json())
-      .then(json => {
-        //this.loadProduct()
-      });
   }
 
   loadProducts() {
-    // axios.get(apiLink_pro).then((response)=>{
-    //     this.setState({
-    //         product_info: response.data
-    //     })
-    //     console.log(this.state.result);
-    // }).catch((error)=>{
-    //     console.log(error);
-    //     this.setState({
-    //         catchError: true
-    //     });
-    // });
     fetch(apiLink_likes, {
       method: 'GET',
       headers: {
@@ -342,20 +311,6 @@ class Userinfo extends Component {
   }
 
   loadCRNs() {
-    // axios.get(apiLink).then((response)=>{
-    //   console.log(response)
-    //   console.log(response.data)
-    //     this.setState({
-    //         crn_info: response.data
-    //     })
-    // }).catch((error)=>{
-    //     console.log('load test')
-    //     console.log(error);
-    //     this.setState({
-    //         catchError: true
-    //     });
-    // });
-
     fetch(apiLink_takes, {
       method: 'GET',
       headers: {
@@ -445,7 +400,7 @@ class Userinfo extends Component {
                       {row.productName}
                     </TableCell>
                     <TableCell align="right">
-                      <EditModalProduct data={row.productName} addItem={this.addProduct} deleteItem={this.deleteProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
+                      <EditModalProduct data={row.id} addItem={this.addProduct} deleteItem={this.deleteProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
                     </TableCell>
                     <TableCell align="left">
                       <Deletemodal data={row.id} deleteItem={this.deleteProduct} />
