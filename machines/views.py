@@ -119,8 +119,7 @@ class PopularDistanceVMViewSet(viewsets.ModelViewSet):
         select vm.buildingID_id as buildingID, vm.vmID as vmID, vm.VMLocation as VMLocation, vm.status as VMstatus, vm.type as VMtype
         from
         (SELECT distinct buildingID_id, distance
-        FROM vending_machine.machines_distance
-        where distance < 10) as vm_distance
+        FROM vending_machine.machines_distance) as vm_distance
         join
         machines_vendingmachine as vm
         on vm_distance.buildingID_id = vm.buildingID_id
