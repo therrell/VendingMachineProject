@@ -169,8 +169,8 @@ class Userinfo extends Component {
       });
   }
 
-  addCRN(crn, subj, num, buildId) {
-    console.log(`Adding new CRN ${crn}, ${subj}, ${num}, ${buildId}`)
+  addCRN(crn) {
+    console.log(`Adding new CRN ${crn}`)
     const addURL = apiLink
     const takesURL = apiLink_takes
     // axios.post(addURL, {crnID:crn,
@@ -184,23 +184,23 @@ class Userinfo extends Component {
     //         catchError: true
     //     });
     // });
-    const options = {
-      crnID: crn,
-      subject: subj,
-      number: num,
-      buildingID: buildId
-    };
-    fetch(addURL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.getItem('access_token')}`
-      },
-      body: JSON.stringify(options)
-    })
-      .then(res => res.json())
-      .then(json => {
-      });
+    // const options = {
+    //   crnID: crn,
+    //   subject: subj,
+    //   number: num,
+    //   buildingID: buildId
+    // };
+    // fetch(addURL, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: `JWT ${localStorage.getItem('access_token')}`
+    //   },
+    //   body: JSON.stringify(options)
+    // })
+    //   .then(res => res.json())
+    //   .then(json => {
+    //   });
       //ADDED HERE
       const options2 = {
         crnID: crn
@@ -376,7 +376,7 @@ class Userinfo extends Component {
               </TableBody>
             </Table>
             <br />
-            <AddCRNModal addItem={this.addCRN} newName={this.state.newCRN} newSubj={this.state.newSubj} newNum={this.state.newNum} newBuildId={this.state.newBuildId} handleChange={this.onChangeCRN} handleChange_subj={this.onChangeCRN_subj} handleChange_num={this.onChangeCRN_num} handleChange_build={this.onChangeCRN_build} />
+            <AddCRNModal addItem={this.addCRN} newName={this.state.newCRN} handleChange={this.onChangeCRN} />
             <br />
           </TableContainer>
 

@@ -46,7 +46,7 @@ export default function AddCRNModal(props) {
   const handleAdd= () => {
     //let data = this.state.crn;
     // console.log(props.addItem)
-    props.addItem(props.newName, props.newSubj, props.newNum, props.newBuildId)
+    props.addItem(props.newName)
     setOpen(false);
   };
 
@@ -59,27 +59,6 @@ export default function AddCRNModal(props) {
           value={props.newName}
           onChange={props.handleChange}
           label="CRN eg: 42091"
-          fullWidth
-          />
-      <TextField
-          name="subj"
-          value={props.newSubj}
-          onChange={props.handleChange_subj}
-          label="Subject eg: CS"
-          fullWidth
-          />
-      <TextField
-          name="subj"
-          value={props.newNum}
-          onChange={props.handleChange_num}
-          label="Number eg: 411"
-          fullWidth
-          />
-      <TextField
-          name="build"
-          value={props.newBuildId}
-          onChange={props.handleChange_build}
-          label="BuildingID eg: 0030"
           fullWidth
           />
       </p>
