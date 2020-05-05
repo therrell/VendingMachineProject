@@ -158,7 +158,7 @@ class Location extends Component {
     // });
     let type = this.state.sortType;
     console.log("sort type is", type);
-    if (type === 1) {
+    if (type == 1) {
       fetch('http://127.0.0.1:8000/api/popularlikesvms/ ', {
         method: 'GET',
         headers: {
@@ -231,6 +231,10 @@ class Location extends Component {
     // this.loadVMs();
   }
   sortByPopularity() {
+      this.setState({
+          sortType: 4
+      });
+
     fetch('http://127.0.0.1:8000/api/popularityindex/', {
       method: 'GET',
       headers: {
@@ -358,7 +362,7 @@ class Location extends Component {
                   <TableCell align="left">VMLocation</TableCell>
                   <TableCell align="left">Status</TableCell>
                   <TableCell align="left">Type</TableCell>
-                  <TableCell align="left">Distance</TableCell>
+                  <TableCell align="left">Distance (in km)</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody >
@@ -378,7 +382,87 @@ class Location extends Component {
           </TableContainer>
         </div>
       )
-    } else {
+    }
+    else if (this.state.sortType == 1) {
+      return (
+        <div className="container">
+          <Button className="form" onClick={this.back} startIcon={<ArrowBackIcon />} variant="contained" color="primary">
+            Find a Vending Machine
+    </Button>
+          <Typography variant="h3">
+            Vending Machine Locator
+        </Typography>
+          <Paper className="paper">
+            <form className="form">
+              <Button
+                className="form"
+                fullWidth
+                onClick={this.handleClick}
+                variant="contained"
+                color="primary"
+              >
+                Search
+        </Button>
+              <br />
+              <Button
+                className="form"
+                fullWidth
+                onClick={this.sortByPopularity}
+                variant="contained"
+                color="secondary"
+              >
+                Sort by Popularity
+        </Button>
+            </form>
+            <Typography variant="h4">
+              <br />
+            </Typography>
+
+            <FormControl >
+              <InputLabel htmlFor="sort by">Sort BY</InputLabel>
+              <Select
+                native
+                value={this.state.sortType}
+                onChange={this.textChange}
+              >
+                <option value={1}>Sort By Product Likes</option>
+                <option value={2}>Sort By CRN Enrollments</option>
+                <option value={3}>Sort By Distances</option>
+                <option value={4}>Sort By All Factors</option>
+              </Select>
+            </FormControl>
+          </Paper>
+
+          <TableContainer component={Paper}>
+            <Table onLoad={this.loadVMs}>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left">BuildingID</TableCell>
+                  <TableCell align="left">VMID</TableCell>
+                  <TableCell align="left">VMLocation</TableCell>
+                  <TableCell align="left">Status</TableCell>
+                  <TableCell align="left">Type</TableCell>
+                  <TableCell align="left">Likes</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody >
+                {this.state.vm_info.map((row, i) => (
+                  <TableRow key={row.vmID}>
+                    <TableCell align="left">{row.buildingID}</TableCell>
+                    <TableCell align="left">{row.vmID}</TableCell>
+                    <TableCell align="left">{row.VMLocation}</TableCell>
+                    <TableCell align="left">{row.VMstatus}</TableCell>
+                    <TableCell align="left">{row.VMtype}</TableCell>
+                    <TableCell align="left">{row.score}</TableCell>
+                    <TableCell align="left" ><VMinfoModal vmId={row.vmID} /></TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      )
+  } else {
       return (
         <div className="container">
           <Button className="form" onClick={this.back} startIcon={<ArrowBackIcon />} variant="contained" color="primary">

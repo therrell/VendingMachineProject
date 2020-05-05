@@ -141,8 +141,10 @@ class Userinfo extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        //this.loadCRNS()
+
       });
+      //this.loadCRNS()
+
   }
 
   deleteProduct(product) {
