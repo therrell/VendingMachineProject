@@ -24,3 +24,5 @@ router.register('populardistancevms', PopularDistanceVMViewSet, 'popular-likes-v
 router.register('popularityindex', PopularityIndexViewSet, 'popularity-index')
 
 router.register('distance', DistanceViewSet, 'building-distance')
+
+router.register('takescrud', TakesCRUDViewSet, 'takes-crud')

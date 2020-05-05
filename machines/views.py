@@ -180,6 +180,34 @@ class DistanceViewSet(viewsets.ModelViewSet):
     queryset = Distance.objects.all()
     serializer_class = DistanceSerializer
 
+class TakesCRUDViewSet(viewsets.ModelViewSet):
+    queryset = Takes.objects.all()
+    serializer_class = TakesSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        #create
+        if self.request.method == 'POST':
+            query_set = queryset.raw('''
+            INSERT INTO machines_crn(crnID_id, user_id_id) VALUES(%s, %s)
+            ''', [self.request.POST['crnID'], [self.request.user]])
+            return query_set
+        # update
+        elif self.request.method == 'PUT':
+            if self.request.user:
+                query_set = queryset.raw('''
+                UPDATE machines_takes SET crnID_id = %s WHERE user_id_id = %s
+                ''', [self.request.PUT['crnID'], self.request.user])
+            return query_set
+        # delete
+        elif self.request.method == 'DELETE':
+            query_set = queryset.raw('''
+            DELETE FROM machines_takes WHERE crnID_id = %s
+            ''', [self.request.DELETE['crnID']])
+            return query_set
+        else:
+            return queryset
+
 def index(request):
     return HttpResponse("Hello, world.")
 
