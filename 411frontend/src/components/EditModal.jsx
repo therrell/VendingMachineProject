@@ -52,7 +52,7 @@ export default function EditModal(props) {
     // props.oldData
     // props.newData
     props.deleteItem(props.data)
-    props.addItem(props.newName, props.newSubj, props.newNum, props.newBuildId)
+    props.addItem(props.newName)
     // props.editItem(props.newName, props.newSubj, props.newNum, props.newBuildId, props.data)
     setOpen(false);
   };
@@ -67,27 +67,7 @@ export default function EditModal(props) {
           label={"CRN" , props.data}
           fullWidth
           />
-          <TextField
-              name="subj"
-              value={props.newSubj}
-              onChange={props.handleChange_subj}
-              label="Subject eg: CS"
-              fullWidth
-              />
-          <TextField
-              name="subj"
-              value={props.newNum}
-              onChange={props.handleChange_num}
-              label="Number eg: 411"
-              fullWidth
-              />
-          <TextField
-              name="build"
-              value={props.newBuildId}
-              onChange={props.handleChange_build}
-              label="BuildingID eg: 0030"
-              fullWidth
-              />
+
       </p>
       <Button type="button"
       variant="outlined"

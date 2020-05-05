@@ -226,8 +226,8 @@ class Userinfo extends Component {
     })
   }
 
-  addProduct(proName, proType, price) {
-    console.log(`Adding new Product ${proName}, ${proType}, ${price}`)
+  addProduct(proName) {
+    console.log(`Adding new Product ${proName}`)
     const addURL = apiLink_pro;
     const likesURL = apiLink_likes;
     // axios.post(addURL, {productName:proName,
@@ -240,23 +240,23 @@ class Userinfo extends Component {
     //         catchError: true
     //     });
     // });
-    const options = {
-      productName: proName,
-      productType: proType,
-      price: price
-    };
-    fetch(addURL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.getItem('access_token')}`
-      },
-      body: JSON.stringify(options)
-    })
-      .then(res => res.json())
-      .then(json => {
-        //this.loadProduct();
-      });
+    // const options = {
+    //   productName: proName,
+    //   productType: proType,
+    //   price: price
+    // };
+    // fetch(addURL, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: `JWT ${localStorage.getItem('access_token')}`
+    //   },
+    //   body: JSON.stringify(options)
+    // })
+    //   .then(res => res.json())
+    //   .then(json => {
+    //     //this.loadProduct();
+    //   });
       //added here
       const options2 = {
         productName: proName
@@ -366,7 +366,7 @@ class Userinfo extends Component {
                       {row.crnID}
                     </TableCell>
                     <TableCell align="right">
-                      <EditModal data={row.id} addItem={this.addCRN} deleteItem={this.deleteCRN} newName={this.state.newCRN} newSubj={this.state.newSubj} newNum={this.state.newNum} newBuildId={this.state.newBuildId} handleChange={this.onChangeCRN} handleChange_subj={this.onChangeCRN_subj} handleChange_num={this.onChangeCRN_num} handleChange_build={this.onChangeCRN_build} />
+                      <EditModal data={row.id} addItem={this.addCRN} deleteItem={this.deleteCRN} newName={this.state.newCRN} handleChange={this.onChangeCRN} />
                     </TableCell>
                     <TableCell align="left">
                       <Deletemodal data={row.id} deleteItem={this.deleteCRN} />
@@ -400,7 +400,7 @@ class Userinfo extends Component {
                       {row.productName}
                     </TableCell>
                     <TableCell align="right">
-                      <EditModalProduct data={row.id} addItem={this.addProduct} deleteItem={this.deleteProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
+                      <EditModalProduct data={row.id} addItem={this.addProduct} deleteItem={this.deleteProduct} newProName={this.state.newProName} handleChange_proName={this.onChangeProduct_name} />
                     </TableCell>
                     <TableCell align="left">
                       <Deletemodal data={row.id} deleteItem={this.deleteProduct} />
@@ -410,7 +410,7 @@ class Userinfo extends Component {
               </TableBody>
             </Table>
             <br />
-            <AddProductModal addItem={this.addProduct} newProName={this.state.newProName} newProType={this.state.newProType} newPrice={this.state.newPrice} handleChange_proName={this.onChangeProduct_name} handleChange_proType={this.onChangeProduct_type} handleChange_proPrice={this.onChangeProduct_price} />
+            <AddProductModal addItem={this.addProduct} newProName={this.state.newProName} handleChange_proName={this.onChangeProduct_name} />
             <br />
           </TableContainer>
         </Paper>

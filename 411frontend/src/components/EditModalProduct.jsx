@@ -52,7 +52,7 @@ export default function EditModal(props) {
     // props.oldData
     // props.newData
     props.deleteItem(props.data)
-    props.addItem(props.newProName, props.newProType, props.newPrice)
+    props.addItem(props.newProName)
     setOpen(false);
   };
   const body = (
@@ -66,20 +66,6 @@ export default function EditModal(props) {
             label="Name"
             fullWidth
               />
-        <TextField
-            name="protype"
-            value={props.newProType}
-            onChange={props.handleChange_proType}
-            label="Type: DR/FO"
-            fullWidth
-              />
-        <TextField
-            name="proprice"
-            value={props.newPrice}
-            onChange={props.handleChange_proPrice}
-            label="Price"
-            fullWidth
-            />
       </p>
       <Button type="button"
       variant="outlined"

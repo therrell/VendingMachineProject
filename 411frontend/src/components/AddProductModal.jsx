@@ -44,7 +44,7 @@ export default function AddProductModal(props) {
   };
 
   const handleAdd= () => {
-    props.addItem(props.newProName, props.newProType, props.newPrice)
+    props.addItem(props.newProName)
     setOpen(false);
   };
 
@@ -59,20 +59,7 @@ export default function AddProductModal(props) {
             label="Name eg: Monster Blue"
             fullWidth
               />
-        <TextField
-            name="protype"
-            value={props.newProType}
-            onChange={props.handleChange_proType}
-            label="Type: DR/FO"
-            fullWidth
-              />
-        <TextField
-            name="proprice"
-            value={props.newPrice}
-            onChange={props.handleChange_proPrice}
-            label="Price eg: 2.25"
-            fullWidth
-            />
+
       </p>
       <Button type="button"
       variant="outlined"
