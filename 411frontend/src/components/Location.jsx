@@ -146,7 +146,7 @@ class Location extends Component {
         this.setState({
             sortType: event.target.value
         });
-       
+
     }
 
 distance(lat1, lon1, lat2, lon2, unit) {
@@ -182,6 +182,14 @@ componentDidMount(props) {
         console.log("Latitude is :", position.coords.latitude);
         console.log("Longitude is :", position.coords.longitude);
       });
+      const self = this;
+      var dcl_dist = this.distance(self.state.a, self.state.b, self.state.dcl.latitude, self.state.dcl.longitude, "K");
+      var siebal_dist = this.distance(self.state.a, self.state.b, self.state.siebal.latitude, self.state.siebal.longitude, "K");
+      var grainger_dist =  this.distance(self.state.a, self.state.b, self.state.grainger.latitude, self.state.grainger.longitude, "K");
+      var union_dist = this.distance(self.state.a, self.state.b, self.state.union.latitude, self.state.union.longitude, "K");
+
+      this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist);
+
 }
 
 render() {
@@ -197,7 +205,7 @@ var siebal_dist = this.distance(self.state.a, self.state.b, self.state.siebal.la
 var grainger_dist =  this.distance(self.state.a, self.state.b, self.state.grainger.latitude, self.state.grainger.longitude, "K");
 var union_dist = this.distance(self.state.a, self.state.b, self.state.union.latitude, self.state.union.longitude, "K");
 
-this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist);
+// this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist);
 
         return (
             <div className="container">
@@ -238,7 +246,7 @@ this.addDist(dcl_dist,siebal_dist,grainger_dist,union_dist);
                     </Select>
                 </FormControl>
               </Paper>
-              
+
               <TableContainer component={Paper}>
                   <Table >
                       <TableHead>
