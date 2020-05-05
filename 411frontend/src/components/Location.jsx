@@ -174,7 +174,7 @@ class Location extends Component {
                     });
                 });
 
-        } else if (type === 2) {
+        } else if (type == 2) {
             fetch('http://127.0.0.1:8000/api/popularenrlvms/ ', {
                 method: 'GET',
                 headers: {
@@ -189,7 +189,7 @@ class Location extends Component {
                         vm_info: json
                     });
                 });
-        } else if (type === 3) {
+        } else if (type == 3) {
             fetch('http://127.0.0.1:8000/api/populardistancevms/', {
                 method: 'GET',
                 headers: {
@@ -204,7 +204,7 @@ class Location extends Component {
                         vm_info: json
                     });
                 });
-        } else if (type === 4) {
+        } else if (type == 4) {
             fetch('http://127.0.0.1:8000/api/popularityindex/', {
                 method: 'GET',
                 headers: {
@@ -331,7 +331,7 @@ var union_dist = this.distance(self.state.a, self.state.b, self.state.union.lati
                     <Typography variant="h4">
                           <br/>
                     </Typography>
-                  
+
                 <FormControl >
                   <InputLabel htmlFor="sort by">Sort BY</InputLabel>
                   <Select
