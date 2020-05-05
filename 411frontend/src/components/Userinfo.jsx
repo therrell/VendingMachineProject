@@ -366,7 +366,7 @@ class Userinfo extends Component {
                       {row.crnID}
                     </TableCell>
                     <TableCell align="right">
-                      <EditModal data={row.id} addItem={this.addCRN} deleteItem={this.deleteCRN} newName={this.state.newCRN} handleChange={this.onChangeCRN} />
+                      <EditModal data={row.id} data2={row.crnID} addItem={this.addCRN} deleteItem={this.deleteCRN} newName={this.state.newCRN} handleChange={this.onChangeCRN} />
                     </TableCell>
                     <TableCell align="left">
                       <Deletemodal data={row.id} deleteItem={this.deleteCRN} />
@@ -400,7 +400,7 @@ class Userinfo extends Component {
                       {row.productName}
                     </TableCell>
                     <TableCell align="right">
-                      <EditModalProduct data={row.id} addItem={this.addProduct} deleteItem={this.deleteProduct} newProName={this.state.newProName} handleChange_proName={this.onChangeProduct_name} />
+                      <EditModalProduct data={row.id} data2={row.productName} addItem={this.addProduct} deleteItem={this.deleteProduct} newProName={this.state.newProName} handleChange_proName={this.onChangeProduct_name} />
                     </TableCell>
                     <TableCell align="left">
                       <Deletemodal data={row.id} deleteItem={this.deleteProduct} />

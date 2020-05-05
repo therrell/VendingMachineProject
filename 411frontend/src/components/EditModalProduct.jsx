@@ -63,7 +63,7 @@ export default function EditModal(props) {
             name="proname"
             value={props.newProName}
             onChange={props.handleChange_proName}
-            label="Name"
+            label={"Name", props.data2}
             fullWidth
               />
       </p>

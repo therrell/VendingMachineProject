@@ -199,7 +199,7 @@ class Signup extends Component {
                         </Link>
 
                         <Typography className="form">
-                            Don't have an account yet?
+                            Already have an account?
                         </Typography>
                         <Link to="/" style={{ textDecoration: 'none' }}>
                             <Button

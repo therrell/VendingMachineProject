@@ -64,7 +64,7 @@ export default function EditModal(props) {
           name="editcrn"
           value={props.newName}
           onChange={props.handleChange}
-          label={"CRN" , props.data}
+          label={"CRN" , props.data2}
           fullWidth
           />
 
