@@ -293,6 +293,16 @@ var union_dist = this.distance(self.state.a, self.state.b, self.state.union.lati
                     >
                         Search
                 </Button>
+                <br />
+                <Button
+                    className="form"
+                    fullWidth
+                    onClick={this.sortByVMID}
+                    variant="contained"
+                    color="secondary"
+                >
+                    Sort by Popularity
+                </Button>
                 </form>
                     <Typography variant="h4">
                           <br/>
